@@ -1,24 +1,34 @@
 package com.vest10.peter.madklubandroid.depenedency_injection.modules
 
-import com.vest10.peter.madklubandroid.HomeFragmentModule
-import com.vest10.peter.madklubandroid.MainActivity
-import com.vest10.peter.madklubandroid.MainView
+import com.vest10.peter.madklubandroid.SomeClass
 import com.vest10.peter.madklubandroid.depenedency_injection.scopes.ActivityScope
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import dagger.android.ContributesAndroidInjector
 
 /**
  * Created by peter on 02-09-17.
  */
 @Module
-abstract class MainActivityModule {
-    /*@ActivityScope
-    @ContributesAndroidInjector(modules = arrayOf(HomeFragmentModule::class))
-    abstract fun contibutesMainActivityInjector(): MainActivity*/
+class MainActivityModule {
+    // So if a module class is abstract, its methods must still be accessible, which is then ny
+    // static access. This is not really a Kotlin thing, but this is how you make kotlin and
+    // dagger understand each-other
+    /*@Module
+    companion object {
+        @Provides
+        @ActivityScope
+        @JvmStatic
+        fun someClass(): SomeClass {
+            return SomeClass()
+        }
+    }*/
+
 
     @ActivityScope
+    @Provides
+    fun someClass(): SomeClass = SomeClass()
+
+    /*@ActivityScope
     @Binds
-    abstract fun bindsMainActivityToMainView(mainActivity: MainActivity): MainView
+    abstract fun bindsMainActivityToMainView(mainActivity: MainActivity): MainView*/
 }

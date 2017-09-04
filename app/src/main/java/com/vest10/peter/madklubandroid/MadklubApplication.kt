@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application
 import com.vest10.peter.madklubandroid.depenedency_injection.components.DaggerAppComponent
 import dagger.android.AndroidInjector
+import dagger.android.DaggerApplication
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import javax.inject.Inject
@@ -11,7 +12,7 @@ import javax.inject.Inject
 /**
  * Created by peter on 02-09-17.
  */
-open class MadklubApplication : Application(), HasActivityInjector {
+open class MadklubApplication : DaggerApplication() {
     @Inject protected lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
 
     override fun onCreate() {
@@ -27,7 +28,7 @@ open class MadklubApplication : Application(), HasActivityInjector {
                 .inject(this)
     }
 
-    override fun activityInjector(): AndroidInjector<Activity> {
-        return dispatchingActivityInjector
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
+        return DaggerAppComponent.builder().application(this).build()
     }
 }

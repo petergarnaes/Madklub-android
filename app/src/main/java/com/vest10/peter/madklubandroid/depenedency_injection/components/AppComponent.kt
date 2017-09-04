@@ -1,12 +1,11 @@
 package com.vest10.peter.madklubandroid.depenedency_injection.components
 
 import com.vest10.peter.madklubandroid.MadklubApplication
-import com.vest10.peter.madklubandroid.depenedency_injection.modules.MainActivityModule
-import com.vest10.peter.madklubandroid.depenedency_injection.modules.NetworkingModule
-import com.vest10.peter.madklubandroid.depenedency_injection.modules.PreferencesModule
+import com.vest10.peter.madklubandroid.depenedency_injection.modules.*
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
+import dagger.android.AndroidInjector
 import javax.inject.Singleton
 
 /**
@@ -15,17 +14,18 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(modules = arrayOf(
-        AndroidInjectionModule::class
-        , NetworkingModule::class
-        , PreferencesModule::class
-        , MainActivityModule::class
-))
-interface AppComponent {
+        AndroidInjectionModule::class,
+        InjectorsModule::class,
+        AppModule::class,
+        NetworkingModule::class,
+        PreferencesModule::class
+        ))
+interface AppComponent : AndroidInjector<MadklubApplication> {
     @Component.Builder
     interface Builder {
         @BindsInstance
-        fun application(myApp: MadklubApplication): Builder
+        fun application(myApp: MadklubApplication): AppComponent.Builder
         fun build(): AppComponent
     }
-    fun inject(myApp: MadklubApplication)
+    override fun inject(myApp: MadklubApplication)
 }

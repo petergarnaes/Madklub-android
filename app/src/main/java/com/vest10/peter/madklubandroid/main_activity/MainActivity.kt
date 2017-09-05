@@ -1,16 +1,17 @@
-package com.vest10.peter.madklubandroid
+package com.vest10.peter.madklubandroid.main_activity
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
+import com.vest10.peter.madklubandroid.R
+import com.vest10.peter.madklubandroid.SomeClass
 import com.vest10.peter.madklubandroid.networking.NetworkService
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
-import javax.inject.Named
 
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     @Inject lateinit var network : NetworkService

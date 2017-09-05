@@ -1,8 +1,8 @@
-package com.vest10.peter.madklubandroid
+package com.vest10.peter.madklubandroid.application
 
 import android.app.Activity
 import android.app.Application
-import com.vest10.peter.madklubandroid.depenedency_injection.components.DaggerAppComponent
+import com.vest10.peter.madklubandroid.application.di.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import dagger.android.DispatchingAndroidInjector

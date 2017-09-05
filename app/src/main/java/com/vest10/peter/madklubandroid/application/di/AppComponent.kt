@@ -1,7 +1,8 @@
-package com.vest10.peter.madklubandroid.depenedency_injection.components
+package com.vest10.peter.madklubandroid.application.di
 
-import com.vest10.peter.madklubandroid.MadklubApplication
+import com.vest10.peter.madklubandroid.application.MadklubApplication
 import com.vest10.peter.madklubandroid.depenedency_injection.modules.*
+import com.vest10.peter.madklubandroid.depenedency_injection.modules.NetworkingModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -25,7 +26,7 @@ interface AppComponent : AndroidInjector<MadklubApplication> {
     interface Builder {
         // With binds instance we can provide MadklubApplication
         @BindsInstance
-        fun application(myApp: MadklubApplication): AppComponent.Builder
+        fun application(myApp: MadklubApplication): Builder
         fun build(): AppComponent
     }
     override fun inject(myApp: MadklubApplication)

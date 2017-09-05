@@ -1,4 +1,4 @@
-package com.vest10.peter.madklubandroid.depenedency_injection.modules
+package com.vest10.peter.madklubandroid.main_activity.di
 
 import com.vest10.peter.madklubandroid.SomeClass
 import com.vest10.peter.madklubandroid.depenedency_injection.scopes.ActivityScope

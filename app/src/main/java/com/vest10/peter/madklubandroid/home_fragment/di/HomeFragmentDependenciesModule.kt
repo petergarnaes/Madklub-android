@@ -1,4 +1,4 @@
-package com.vest10.peter.madklubandroid
+package com.vest10.peter.madklubandroid.home_fragment.di
 
 import com.vest10.peter.madklubandroid.depenedency_injection.scopes.FragmentScope
 import dagger.Module

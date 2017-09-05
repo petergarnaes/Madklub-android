@@ -1,13 +1,11 @@
-package com.vest10.peter.madklubandroid.depenedency_injection.modules
+package com.vest10.peter.madklubandroid.application.di
 
-import com.vest10.peter.madklubandroid.HomeFragmentInjectorModule
-import com.vest10.peter.madklubandroid.MainActivity
-import com.vest10.peter.madklubandroid.SomeClass
+import com.vest10.peter.madklubandroid.home_fragment.di.HomeFragmentInjectorModule
+import com.vest10.peter.madklubandroid.main_activity.MainActivity
 import com.vest10.peter.madklubandroid.depenedency_injection.scopes.ActivityScope
+import com.vest10.peter.madklubandroid.main_activity.di.MainActivityDependenciesModule
 import dagger.Module
-import dagger.Provides
 import dagger.android.ContributesAndroidInjector
-import javax.inject.Named
 
 /**
  * Created by peter on 04-09-17.

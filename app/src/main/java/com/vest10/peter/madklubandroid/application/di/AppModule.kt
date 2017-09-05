@@ -1,4 +1,4 @@
-package com.vest10.peter.madklubandroid.depenedency_injection.modules
+package com.vest10.peter.madklubandroid.application.di
 
 import android.app.Application
 import android.content.Context

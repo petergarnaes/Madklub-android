@@ -1,4 +1,4 @@
-package com.vest10.peter.madklubandroid
+package com.vest10.peter.madklubandroid.home_fragment
 
 import android.content.Context
 import android.os.Bundle
@@ -7,6 +7,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.vest10.peter.madklubandroid.R
+import com.vest10.peter.madklubandroid.SomeClass
 import com.vest10.peter.madklubandroid.networking.NetworkService
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject

@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.vest10.peter.madklubandroid.MainActivity">
+    tools:context="com.vest10.peter.madklubandroid.main_activity.MainActivity">
 
     <fragment
-        android:name="com.vest10.peter.madklubandroid.HomeFragment"
+        android:name="com.vest10.peter.madklubandroid.home_fragment.HomeFragment"
         android:id="@+id/homeFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

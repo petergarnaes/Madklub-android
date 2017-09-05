@@ -1,6 +1,6 @@
 package com.vest10.peter.madklubandroid.depenedency_injection.modules
 
-import com.vest10.peter.madklubandroid.MadklubApplication
+import com.vest10.peter.madklubandroid.application.MadklubApplication
 import com.vest10.peter.madklubandroid.networking.NetworkService
 import dagger.Module
 import dagger.Provides

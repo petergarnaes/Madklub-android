@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         setContentView(R.layout.activity_main)
         Log.d("Injected network",network.toString())
         Log.d("Injected somestring",someClass.toString())
-        Log.d("Injected lol string",lolString)
     }
 
     override fun supportFragmentInjector(): AndroidInjector<Fragment> {

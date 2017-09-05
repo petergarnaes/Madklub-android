@@ -23,6 +23,7 @@ import javax.inject.Singleton
 interface AppComponent : AndroidInjector<MadklubApplication> {
     @Component.Builder
     interface Builder {
+        // With binds instance we can provide MadklubApplication
         @BindsInstance
         fun application(myApp: MadklubApplication): AppComponent.Builder
         fun build(): AppComponent

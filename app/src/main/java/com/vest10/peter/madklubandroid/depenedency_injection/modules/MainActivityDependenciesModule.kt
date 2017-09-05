@@ -9,7 +9,7 @@ import dagger.Provides
  * Created by peter on 02-09-17.
  */
 @Module
-class MainActivityModule {
+class MainActivityDependenciesModule {
     // So if a module class is abstract, its methods must still be accessible, which is then ny
     // static access. This is not really a Kotlin thing, but this is how you make kotlin and
     // dagger understand each-other

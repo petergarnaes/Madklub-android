@@ -1,9 +1,10 @@
 package com.vest10.peter.madklubandroid.depenedency_injection.modules
 
-import com.vest10.peter.madklubandroid.application.MadklubApplication
-import com.vest10.peter.madklubandroid.networking.NetworkService
+import com.apollographql.apollo.ApolloClient
 import dagger.Module
 import dagger.Provides
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
 import javax.inject.Singleton
 
 /**
@@ -11,9 +12,28 @@ import javax.inject.Singleton
  */
 @Module
 class NetworkingModule {
+    companion object {
+        val url = "http://10.0.2.2:3000/graphql"
+    }
+
     @Provides
     @Singleton
-    fun provideNetworkingService(myApp: MadklubApplication): NetworkService {
-        return NetworkService(myApp)
-    }
+    fun provideHttpClient(): OkHttpClient =
+        OkHttpClient().newBuilder()
+                .addNetworkInterceptor { chain: Interceptor.Chain? ->
+                    if(chain != null) {
+                        val request = chain.request().newBuilder()
+                                //.addHeader("Authorization",jwtToken)
+                                .build()
+                        chain.proceed(request)
+                    } else chain
+                }
+                .build()
+
+    @Provides
+    @Singleton
+    fun provideApolloClient(okHttpClient: OkHttpClient): ApolloClient = ApolloClient.builder()
+                .serverUrl(NetworkingModule.url)
+                .okHttpClient(okHttpClient)
+                .build()
 }

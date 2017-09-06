@@ -18,7 +18,6 @@ import javax.inject.Named
  * Created by peter on 02-09-17.
  */
 class HomeFragment : Fragment() {
-    @Inject lateinit var network : NetworkService
     @Inject lateinit var someClass : SomeClass
     @Inject @field:Named("something") lateinit var someString : String
 
@@ -29,7 +28,6 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("Injected network f",network.toString())
         Log.d("Injected someclass f",someClass.toString())
         Log.d("Injected somestring f",someString)
     }

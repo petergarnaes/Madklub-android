@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.apollographql.android'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
@@ -48,7 +49,9 @@ dependencies {
     kapt 'com.google.dagger:dagger-compiler:2.11'
     kapt 'com.google.dagger:dagger-android-processor:2.11'
     provided 'org.glassfish:javax.annotation:10.0-b28'
-    compile "com.daimajia.swipelayout:library:1.2.0@aar"
+    compile 'com.loopeer.library:itemtouchhelperextension:1.0.5'
+    compile 'com.squareup.okhttp3:okhttp:3.9.0'
+    compile 'com.apollographql.apollo:apollo-rx2-support:0.4.1'
 }
 repositories {
     mavenCentral()

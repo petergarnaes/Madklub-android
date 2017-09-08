@@ -1,6 +1,7 @@
 package com.vest10.peter.madklubandroid.home_fragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
@@ -18,8 +19,10 @@ import javax.inject.Named
  * Created by peter on 02-09-17.
  */
 class HomeFragment : Fragment() {
-    @Inject lateinit var someClass : SomeClass
-    @Inject @field:Named("something") lateinit var someString : String
+    @Inject
+    lateinit var someClass : SomeClass
+    @Inject
+    @field:Named("something") lateinit var someString : String
     private var isChecked = false
 
     override fun onAttach(context: Context?) {
@@ -41,7 +44,7 @@ class HomeFragment : Fragment() {
         kf_selectable_icon.setOnClickListener {
             isChecked = !isChecked
             val stateSet = intArrayOf(android.R.attr.state_checked * if (isChecked) 1 else -1)
-            kf_selectable_icon.setImageState(stateSet,true)
+            kf_selectable_icon.setImageState(stateSet,false)
         }
     }
 }

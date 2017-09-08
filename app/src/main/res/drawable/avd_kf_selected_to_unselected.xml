@@ -2,6 +2,16 @@
 <animated-vector
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:drawable="@drawable/vd_kf_selected">
-    <target android:name="fork" android:animation="@animator/fork_selected_to_unselected"/>
-    <target android:name="knife" android:animation="@animator/knife_selected_to_unselected"/>
+    <target
+        android:name="fork"
+        android:animation="@animator/fork_selected_to_unselected"/>
+    <target
+        android:animation="@animator/kf_selected_to_unselected"
+        android:name="fork_path"/>
+    <target
+        android:name="knife"
+        android:animation="@animator/knife_selected_to_unselected"/>
+    <target
+        android:animation="@animator/kf_selected_to_unselected"
+        android:name="knife_path"/>
 </animated-vector>

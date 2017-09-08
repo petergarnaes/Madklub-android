@@ -4,6 +4,12 @@
     android:drawable="@drawable/vd_kf_unselected">
     <target android:name="fork"
         android:animation="@animator/fork_unselected_to_selected"/>
+    <target
+        android:animation="@animator/kf_unselected_to_selected"
+        android:name="fork_path"/>
     <target android:name="knife"
         android:animation="@animator/knife_unselected_to_selected"/>
+    <target
+        android:animation="@animator/kf_unselected_to_selected"
+        android:name="knife_path"/>
 </animated-vector>

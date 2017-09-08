@@ -23,6 +23,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     // For some reason this will make dagger complain :/
     //val something: List<KitchensQuery.Kitchen> = emptyList()
+    private var isChecked = false
     @Inject
     lateinit var someClass : SomeClass
     @Inject
@@ -67,6 +68,11 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                     }
                     Log.d("Kitchens response", log)
                 }
+        kf_selectable_icon2.setOnClickListener {
+            isChecked = !isChecked
+            val stateSet = intArrayOf(android.R.attr.state_checked * if (isChecked) 1 else -1)
+            kf_selectable_icon2.setImageState(stateSet,false)
+        }
     }
 
     override fun supportFragmentInjector(): AndroidInjector<Fragment> {

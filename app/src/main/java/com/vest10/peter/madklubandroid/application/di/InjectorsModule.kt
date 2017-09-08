@@ -19,7 +19,8 @@ abstract class InjectorsModule {
             // Provides injector factory for this fragment, which must of course be provided
             // by the parent activity, since the fragment will ask its parent to provide it
             // an injector behind the scenes, when calling AndroidSupportInjection.inject(this).
-            HomeFragmentInjectorModule::class))
+            HomeFragmentInjectorModule::class
+    ))
     abstract fun contibutesMainActivityInjector(): MainActivity
 
 }

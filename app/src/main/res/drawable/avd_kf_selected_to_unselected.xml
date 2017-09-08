@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/vd_kf_selected">
+    <target android:name="fork" android:animation="@animator/fork_selected_to_unselected"/>
+    <target android:name="knife" android:animation="@animator/knife_selected_to_unselected"/>
+</animated-vector>

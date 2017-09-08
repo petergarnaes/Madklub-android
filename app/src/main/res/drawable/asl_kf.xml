@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/kf_selected"
+        android:drawable="@drawable/vd_kf_selected"
+        android:state_checked="true"/>
+
+    <item
+        android:id="@+id/kf_unselected"
+        android:drawable="@drawable/vd_kf_unselected" />
+
+
+    <transition
+        android:drawable="@drawable/avd_kf_unselected_to_selected"
+        android:fromId="@id/kf_unselected"
+        android:toId="@id/kf_selected"/>
+
+    <transition
+        android:drawable="@drawable/avd_kf_selected_to_unselected"
+        android:fromId="@id/kf_selected"
+        android:toId="@id/kf_unselected"/>
+
+</animated-selector>

@@ -41,10 +41,5 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        kf_selectable_icon.setOnClickListener {
-            isChecked = !isChecked
-            val stateSet = intArrayOf(android.R.attr.state_checked * if (isChecked) 1 else -1)
-            kf_selectable_icon.setImageState(stateSet,false)
-        }
     }
 }

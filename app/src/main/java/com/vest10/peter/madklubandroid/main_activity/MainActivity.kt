@@ -7,16 +7,17 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.util.Log
 import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.rx2.Rx2Apollo
 import com.vest10.peter.madklubandroid.R
 import com.vest10.peter.madklubandroid.SomeClass
 import com.vest10.peter.madklubandroid.kitchens_list.KitchenListItemTouchHelperCallback
 import com.vest10.peter.madklubandroid.kitchens_list.KitchensListAdapter
-import com.vest10.peter.madklubandroid.networking.NetworkService
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
+import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -47,14 +48,25 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         val touchHelper = ItemTouchHelper(KitchenListItemTouchHelperCallback(kitchensAdapter))
         touchHelper.attachToRecyclerView(kitchen_list)
 
+        Rx2Apollo.from(client.query(UpcommingDinnerclubsQuery.builder().build()))
+                .subscribe {
+                    res ->
+                    Log.d("Madklub","successfully returned from logged in query")
+                }
         Rx2Apollo.from(client.query(KitchensQuery.builder().build()))
-                .subscribe { res ->
-                    val data = res.data()
+                .map { it.data()?.kitchens() }
+                .onErrorReturn({
+                    Log.d("We had the error", it.localizedMessage)
+                    emptyList<KitchensQuery.Kitchen>()
+                })
+                .subscribe { kitchens ->
+                    //val data = res.data()
+                    //val data = kitchens
                     var log = "data is null..."
-                    if (data != null) {
+                    //if (data != null) {
                         log = "Have kitchens - "
                         var kitchensString = "null"
-                        val kitchens = data.kitchens()
+                        //val kitchens = data.kitchens()
                         if (kitchens != null) {
                             kitchensString = "["
                             for (k in kitchens)
@@ -65,14 +77,9 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                             kitchen_list.adapter.notifyDataSetChanged()
                         }
                         log += kitchensString
-                    }
+                    //}
                     Log.d("Kitchens response", log)
                 }
-        kf_selectable_icon2.setOnClickListener {
-            isChecked = !isChecked
-            val stateSet = intArrayOf(android.R.attr.state_checked * if (isChecked) 1 else -1)
-            kf_selectable_icon2.setImageState(stateSet,false)
-        }
     }
 
     override fun supportFragmentInjector(): AndroidInjector<Fragment> {

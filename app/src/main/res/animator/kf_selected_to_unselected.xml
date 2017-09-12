@@ -4,5 +4,5 @@
     android:interpolator="@android:interpolator/fast_out_slow_in"
     android:propertyName="fillColor"
     android:valueTo="@color/colorPrimary"
-    android:valueFrom="@color/greyDeSelected"
+    android:valueFrom="@color/dark_grey_deselected"
     android:valueType="colorType"/>

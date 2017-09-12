@@ -3,20 +3,21 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:clickable="true"
     android:paddingTop="10dp"
     android:paddingBottom="10dp">
     <TextView
         android:id="@+id/kitchen_name"
+        android:textSize="20sp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
-
-    <Button
-        android:id="@+id/cancel_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:text="@string/cancel"
-        android:textSize="10sp" />
+    <ImageView
+        android:id="@+id/kf_cancel_icon"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_margin="4dp"
+        android:contentDescription="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/asl_kf" />
 </LinearLayout>

@@ -17,12 +17,4 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         tools:layout="@layout/home_fragment" />
-    <ImageView
-        android:id="@+id/kf_selectable_icon2"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_margin="4dp"
-        android:contentDescription="@null"
-        android:scaleType="fitCenter"
-        android:src="@drawable/asl_kf" />
 </LinearLayout>

@@ -14,6 +14,7 @@ import javax.inject.Singleton
 class NetworkingModule {
     companion object {
         val url = "http://10.0.2.2:3000/graphql"
+        val jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMxMWMxNjk1LTdiN2EtNGUyMi04ODA1LTk3YmFmMWQzYTQ1MiIsImVtYWlsIjoiMTAwNkB0ZXN0IiwiaWF0IjoxNTA1MjEzNDM2LCJleHAiOjE1MDUyOTk4MzZ9.p2ieNNEuz-FkNStJ_H6Q6DvRiAA4GeZCxQv8jA36D6k"
     }
 
     @Provides
@@ -23,7 +24,7 @@ class NetworkingModule {
                 .addNetworkInterceptor { chain: Interceptor.Chain? ->
                     if(chain != null) {
                         val request = chain.request().newBuilder()
-                                //.addHeader("Authorization",jwtToken)
+                                .addHeader("id_token",jwtToken)
                                 .build()
                         chain.proceed(request)
                     } else chain

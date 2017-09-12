@@ -1,0 +1,12 @@
+query UpcommingDinnerclubsQuery {
+  me {
+    kitchen {
+      dinnerclubs{
+        id
+        cancelled
+        shopping_complete
+        at
+      }
+    }
+  }
+}

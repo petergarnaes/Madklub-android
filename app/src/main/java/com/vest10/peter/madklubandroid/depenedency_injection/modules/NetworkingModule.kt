@@ -14,7 +14,8 @@ import javax.inject.Singleton
 class NetworkingModule {
     companion object {
         val url = "http://10.0.2.2:3000/graphql"
-        val jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMxMWMxNjk1LTdiN2EtNGUyMi04ODA1LTk3YmFmMWQzYTQ1MiIsImVtYWlsIjoiMTAwNkB0ZXN0IiwiaWF0IjoxNTA1MjEzNDM2LCJleHAiOjE1MDUyOTk4MzZ9.p2ieNNEuz-FkNStJ_H6Q6DvRiAA4GeZCxQv8jA36D6k"
+        val csrfToken = "bob"
+        val jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMxMWMxNjk1LTdiN2EtNGUyMi04ODA1LTk3YmFmMWQzYTQ1MiIsImVtYWlsIjoiMTAwNkB0ZXN0IiwiaWF0IjoxNTA1MjI4NjI3LCJleHAiOjE1MDUzMTUwMjd9.IYVIU-Q_v0mosD4EB9iGC2FU5S6_BGZZRtjiSK3HV6U"
     }
 
     @Provides
@@ -24,7 +25,8 @@ class NetworkingModule {
                 .addNetworkInterceptor { chain: Interceptor.Chain? ->
                     if(chain != null) {
                         val request = chain.request().newBuilder()
-                                .addHeader("id_token",jwtToken)
+                                .addHeader("X-CSRF-TOKEN", csrfToken)
+                                .addHeader("Cookie", "id_token=$jwtToken;csrf_token=$csrfToken")
                                 .build()
                         chain.proceed(request)
                     } else chain

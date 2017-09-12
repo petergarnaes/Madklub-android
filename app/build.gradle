@@ -30,6 +30,11 @@ android {
     }
 }
 
+apollo {
+    customTypeMapping['Date'] = "java.util.Date"
+    //customTypeMapping['Currency'] = "java.math.BigDecimal"
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -55,6 +60,7 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.9.0'
     compile 'com.apollographql.apollo:apollo-rx2-support:0.4.1'
     compile 'com.github.zagum:Android-SwitchIcon:1.3.5'
+    compile 'net.danlew:android.joda:2.9.9'
 }
 repositories {
     mavenCentral()

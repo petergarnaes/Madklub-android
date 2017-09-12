@@ -7,6 +7,7 @@ import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
+import net.danlew.android.joda.JodaTimeAndroid
 import javax.inject.Inject
 
 /**
@@ -18,6 +19,7 @@ open class MadklubApplication : DaggerApplication() {
     override fun onCreate() {
         super.onCreate()
         injectDagger()
+        JodaTimeAndroid.init(this)
     }
 
     open fun injectDagger() {

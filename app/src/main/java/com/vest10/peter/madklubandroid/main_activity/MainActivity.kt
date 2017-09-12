@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                                 it.id(),
                                 it.cancelled()!!,
                                 it.shopping_complete()!!,
-                                it.at().toString())
+                                it.at()!!)
                     }
                 }
                 .subscribe {

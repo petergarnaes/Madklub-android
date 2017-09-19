@@ -1,11 +1,13 @@
-query UpcommingDinnerclubsQuery {
+query UpcommingDinnerclubsQuery($startDate: String!,$endDate: String!) {
   me {
+    id
     kitchen {
-      dinnerclubs{
+      dinnerclubs(range: {start: $startDate,end: $endDate}){
         id
         cancelled
         shopping_complete
         at
+        meal
       }
     }
   }

@@ -11,10 +11,15 @@ import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.rx2.Rx2Apollo
 import com.vest10.peter.madklubandroid.R
 import com.vest10.peter.madklubandroid.SomeClass
+import com.vest10.peter.madklubandroid.application.BaseActivity
+import com.vest10.peter.madklubandroid.depenedency_injection.components.UserComponent
 import com.vest10.peter.madklubandroid.kitchens_list.KitchenListItemTouchHelperCallback
 import com.vest10.peter.madklubandroid.kitchens_list.KitchensListAdapter
+import com.vest10.peter.madklubandroid.main_activity.di.MainActivityDependenciesModule
 import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.UpcommingDinnerclubItem
 import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.UpcommingDinnerclubsAdapter
+import com.vest10.peter.madklubandroid.user.BaseUserActivity
+import com.vest10.peter.madklubandroid.user.User
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -23,20 +28,21 @@ import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
+class MainActivity : BaseUserActivity() {
+
     // For some reason this will make dagger complain :/
     //val something: List<KitchensQuery.Kitchen> = emptyList()
     private var isChecked = false
     @Inject
+    lateinit var user : User
+    @Inject
     lateinit var someClass : SomeClass
     @Inject
     lateinit var client : ApolloClient
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
+        //AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -49,6 +55,8 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
             val touchHelper = ItemTouchHelper(KitchenListItemTouchHelperCallback(kitchensAdapter))
             touchHelper.attachToRecyclerView(kitchen_list)
         }*/
+        Log.d("Madklub","We have the SomeClass: $someClass")
+        Log.d("Madklub","We have the user: ${user.username}")
         kitchen_list.apply {
             setHasFixedSize(true)
             adapter = UpcommingDinnerclubsAdapter()
@@ -57,7 +65,10 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         }
         kitchen_list.setHasFixedSize(true)
 
-        Rx2Apollo.from(client.query(UpcommingDinnerclubsQuery.builder().build()))
+        Rx2Apollo.from(client.query(UpcommingDinnerclubsQuery.builder()
+                .startDate("2017-01-22T12:00:00.000Z")
+                .endDate("2017-10-22T12:00:00.000Z")
+                .build()))
                 .map {
                     it.data()?.me()?.kitchen()?.dinnerclubs()
                 }
@@ -107,8 +118,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
                     Log.d("Kitchens response", log)
                 }*/
     }
-
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> {
-        return dispatchingAndroidInjector
+    override fun setupUserComponent(userComponent: UserComponent) {
+        userComponent.plus(MainActivityDependenciesModule()).inject(this)
     }
 }

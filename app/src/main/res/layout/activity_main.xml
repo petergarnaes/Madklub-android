@@ -10,11 +10,4 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"/>
-    <fragment
-        android:name="com.vest10.peter.madklubandroid.home_fragment.HomeFragment"
-        android:id="@+id/homeFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        tools:layout="@layout/home_fragment" />
 </LinearLayout>

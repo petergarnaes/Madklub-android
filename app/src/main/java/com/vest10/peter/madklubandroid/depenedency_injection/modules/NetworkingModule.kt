@@ -24,7 +24,7 @@ class NetworkingModule {
     companion object {
         val url = "http://10.0.2.2:3000/graphql"
         val csrfToken = "bob"
-        val jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMxMWMxNjk1LTdiN2EtNGUyMi04ODA1LTk3YmFmMWQzYTQ1MiIsImVtYWlsIjoiMTAwNkB0ZXN0IiwiaWF0IjoxNTA1MjI4NjI3LCJleHAiOjE1MDUzMTUwMjd9.IYVIU-Q_v0mosD4EB9iGC2FU5S6_BGZZRtjiSK3HV6U"
+        val jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU5MTM4ZTcyLTEyNmEtNDgwZC04NmJiLTM5ZTkxNTUyOGRhNyIsImVtYWlsIjoiMTAwNkB0ZXN0IiwiaWF0IjoxNTA1MjU0MDk0LCJleHAiOjE1MDUzNDA0OTR9.3yhdFowPoFt2TA2gFshEK39hblAtUNWQPBCJj3R2lv8"
     }
 
     @Provides

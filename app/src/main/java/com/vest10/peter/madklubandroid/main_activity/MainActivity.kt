@@ -1,30 +1,19 @@
 package com.vest10.peter.madklubandroid.main_activity
 
+import UpcommingDinnerclubsQuery
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.util.Log
 import com.apollographql.apollo.ApolloClient
-import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.rx2.Rx2Apollo
 import com.vest10.peter.madklubandroid.R
 import com.vest10.peter.madklubandroid.SomeClass
-import com.vest10.peter.madklubandroid.application.BaseActivity
 import com.vest10.peter.madklubandroid.depenedency_injection.components.UserComponent
-import com.vest10.peter.madklubandroid.kitchens_list.KitchenListItemTouchHelperCallback
-import com.vest10.peter.madklubandroid.kitchens_list.KitchensListAdapter
 import com.vest10.peter.madklubandroid.main_activity.di.MainActivityDependenciesModule
 import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.UpcommingDinnerclubItem
 import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.UpcommingDinnerclubsAdapter
 import com.vest10.peter.madklubandroid.user.BaseUserActivity
 import com.vest10.peter.madklubandroid.user.User
-import dagger.android.AndroidInjection
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
-import io.reactivex.functions.Consumer
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -41,9 +30,7 @@ class MainActivity : BaseUserActivity() {
     lateinit var client : ApolloClient
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        //AndroidInjection.inject(this)
-        super.onCreate(savedInstanceState)
+    override fun onCreateSafe(savedInstanceState: Bundle?) {
         setContentView(R.layout.activity_main)
 
         // RecylcerView setup

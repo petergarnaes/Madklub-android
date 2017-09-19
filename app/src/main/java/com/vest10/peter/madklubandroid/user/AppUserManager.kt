@@ -47,4 +47,12 @@ class AppUserManager @Inject constructor(private val application: MadklubApplica
         userCache = null
         userComponent = null
     }
+
+    fun attemptToLoadUser() {
+        if(!isLoggedIn){
+            // TODO Get user from store
+
+            // If no user can be loaded, userComponent should maybe be null?
+        }
+    }
 }

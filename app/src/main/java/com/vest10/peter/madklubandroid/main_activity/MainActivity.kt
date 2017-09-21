@@ -21,6 +21,7 @@ import com.vest10.peter.madklubandroid.user.User
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
+import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
@@ -61,11 +62,31 @@ class MainActivity : BaseActivity() {
         }
         kitchen_list.setHasFixedSize(true)
 
-        Rx2Apollo.from(client.query(UpcommingDinnerclubsQuery.builder()
+        fun getObservable() = Rx2Apollo.from(client.query(UpcommingDinnerclubsQuery.builder()
                 .startDate("2017-01-22T12:00:00.000Z")
                 .endDate("2017-10-22T12:00:00.000Z")
                 .build()))
-                .doOnError {
+
+        getObservable()
+                // TODO on 401/403 error, concat
+                .onErrorResumeNext { t: Throwable ->
+                    when (t) {
+                        is ApolloHttpException -> when (t.code()) {
+                            401,403 -> {
+                                // We have invalid auth token, will send user to authentication
+                                // page if his account is outdated (hopefully...)
+                                Log.d("MadklubNetwork","Had invalid login, trying again...")
+                                userManager.invalidateAuthToken()
+                                getObservable()
+                            }
+                            // Propagate error
+                            else -> Observable.error(t)
+                        }
+                        // Propagate error
+                        else -> Observable.error(t)
+                    }
+                }
+                /*.doOnError {
                     when (it) {
                         is ApolloHttpException -> when (it.code()) {
                             401,403 -> userManager.invalidateAuthToken() // accountManager.invalidateToken(accountType,oldToken)
@@ -73,6 +94,23 @@ class MainActivity : BaseActivity() {
                         }
                     }
                 }
+                .retryWhen {
+                    errors ->
+                    val alreadyRetried = AtomicBoolean(false)
+                    errors.flatMap { error ->
+                        val isAuthorizationError = when (error) {
+                            is ApolloHttpException -> error.code() == 401 || error.code() == 403
+                            else -> false
+                        }
+                        if(isAuthorizationError && !alreadyRetried.get()){
+                            Log.d("MadklubNetwork","Invalidating and retrying!!!")
+                            userManager.invalidateAuthToken()
+                            // We retry
+                            Observable.just(null)
+                        }
+                        Observable.error<List<UpcommingDinnerclubItem>>(error)
+                    }
+                }*/
                 .map {
                     it.data()?.me()?.kitchen()?.dinnerclubs()
                 }
@@ -90,11 +128,6 @@ class MainActivity : BaseActivity() {
                                 it.at()!!)
                     }
                 }
-                /*.retryWhen {
-                    error -> error.flatMap {
-                        Observable.just(null)
-                    }
-                }*/
                 .subscribe {
                     res ->
                     (kitchen_list.adapter as UpcommingDinnerclubsAdapter).addDinnerclubs(res)

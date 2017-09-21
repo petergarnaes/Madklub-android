@@ -7,6 +7,7 @@ import com.apollographql.apollo.CustomTypeAdapter
 import com.apollographql.apollo.interceptor.ApolloInterceptor
 import com.apollographql.apollo.interceptor.ApolloInterceptorChain
 import com.vest10.peter.madklubandroid.authentication.AccountGeneral
+import com.vest10.peter.madklubandroid.authentication.MadklubUserManager
 import dagger.Module
 import dagger.Provides
 import okhttp3.Interceptor
@@ -34,16 +35,12 @@ class NetworkingModule {
 
     @Provides
     @Singleton
-    fun provideHttpClient(accountManager: AccountManager): OkHttpClient =
+    fun provideHttpClient(userManager: MadklubUserManager): OkHttpClient =
         OkHttpClient().newBuilder()
                 .addNetworkInterceptor { chain: Interceptor.Chain? ->
-                    Log.d("MadklubNetwork","Hello?!?!?!")
+                    Log.d("MadklubNetwork","Starting network request")
                     if(chain != null) {
-                        Log.d("MadklubNetwork","Starting authToken circus")
-                        val account = accountManager.getAccountsByType(AccountGeneral.ACCOUNT_TYPE)[0]
-                        Log.d("MadklubNetwork","Retrieved account $account")
-                        val authToken = accountManager.blockingGetAuthToken(account,AccountGeneral.AUTHTOKEN_TYPE_USER,false)
-                        Log.d("MadklubNetwork","Retrieved authToken $authToken")
+                        val authToken = userManager.blockingGetAuthToken()
                         val request = chain.request().newBuilder()
                                 .addHeader("X-CSRF-TOKEN", csrfToken)
                                 .addHeader("Cookie", "id_token=$authToken;csrf_token=$csrfToken")

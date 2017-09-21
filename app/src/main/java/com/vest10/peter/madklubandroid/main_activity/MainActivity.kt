@@ -11,6 +11,7 @@ import com.apollographql.apollo.rx2.Rx2Apollo
 import com.vest10.peter.madklubandroid.R
 import com.vest10.peter.madklubandroid.SomeClass
 import com.vest10.peter.madklubandroid.application.BaseActivity
+import com.vest10.peter.madklubandroid.authentication.MadklubUserManager
 import com.vest10.peter.madklubandroid.depenedency_injection.components.UserComponent
 import com.vest10.peter.madklubandroid.main_activity.di.MainActivityDependenciesModule
 import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.UpcommingDinnerclubItem
@@ -33,6 +34,8 @@ class MainActivity : BaseActivity() {
     //lateinit var someClass : SomeClass
     @Inject
     lateinit var client : ApolloClient
+    @Inject
+    lateinit var userManager: MadklubUserManager
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,14 +65,14 @@ class MainActivity : BaseActivity() {
                 .startDate("2017-01-22T12:00:00.000Z")
                 .endDate("2017-10-22T12:00:00.000Z")
                 .build()))
-                /*.doOnError {
+                .doOnError {
                     when (it) {
                         is ApolloHttpException -> when (it.code()) {
-                            401 -> 1 // accountManager.invalidateToken(accountType,oldToken)
+                            401,403 -> userManager.invalidateAuthToken() // accountManager.invalidateToken(accountType,oldToken)
                             else -> 1
                         }
                     }
-                }*/
+                }
                 .map {
                     it.data()?.me()?.kitchen()?.dinnerclubs()
                 }

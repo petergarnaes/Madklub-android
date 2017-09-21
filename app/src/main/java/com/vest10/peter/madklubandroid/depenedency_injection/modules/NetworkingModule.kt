@@ -8,6 +8,7 @@ import com.apollographql.apollo.interceptor.ApolloInterceptor
 import com.apollographql.apollo.interceptor.ApolloInterceptorChain
 import com.vest10.peter.madklubandroid.authentication.AccountGeneral
 import com.vest10.peter.madklubandroid.authentication.MadklubUserManager
+import com.vest10.peter.madklubandroid.networking.NetworkService
 import dagger.Module
 import dagger.Provides
 import okhttp3.Interceptor
@@ -70,4 +71,10 @@ class NetworkingModule {
 
                 })
                 .build()
+
+    @Provides
+    @Singleton
+    fun provideNetworkService(
+            client: ApolloClient,
+            userManager: MadklubUserManager): NetworkService = NetworkService(client,userManager)
 }

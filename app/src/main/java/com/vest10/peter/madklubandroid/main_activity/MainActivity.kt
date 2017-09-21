@@ -14,6 +14,7 @@ import com.vest10.peter.madklubandroid.application.BaseActivity
 import com.vest10.peter.madklubandroid.authentication.MadklubUserManager
 import com.vest10.peter.madklubandroid.depenedency_injection.components.UserComponent
 import com.vest10.peter.madklubandroid.main_activity.di.MainActivityDependenciesModule
+import com.vest10.peter.madklubandroid.networking.NetworkService
 import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.UpcommingDinnerclubItem
 import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.UpcommingDinnerclubsAdapter
 import com.vest10.peter.madklubandroid.user.BaseUserActivity
@@ -34,9 +35,7 @@ class MainActivity : BaseActivity() {
     //@Inject
     //lateinit var someClass : SomeClass
     @Inject
-    lateinit var client : ApolloClient
-    @Inject
-    lateinit var userManager: MadklubUserManager
+    lateinit var networkService: NetworkService
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,77 +61,37 @@ class MainActivity : BaseActivity() {
         }
         kitchen_list.setHasFixedSize(true)
 
-        fun getObservable() = Rx2Apollo.from(client.query(UpcommingDinnerclubsQuery.builder()
-                .startDate("2017-01-22T12:00:00.000Z")
-                .endDate("2017-10-22T12:00:00.000Z")
-                .build()))
-
-        getObservable()
-                // TODO on 401/403 error, concat
-                .onErrorResumeNext { t: Throwable ->
-                    when (t) {
-                        is ApolloHttpException -> when (t.code()) {
-                            401,403 -> {
-                                // We have invalid auth token, will send user to authentication
-                                // page if his account is outdated (hopefully...)
-                                Log.d("MadklubNetwork","Had invalid login, trying again...")
-                                userManager.invalidateAuthToken()
-                                getObservable()
-                            }
-                            // Propagate error
-                            else -> Observable.error(t)
-                        }
-                        // Propagate error
-                        else -> Observable.error(t)
-                    }
-                }
-                /*.doOnError {
-                    when (it) {
-                        is ApolloHttpException -> when (it.code()) {
-                            401,403 -> userManager.invalidateAuthToken() // accountManager.invalidateToken(accountType,oldToken)
-                            else -> 1
-                        }
-                    }
-                }
-                .retryWhen {
-                    errors ->
-                    val alreadyRetried = AtomicBoolean(false)
-                    errors.flatMap { error ->
-                        val isAuthorizationError = when (error) {
-                            is ApolloHttpException -> error.code() == 401 || error.code() == 403
-                            else -> false
-                        }
-                        if(isAuthorizationError && !alreadyRetried.get()){
-                            Log.d("MadklubNetwork","Invalidating and retrying!!!")
-                            userManager.invalidateAuthToken()
-                            // We retry
-                            Observable.just(null)
-                        }
-                        Observable.error<List<UpcommingDinnerclubItem>>(error)
-                    }
-                }*/
-                .map {
-                    it.data()?.me()?.kitchen()?.dinnerclubs()
-                }
-                .onErrorReturn({
-                    Log.d("We had the error", it.localizedMessage)
-                    Log.d("We had the error", "$it")
-                    emptyList<UpcommingDinnerclubsQuery.Dinnerclub>()
-                })
-                .map {
-                    it.map {
-                        UpcommingDinnerclubItem(
-                                it.id(),
-                                it.cancelled()!!,
-                                it.shopping_complete()!!,
-                                it.at()!!)
-                    }
-                }
-                .subscribe {
-                    res ->
-                    (kitchen_list.adapter as UpcommingDinnerclubsAdapter).addDinnerclubs(res)
-                    Log.d("Madklub","successfully returned from logged in query")
-                }
+        networkService.query {
+            UpcommingDinnerclubsQuery.builder()
+                    .startDate("2017-01-22T12:00:00.000Z")
+                    .endDate("2017-10-22T12:00:00.000Z")
+                    .build()
+        }.map {
+            it.data()?.me()?.kitchen()?.dinnerclubs()
+        }.onErrorReturn({
+            Log.d("We had the error", it.localizedMessage)
+            Log.d("We had the error", "$it")
+            emptyList<UpcommingDinnerclubsQuery.Dinnerclub>()
+        }).map {
+            it.map {
+                UpcommingDinnerclubItem(
+                        it.id(),
+                        it.cancelled()!!,
+                        it.shopping_complete()!!,
+                        it.at()!!)
+            }
+        }.subscribe ({
+            res ->
+            (kitchen_list.adapter as UpcommingDinnerclubsAdapter).addDinnerclubs(res)
+            Log.d("Madklub","successfully returned from logged in query")
+        },{
+            // TODO do errors based on their type
+            error -> when (error) {
+                // TODO inform user there is no connection
+                is ApolloNetworkException -> Log.d("Madklub","Network error, server probably down...")
+            }
+            Log.d("Madklub","We had an error")
+        })
         /*Rx2Apollo.from(client.query(KitchensQuery.builder().build()))
                 .map { it.data()?.kitchens() }
                 .onErrorReturn({

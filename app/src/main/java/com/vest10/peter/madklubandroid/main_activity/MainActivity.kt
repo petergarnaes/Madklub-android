@@ -5,32 +5,38 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.exception.ApolloHttpException
+import com.apollographql.apollo.exception.ApolloNetworkException
 import com.apollographql.apollo.rx2.Rx2Apollo
 import com.vest10.peter.madklubandroid.R
 import com.vest10.peter.madklubandroid.SomeClass
+import com.vest10.peter.madklubandroid.application.BaseActivity
 import com.vest10.peter.madklubandroid.depenedency_injection.components.UserComponent
 import com.vest10.peter.madklubandroid.main_activity.di.MainActivityDependenciesModule
 import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.UpcommingDinnerclubItem
 import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.UpcommingDinnerclubsAdapter
 import com.vest10.peter.madklubandroid.user.BaseUserActivity
 import com.vest10.peter.madklubandroid.user.User
+import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 import javax.inject.Inject
 
-class MainActivity : BaseUserActivity() {
+class MainActivity : BaseActivity() {
 
     // For some reason this will make dagger complain :/
     //val something: List<KitchensQuery.Kitchen> = emptyList()
     private var isChecked = false
-    @Inject
-    lateinit var user : User
-    @Inject
-    lateinit var someClass : SomeClass
+    //@Inject
+    //lateinit var user : User
+    //@Inject
+    //lateinit var someClass : SomeClass
     @Inject
     lateinit var client : ApolloClient
 
 
-    override fun onCreateSafe(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         // RecylcerView setup
@@ -42,8 +48,8 @@ class MainActivity : BaseUserActivity() {
             val touchHelper = ItemTouchHelper(KitchenListItemTouchHelperCallback(kitchensAdapter))
             touchHelper.attachToRecyclerView(kitchen_list)
         }*/
-        Log.d("Madklub","We have the SomeClass: $someClass")
-        Log.d("Madklub","We have the user: ${user.username}")
+        //Log.d("Madklub","We have the SomeClass: $someClass")
+        //Log.d("Madklub","We have the user: ${user.username}")
         kitchen_list.apply {
             setHasFixedSize(true)
             adapter = UpcommingDinnerclubsAdapter()
@@ -56,11 +62,20 @@ class MainActivity : BaseUserActivity() {
                 .startDate("2017-01-22T12:00:00.000Z")
                 .endDate("2017-10-22T12:00:00.000Z")
                 .build()))
+                /*.doOnError {
+                    when (it) {
+                        is ApolloHttpException -> when (it.code()) {
+                            401 -> 1 // accountManager.invalidateToken(accountType,oldToken)
+                            else -> 1
+                        }
+                    }
+                }*/
                 .map {
                     it.data()?.me()?.kitchen()?.dinnerclubs()
                 }
                 .onErrorReturn({
                     Log.d("We had the error", it.localizedMessage)
+                    Log.d("We had the error", "$it")
                     emptyList<UpcommingDinnerclubsQuery.Dinnerclub>()
                 })
                 .map {
@@ -72,6 +87,11 @@ class MainActivity : BaseUserActivity() {
                                 it.at()!!)
                     }
                 }
+                /*.retryWhen {
+                    error -> error.flatMap {
+                        Observable.just(null)
+                    }
+                }*/
                 .subscribe {
                     res ->
                     (kitchen_list.adapter as UpcommingDinnerclubsAdapter).addDinnerclubs(res)
@@ -105,7 +125,7 @@ class MainActivity : BaseUserActivity() {
                     Log.d("Kitchens response", log)
                 }*/
     }
-    override fun setupUserComponent(userComponent: UserComponent) {
-        userComponent.plus(MainActivityDependenciesModule()).inject(this)
-    }
+    //override fun setupUserComponent(userComponent: UserComponent) {
+    //    userComponent.plus(MainActivityDependenciesModule()).inject(this)
+    //}
 }

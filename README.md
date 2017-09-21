@@ -23,3 +23,7 @@ The native Android app for <a href="https://github.com/petergarnaes/Madklub-webs
     * Implement fancy calendar selection, maybe with Squares claendar dialog view?
  - Fancy drag-and-drop for your dinners where user cook?
     * When drag, add blank elements to signify free dates
+ - Settings activity
+    * Enable/disable reminder notification
+    * Set notification reminder time
+    * Log out

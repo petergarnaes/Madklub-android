@@ -1,8 +1,12 @@
 package com.vest10.peter.madklubandroid.depenedency_injection.modules
 
+import android.accounts.AccountManager
 import android.util.Log
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.CustomTypeAdapter
+import com.apollographql.apollo.interceptor.ApolloInterceptor
+import com.apollographql.apollo.interceptor.ApolloInterceptorChain
+import com.vest10.peter.madklubandroid.authentication.AccountGeneral
 import dagger.Module
 import dagger.Provides
 import okhttp3.Interceptor
@@ -14,6 +18,7 @@ import org.joda.time.format.ISODateTimeFormat
 import type.CustomType
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.ExecutorService
 import javax.inject.Singleton
 
 /**
@@ -29,16 +34,25 @@ class NetworkingModule {
 
     @Provides
     @Singleton
-    fun provideHttpClient(): OkHttpClient =
+    fun provideHttpClient(accountManager: AccountManager): OkHttpClient =
         OkHttpClient().newBuilder()
                 .addNetworkInterceptor { chain: Interceptor.Chain? ->
+                    Log.d("MadklubNetwork","Hello?!?!?!")
                     if(chain != null) {
+                        Log.d("MadklubNetwork","Starting authToken circus")
+                        val account = accountManager.getAccountsByType(AccountGeneral.ACCOUNT_TYPE)[0]
+                        Log.d("MadklubNetwork","Retrieved account $account")
+                        val authToken = accountManager.blockingGetAuthToken(account,AccountGeneral.AUTHTOKEN_TYPE_USER,false)
+                        Log.d("MadklubNetwork","Retrieved authToken $authToken")
                         val request = chain.request().newBuilder()
                                 .addHeader("X-CSRF-TOKEN", csrfToken)
-                                .addHeader("Cookie", "id_token=$jwtToken;csrf_token=$csrfToken")
+                                .addHeader("Cookie", "id_token=$authToken;csrf_token=$csrfToken")
                                 .build()
                         chain.proceed(request)
-                    } else chain
+                    } else {
+                        Log.d("MadklubNetwork","Awhat?!?!")
+                        chain
+                    }
                 }
                 .build()
 

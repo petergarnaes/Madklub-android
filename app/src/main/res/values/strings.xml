@@ -15,4 +15,6 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="title_activity_authentication">Sign in</string>
+    <string name="account_authenticator_label">Madklub</string>
 </resources>

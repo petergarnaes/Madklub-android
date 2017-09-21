@@ -55,12 +55,6 @@ class AuthenticationActivity : AccountAuthenticatorActivity(), LoaderCallbacks<C
          */
         private val REQUEST_READ_CONTACTS = 0
 
-        /**
-         * A dummy authentication store containing known user names and passwords.
-         * TODO: remove after connecting to a real authentication system.
-         */
-        private val DUMMY_CREDENTIALS = arrayOf("foo@example.com:hello", "bar@example.com:world")
-
         val ARG_ACCOUNT_TYPE = "MadklubDefaultUser"
         val ARG_ACCOUNT_NAME = "MadklubAccountName"
         val ARG_AUTH_TYPE = "MadklubDefaultAuth"
@@ -72,7 +66,6 @@ class AuthenticationActivity : AccountAuthenticatorActivity(), LoaderCallbacks<C
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    private var mAuthTask: UserLoginTask? = null
     private var mAccountManager: AccountManager? = null
     private var mAuthTokenType: String? = null
     private var client = ApolloClient.builder()
@@ -151,10 +144,6 @@ class AuthenticationActivity : AccountAuthenticatorActivity(), LoaderCallbacks<C
      * errors are presented and no actual login attempt is made.
      */
     private fun attemptLogin() {
-        if (mAuthTask != null) {
-            return
-        }
-
         // Reset errors.
         email.error = null
         password.error = null
@@ -227,8 +216,6 @@ class AuthenticationActivity : AccountAuthenticatorActivity(), LoaderCallbacks<C
                         Toast.makeText(baseContext,"Network error",Toast.LENGTH_SHORT)
                         Log.d("Madklub",error.localizedMessage)
                     })
-            //mAuthTask = UserLoginTask(typedEmail, typedPassword)
-            //mAuthTask!!.execute(null as Void?)
         }
     }
 
@@ -348,51 +335,4 @@ class AuthenticationActivity : AccountAuthenticatorActivity(), LoaderCallbacks<C
 
         email.setAdapter(adapter)
     }
-
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
-    inner class UserLoginTask internal constructor(private val mEmail: String, private val mPassword: String) : AsyncTask<Void, Void, Boolean>() {
-
-        override fun doInBackground(vararg params: Void): Boolean? {
-            // TODO: attempt authentication against a network service.
-
-            try {
-                // Simulate network access.
-                Thread.sleep(2000)
-            } catch (e: InterruptedException) {
-                return false
-            }
-
-            for (credential in DUMMY_CREDENTIALS) {
-                val pieces = credential.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                if (pieces[0] == mEmail) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1] == mPassword
-                }
-            }
-
-            // TODO: register the new account here.
-            return true
-        }
-
-        override fun onPostExecute(success: Boolean) {
-            mAuthTask = null
-            showProgress(false)
-
-            if (success) {
-                finish()
-            } else {
-                password.error = getString(R.string.error_incorrect_password)
-                password.requestFocus()
-            }
-        }
-
-        override fun onCancelled() {
-            mAuthTask = null
-            showProgress(false)
-        }
-    }
 }
-

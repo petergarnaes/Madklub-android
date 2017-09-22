@@ -226,7 +226,7 @@ class AuthenticationActivity : AccountAuthenticatorActivity(), LoaderCallbacks<C
 
         val data = Bundle()
         data.putString(AccountManager.KEY_ACCOUNT_NAME, username)
-        data.putString(AccountManager.KEY_ACCOUNT_TYPE, AccountGeneral.AUTHTOKEN_TYPE_USER)
+        data.putString(AccountManager.KEY_ACCOUNT_TYPE, getIntent().getStringExtra(ARG_ACCOUNT_TYPE))
         data.putString(AccountManager.KEY_AUTHTOKEN, authToken)
         data.putString(PARAM_USER_PASS, password)
         intent.putExtras(data)

@@ -42,11 +42,14 @@ class NetworkingModule {
                     Log.d("MadklubNetwork","Starting network request")
                     if(chain != null) {
                         val authToken = userManager.blockingGetAuthToken()
-                        val request = chain.request().newBuilder()
+                        val requestBuilder = chain.request().newBuilder()
                                 .addHeader("X-CSRF-TOKEN", csrfToken)
-                                .addHeader("Cookie", "id_token=$authToken;csrf_token=$csrfToken")
-                                .build()
-                        chain.proceed(request)
+                        var cookie = "csrf_token=$csrfToken"
+                        if(authToken != null){
+                            cookie += ";id_token=$authToken"
+                        }
+                        requestBuilder.addHeader("Cookie", cookie)
+                        chain.proceed(requestBuilder.build())
                     } else {
                         Log.d("MadklubNetwork","Awhat?!?!")
                         chain

@@ -18,6 +18,14 @@ The native Android app for <a href="https://github.com/petergarnaes/Madklub-webs
  - <s>Add logic that makes sure data is fetched/re-fetched in case user was thrown into authentication activity</s>
  - Implement <a href="https://github.com/team-supercharge/ShimmerLayout" target="_blank">ShimmerLayout</a> and/or <a href="https://github.com/sharish/ShimmerRecyclerView" target="_blank">ShimmerRecyclerView</a> for loading dinners
  - <s>Implement View type for dinners where user cooks</s>
+    * Participation count
+    * Shopping icon should perform mutation
+    * Cancelling participation icon should perform mutation
+ - Dinnerclub infinte scroll
+    * load more when scrolled to bottom
+    * load previous when scrolled to top, remember to reset scroll
+ - Dinnerclub list refresh
+    * On refresh reset date range we look at
  - Headers showing month we are in.
     * Make headers sticky
     * Make action bar disappear on scroll, so there is more room for list and sticky header

@@ -15,9 +15,9 @@ The native Android app for <a href="https://github.com/petergarnaes/Madklub-webs
  - <s>Implement login screen that uses the API</s>
  - <s>Make main activity the launcher activity, and thoroughly test the "go to login screen" logic</s>
  - <s>Implement authenticated network access.<s>
- - Add logic that makes sure data is fetched/re-fetched in case user was thrown into authentication activity
+ - <s>Add logic that makes sure data is fetched/re-fetched in case user was thrown into authentication activity</s>
  - Implement <a href="https://github.com/team-supercharge/ShimmerLayout" target="_blank">ShimmerLayout</a> and/or <a href="https://github.com/sharish/ShimmerRecyclerView" target="_blank">ShimmerRecyclerView</a> for loading dinners
- - Implement View type for dinners where user cooks
+ - <s>Implement View type for dinners where user cooks</s>
  - Headers showing month we are in.
     * Make headers sticky
     * Make action bar disappear on scroll, so there is more room for list and sticky header

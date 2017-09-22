@@ -10,7 +10,11 @@ import com.vest10.peter.madklubandroid.commons.adapter.ViewTypeDelegateAdapter
 /**
  * Created by peter on 12-09-17.
  */
-class UpcommingDinnerclubsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), RegularDinnerclubsDelegateAdapter.DinnerClubCancelledListener {
+class UpcommingDinnerclubsAdapter :
+        RecyclerView.Adapter<RecyclerView.ViewHolder>(),
+        RegularDinnerclubsDelegateAdapter.DinnerClubCancelledListener,
+        CookDinnerclubsDelegateAdapter.DinnerClubHasShoppedListener {
+
     private var items: ArrayList<ViewType>
     private var delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
     private val loadingItem = object : ViewType {
@@ -20,6 +24,7 @@ class UpcommingDinnerclubsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder
     init {
         delegateAdapters.put(AdapterConstants.LOADING,LoadingDelegateAdapter())
         delegateAdapters.put(AdapterConstants.REGULAR_DINNERCLUB,RegularDinnerclubsDelegateAdapter(this))
+        delegateAdapters.put(AdapterConstants.COOKING_DINNERCLUB,CookDinnerclubsDelegateAdapter(this))
         items = ArrayList()
         items.add(loadingItem)
     }
@@ -29,7 +34,7 @@ class UpcommingDinnerclubsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder
     override fun getItemCount(): Int = items.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-            delegateAdapters.get(getItemViewType(position)).onBindViewHolder(holder,items[position])
+        delegateAdapters.get(getItemViewType(position)).onBindViewHolder(holder,items[position])
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
@@ -44,6 +49,11 @@ class UpcommingDinnerclubsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder
         notifyItemRangeChanged(initPosition, items.size + 1 /* plus loading item*/)
     }
     override fun onDinnerclubCancelled(position: Int,isCancelled: Boolean) {
+        notifyItemChanged(position)
+        // TODO optimistic server update
+    }
+
+    override fun onDinnerclubShopped(position: Int, hasShopped: Boolean) {
         notifyItemChanged(position)
         // TODO optimistic server update
     }

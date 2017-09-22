@@ -20,7 +20,7 @@ class RegularDinnerclubsDelegateAdapter(val cancelAction: DinnerClubCancelledLis
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType) {
         holder as TurnsViewHolder
-        var upcommingDinnerclub = item as UpcommingDinnerclubItem
+        val upcommingDinnerclub = item as RegularDinnerclubItem
         with(holder.itemView) {
             kf_cancel_icon.setOnClickListener {
                 upcommingDinnerclub.cancelled = !upcommingDinnerclub.cancelled
@@ -34,9 +34,10 @@ class RegularDinnerclubsDelegateAdapter(val cancelAction: DinnerClubCancelledLis
 
     class TurnsViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
             parent.inflate(R.layout.upcomming_dinnerclub_item)) {
-        fun bind(item: UpcommingDinnerclubItem) = with(itemView) {
-            is_cancelled.text = if(item.cancelled) "Cancelled" else "Not cancelled"
-            is_shopping_complete.text = if(item.shopping_complete) "completed" else "not shopped"
+        fun bind(item: RegularDinnerclubItem) = with(itemView) {
+            dinnerclub_item_date.text = item.at.dayOfMonth().asText
+            dinnerclub_item_meal.text = item.meal
+            dinnerclub_item_cook.text = item.cookName
             val stateSet = intArrayOf(android.R.attr.state_checked * if (item.cancelled) 1 else -1)
             kf_cancel_icon.setImageState(stateSet, false)
         }

@@ -452,9 +452,13 @@
               "description": "The date at which the entry was created",
               "args": [],
               "type": {
-                "kind": "SCALAR",
-                "name": "Date",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Date",
+                  "ofType": null
+                }
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -464,9 +468,13 @@
               "description": "The date at which the entry was last updated",
               "args": [],
               "type": {
-                "kind": "SCALAR",
-                "name": "Date",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Date",
+                  "ofType": null
+                }
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -641,72 +649,80 @@
             },
             {
               "name": "archived",
-              "description": null,
+              "description": "Whether or not it is archived, and thereby not changeable",
               "args": [],
               "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "cancelled",
-              "description": null,
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
               },
               "isDeprecated": false,
               "deprecationReason": null
             },
             {
               "name": "shopping_complete",
-              "description": null,
+              "description": "Whether or not it is shopping has completed, and thereby if participants can cancel their Participation",
               "args": [],
               "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
               },
               "isDeprecated": false,
               "deprecationReason": null
             },
             {
-              "name": "total_cost",
-              "description": null,
+              "name": "cancelled",
+              "description": "Whether or not the dinnerclub is cancelled",
               "args": [],
               "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
               },
               "isDeprecated": false,
               "deprecationReason": null
             },
             {
               "name": "meal",
-              "description": null,
+              "description": "Describes what is served for dinner, defaults to empty string",
               "args": [],
               "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
               },
               "isDeprecated": false,
               "deprecationReason": null
             },
             {
-              "name": "associatedKitchenId",
-              "description": null,
+              "name": "total_cost",
+              "description": "The cost of the dinnerclub",
               "args": [],
               "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Float",
+                  "ofType": null
+                }
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -716,9 +732,13 @@
               "description": "The date and time the DinnerClub is held at",
               "args": [],
               "type": {
-                "kind": "SCALAR",
-                "name": "Date",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Date",
+                  "ofType": null
+                }
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -728,9 +748,13 @@
               "description": "The date at which the entry was created",
               "args": [],
               "type": {
-                "kind": "SCALAR",
-                "name": "Date",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Date",
+                  "ofType": null
+                }
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -740,9 +764,13 @@
               "description": "The date at which the entry was last updated",
               "args": [],
               "type": {
-                "kind": "SCALAR",
-                "name": "Date",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Date",
+                  "ofType": null
+                }
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -752,9 +780,13 @@
               "description": "The user who cooks the dinner",
               "args": [],
               "type": {
-                "kind": "OBJECT",
-                "name": "SimpleUser",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "SimpleUser",
+                  "ofType": null
+                }
               },
               "isDeprecated": false,
               "deprecationReason": null

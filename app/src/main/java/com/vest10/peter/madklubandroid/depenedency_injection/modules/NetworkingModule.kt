@@ -1,12 +1,8 @@
 package com.vest10.peter.madklubandroid.depenedency_injection.modules
 
-import android.accounts.AccountManager
 import android.util.Log
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.CustomTypeAdapter
-import com.apollographql.apollo.interceptor.ApolloInterceptor
-import com.apollographql.apollo.interceptor.ApolloInterceptorChain
-import com.vest10.peter.madklubandroid.authentication.AccountGeneral
 import com.vest10.peter.madklubandroid.authentication.MadklubUserManager
 import com.vest10.peter.madklubandroid.networking.NetworkService
 import dagger.Module
@@ -14,13 +10,8 @@ import dagger.Provides
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormatter
-import org.joda.time.format.DateTimeFormatterBuilder
 import org.joda.time.format.ISODateTimeFormat
 import type.CustomType
-import java.text.SimpleDateFormat
-import java.util.*
-import java.util.concurrent.ExecutorService
 import javax.inject.Singleton
 
 /**
@@ -62,16 +53,15 @@ class NetworkingModule {
     fun provideApolloClient(okHttpClient: OkHttpClient): ApolloClient = ApolloClient.builder()
                 .serverUrl(NetworkingModule.url)
                 .okHttpClient(okHttpClient)
-                .addCustomTypeAdapter(CustomType.DATE, object : CustomTypeAdapter<Date>{
-                    override fun decode(value: String?): Date =
-                        ISODateTimeFormat.dateTimeParser().parseDateTime(value).toDate()
+                .addCustomTypeAdapter(CustomType.DATE, object : CustomTypeAdapter<DateTime>{
+                    override fun decode(value: String?): DateTime =
+                        ISODateTimeFormat.dateTimeParser().parseDateTime(value)
 
-                    override fun encode(value: Date?): String {
+                    override fun encode(value: DateTime?): String {
                         val d = DateTime(value).toString()
                         Log.d("Madklub","Parsing date to: $d")
                         return d
                     }
-
                 })
                 .build()
 

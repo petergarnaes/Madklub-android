@@ -8,9 +8,12 @@ import com.apollographql.apollo.exception.ApolloNetworkException
 import com.vest10.peter.madklubandroid.R
 import com.vest10.peter.madklubandroid.application.BaseActivity
 import com.vest10.peter.madklubandroid.networking.NetworkService
+import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.CookDinnerclubItem
+import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.RegularDinnerclubItem
 import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.UpcommingDinnerclubItem
 import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.UpcommingDinnerclubsAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
@@ -38,22 +41,46 @@ class MainActivity : BaseActivity() {
     override fun launchAuthenticatedNetworkRequests() {
         val getDinnerclubs = networkService.query {
             UpcommingDinnerclubsQuery.builder()
-                    .startDate("2017-01-22T12:00:00.000Z")
-                    .endDate("2017-10-22T12:00:00.000Z")
+                    .startDate("2017-09-22T12:00:00.000Z")
+                    .endDate("2017-12-22T12:00:00.000Z")
                     .build()
-        }.map {
-            it.data()?.me()?.kitchen()?.dinnerclubs()
+        }
+        .delay(4,TimeUnit.SECONDS)
+        .map {
+            val me = it.data()?.me()
+            Pair<String,List<UpcommingDinnerclubsQuery.Dinnerclub>>(me?.id()!!,me.kitchen()?.dinnerclubs()!!)
+            //it.data()?.me()?.kitchen()?.dinnerclubs()
         }.onErrorReturn({
             Log.d("We had the error", it.localizedMessage)
             Log.d("We had the error", "$it")
-            emptyList<UpcommingDinnerclubsQuery.Dinnerclub>()
+            Pair("",emptyList<UpcommingDinnerclubsQuery.Dinnerclub>())
         }).map {
-            it.map {
-                UpcommingDinnerclubItem(
-                        it.id(),
-                        it.cancelled()!!,
-                        it.shopping_complete()!!,
-                        it.at()!!)
+            pair ->
+            pair.second.map {
+                val id = it.id()
+                Log.d("Madklub","User id is: $id")
+                if(pair.first == it.cook().id()){
+                    Log.d("Madklub","Do we get the cook case?!?!?!")
+                    // Current user is cook
+                    //throw RuntimeException("Do we get the cook case")
+                    CookDinnerclubItem(
+                            id,
+                            it.cancelled(),
+                            it.shopping_complete(),
+                            it.at(),
+                            it.meal(),
+                            20)
+                }else{
+                    Log.d("Madklub","Do we get the regular case?!?!?!")
+                    // Current user is NOT cook
+                    RegularDinnerclubItem(
+                            id,
+                            it.cancelled(),
+                            it.shopping_complete(),
+                            it.at(),
+                            it.meal(),
+                            it.cook().display_name()!!)
+                }
             }
         }.subscribe ({
             res ->

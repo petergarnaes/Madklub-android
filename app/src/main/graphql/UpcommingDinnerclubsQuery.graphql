@@ -8,6 +8,10 @@ query UpcommingDinnerclubsQuery($startDate: String!,$endDate: String!) {
         shopping_complete
         at
         meal
+        cook {
+          id
+          display_name
+        }
       }
     }
   }

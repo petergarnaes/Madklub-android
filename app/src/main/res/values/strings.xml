@@ -17,4 +17,6 @@
     </string>
     <string name="title_activity_authentication">Sign in</string>
     <string name="account_authenticator_label">Madklub</string>
+
+    <string name="dinnerclub_item_cook_participants">Deltagere:</string>
 </resources>

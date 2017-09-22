@@ -26,10 +26,6 @@ import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
-
-    // For some reason this will make dagger complain :/
-    //val something: List<KitchensQuery.Kitchen> = emptyList()
-    private var isChecked = false
     //@Inject
     //lateinit var user : User
     //@Inject
@@ -42,17 +38,6 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // RecylcerView setup
-        /*kitchen_list.apply {
-            setHasFixedSize(true)
-            val kitchensAdapter = KitchensListAdapter(listOf(),this@MainActivity)
-            adapter = kitchensAdapter
-            layoutManager = LinearLayoutManager(this@MainActivity)
-            val touchHelper = ItemTouchHelper(KitchenListItemTouchHelperCallback(kitchensAdapter))
-            touchHelper.attachToRecyclerView(kitchen_list)
-        }*/
-        //Log.d("Madklub","We have the SomeClass: $someClass")
-        //Log.d("Madklub","We have the user: ${user.username}")
         kitchen_list.apply {
             setHasFixedSize(true)
             adapter = UpcommingDinnerclubsAdapter()
@@ -61,7 +46,7 @@ class MainActivity : BaseActivity() {
         }
         kitchen_list.setHasFixedSize(true)
 
-        networkService.query {
+        val getDinnerclubs = networkService.query {
             UpcommingDinnerclubsQuery.builder()
                     .startDate("2017-01-22T12:00:00.000Z")
                     .endDate("2017-10-22T12:00:00.000Z")
@@ -92,35 +77,6 @@ class MainActivity : BaseActivity() {
             }
             Log.d("Madklub","We had an error")
         })
-        /*Rx2Apollo.from(client.query(KitchensQuery.builder().build()))
-                .map { it.data()?.kitchens() }
-                .onErrorReturn({
-                    Log.d("We had the error", it.localizedMessage)
-                    emptyList<KitchensQuery.Kitchen>()
-                })
-                .subscribe { kitchens ->
-                    //val data = res.data()
-                    //val data = kitchens
-                    var log = "data is null..."
-                    //if (data != null) {
-                        log = "Have kitchens - "
-                        var kitchensString = "null"
-                        //val kitchens = data.kitchens()
-                        if (kitchens != null) {
-                            kitchensString = "["
-                            for (k in kitchens)
-                                kitchensString += k.name() + ","
-                            kitchensString += "]"
-                            // Update
-                            (kitchen_list.adapter as KitchensListAdapter).kitchensList = kitchens
-                            kitchen_list.adapter.notifyDataSetChanged()
-                        }
-                        log += kitchensString
-                    //}
-                    Log.d("Kitchens response", log)
-                }*/
+        subscriptions.add(getDinnerclubs)
     }
-    //override fun setupUserComponent(userComponent: UserComponent) {
-    //    userComponent.plus(MainActivityDependenciesModule()).inject(this)
-    //}
 }

@@ -24,6 +24,7 @@ The native Android app for <a href="https://github.com/petergarnaes/Madklub-webs
  - Dinnerclub infinte scroll
     * load more when scrolled to bottom
     * load previous when scrolled to top, remember to reset scroll
+    * If list is to short, replace bottom loader that when pressed loads the next
  - Dinnerclub list refresh
     * On refresh reset date range we look at
  - Headers showing month we are in.

@@ -21,7 +21,6 @@
         android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/dinnerclub_item_cook_date">
         <RelativeLayout
-            android:id="@+id/bob"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toStartOf="@+id/dinnerclub_item_cook_has_shopped_icon">

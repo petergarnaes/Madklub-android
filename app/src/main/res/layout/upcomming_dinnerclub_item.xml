@@ -12,33 +12,38 @@
         android:text="12"
         android:layout_marginEnd="10dp"
         android:textSize="26sp"/>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/dinnerclub_item_date">
-        <TextView
-            android:id="@+id/dinnerclub_item_meal"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="Dummy text indicating width"/>
-        <TextView
-            android:id="@+id/dinnerclub_item_cook"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:text="Width indicator cook name"/>
-    </LinearLayout>
-
-    <ImageView
-        android:layout_alignParentRight="true"
-        android:id="@+id/kf_cancel_icon"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_margin="4dp"
-        android:contentDescription="@null"
-        android:scaleType="fitCenter"
-        android:src="@drawable/asl_kf" />
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/kf_cancel_icon">
+            <TextView
+                android:id="@+id/dinnerclub_item_meal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="Dummy text"/>
+            <TextView
+                android:id="@+id/dinnerclub_item_cook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dinnerclub_item_meal"
+                android:textSize="16sp"
+                android:text="Width indicator cook name"/>
+        </RelativeLayout>
+        <ImageView
+            android:layout_alignParentRight="true"
+            android:id="@+id/kf_cancel_icon"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_margin="4dp"
+            android:layout_centerVertical="true"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/asl_kf" />
+    </RelativeLayout>
 </RelativeLayout>

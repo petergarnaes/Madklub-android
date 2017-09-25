@@ -45,7 +45,10 @@
         <activity
             android:name=".detail_activity.DetailActivity"
             android:label="@string/title_activity_detail"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:parentActivityName=".main_activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".main_activity.MainActivity"/>
+        </activity>
     </application>
 
 </manifest>

@@ -15,12 +15,12 @@ import kotlinx.android.synthetic.main.upcomming_dinnerclub_item.view.*
  */
 class RegularDinnerclubsDelegateAdapter(
         val cancelAction: DinnerClubCancelledListener,
-        private val onClickListener: (View) -> Unit) : ViewTypeDelegateAdapter {
+        private val onItemSelected: ((UpcommingDinnerclubItem) -> Unit)?) : ViewTypeDelegateAdapter {
     interface DinnerClubCancelledListener {
         fun onDinnerclubCancelled(position: Int,isCancelled: Boolean)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder = TurnsViewHolder(parent, onClickListener)
+    override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder = TurnsViewHolder(parent)
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType) {
         holder as TurnsViewHolder
@@ -32,11 +32,15 @@ class RegularDinnerclubsDelegateAdapter(
                 kf_cancel_icon.setImageState(stateSet, false)
                 cancelAction.onDinnerclubCancelled(holder.adapterPosition,upcommingDinnerclub.cancelled)
             }
+            if(onItemSelected != null)
+                setOnClickListener {
+                    onItemSelected.invoke(upcommingDinnerclub)
+                }
         }
         holder.bind(upcommingDinnerclub)
     }
 
-    class TurnsViewHolder(parent: ViewGroup, private val onClickListener: (View) -> Unit) : RecyclerView.ViewHolder(
+    class TurnsViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
             parent.inflate(R.layout.upcomming_dinnerclub_item)) {
         fun bind(item: RegularDinnerclubItem) = with(itemView) {
             dinnerclub_item_date.text = item.at.dayOfMonth().asText
@@ -44,9 +48,6 @@ class RegularDinnerclubsDelegateAdapter(
             dinnerclub_item_cook.text = item.cookName
             val stateSet = intArrayOf(android.R.attr.state_checked * if (item.cancelled) 1 else -1)
             kf_cancel_icon.setImageState(stateSet, false)
-            setOnClickListener {
-            }
-            setOnClickListener(onClickListener)
         }
     }
 }

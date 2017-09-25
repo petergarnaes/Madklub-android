@@ -11,7 +11,7 @@ import com.vest10.peter.madklubandroid.commons.adapter.ViewTypeDelegateAdapter
 /**
  * Created by peter on 12-09-17.
  */
-class UpcommingDinnerclubsAdapter(private val onClickListener: (View) -> Unit) :
+class UpcommingDinnerclubsAdapter(private val onClickListener: ((UpcommingDinnerclubItem) -> Unit)?) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>(),
         RegularDinnerclubsDelegateAdapter.DinnerClubCancelledListener,
         CookDinnerclubsDelegateAdapter.DinnerClubHasShoppedListener {

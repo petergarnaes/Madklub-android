@@ -1,16 +1,17 @@
 package com.vest10.peter.madklubandroid.main_activity
 
 import UpcommingDinnerclubsQuery
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import com.apollographql.apollo.exception.ApolloNetworkException
 import com.vest10.peter.madklubandroid.R
 import com.vest10.peter.madklubandroid.application.BaseActivity
+import com.vest10.peter.madklubandroid.detail_activity.DetailActivity
 import com.vest10.peter.madklubandroid.networking.NetworkService
 import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.CookDinnerclubItem
 import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.RegularDinnerclubItem
-import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.UpcommingDinnerclubItem
 import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.UpcommingDinnerclubsAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.concurrent.TimeUnit
@@ -31,7 +32,9 @@ class MainActivity : BaseActivity() {
 
         kitchen_list.apply {
             setHasFixedSize(true)
-            adapter = UpcommingDinnerclubsAdapter()
+            adapter = UpcommingDinnerclubsAdapter({
+                startActivity(Intent(this@MainActivity,DetailActivity::class.java))
+            })
             layoutManager = LinearLayoutManager(this@MainActivity)
             itemAnimator = null
         }

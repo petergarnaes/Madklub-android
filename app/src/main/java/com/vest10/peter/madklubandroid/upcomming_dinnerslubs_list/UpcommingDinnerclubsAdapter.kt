@@ -2,6 +2,7 @@ package com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list
 
 import android.support.v4.util.SparseArrayCompat
 import android.support.v7.widget.RecyclerView
+import android.view.View
 import android.view.ViewGroup
 import com.vest10.peter.madklubandroid.commons.adapter.AdapterConstants
 import com.vest10.peter.madklubandroid.commons.adapter.ViewType
@@ -10,7 +11,7 @@ import com.vest10.peter.madklubandroid.commons.adapter.ViewTypeDelegateAdapter
 /**
  * Created by peter on 12-09-17.
  */
-class UpcommingDinnerclubsAdapter :
+class UpcommingDinnerclubsAdapter(private val onClickListener: (View) -> Unit) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>(),
         RegularDinnerclubsDelegateAdapter.DinnerClubCancelledListener,
         CookDinnerclubsDelegateAdapter.DinnerClubHasShoppedListener {
@@ -23,8 +24,8 @@ class UpcommingDinnerclubsAdapter :
 
     init {
         delegateAdapters.put(AdapterConstants.LOADING,LoadingDelegateAdapter())
-        delegateAdapters.put(AdapterConstants.REGULAR_DINNERCLUB,RegularDinnerclubsDelegateAdapter(this))
-        delegateAdapters.put(AdapterConstants.COOKING_DINNERCLUB,CookDinnerclubsDelegateAdapter(this))
+        delegateAdapters.put(AdapterConstants.REGULAR_DINNERCLUB,RegularDinnerclubsDelegateAdapter(this,onClickListener))
+        delegateAdapters.put(AdapterConstants.COOKING_DINNERCLUB,CookDinnerclubsDelegateAdapter(this,onClickListener))
         items = ArrayList()
         items.add(loadingItem)
     }

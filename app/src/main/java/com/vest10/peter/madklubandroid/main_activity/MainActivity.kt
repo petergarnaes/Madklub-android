@@ -43,7 +43,10 @@ class MainActivity : BaseActivity() {
             adapter = UpcommingDinnerclubsAdapter({
                 dinnerclubItem,holder ->
                 val intent = Intent(this@MainActivity,DetailActivity::class.java)
+                intent.putExtra(DetailActivity.EXTRA_ID,dinnerclubItem.id)
                 intent.putExtra(DetailActivity.EXTRA_MEAL,dinnerclubItem.meal)
+
+                // Shared tansition
                 var transitionViewMeal: View? = null
                 var transitionViewIcon: View? = null
                 var transitionNameIcon: String? = null

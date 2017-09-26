@@ -8,17 +8,23 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 
 import com.vest10.peter.madklubandroid.R
+import com.vest10.peter.madklubandroid.application.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail.*
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 
-class DetailActivity : AppCompatActivity() {
+class DetailActivity : BaseActivity() {
     companion object {
         val EXTRA_MEAL = "MadklubDetailMeal"
+        val EXTRA_ID = "DetailDinnerclubID"
         val MEAL_TRANSITION_KEY = "sharedMealTransitionKey"
         val BACKGROUND_TRANSITION_KEY = "sharedBackgroundTransitionKey"
         val ICON_PARTICIPATING_TRANSITION_KEY = "afjghlakerhgj"
         val ICON_SHOPPED_TRANSITION_KEY = "fjhgfhgfhghg"
+    }
+
+    override fun launchAuthenticatedNetworkRequests() {
+        // TODO implement individual dinnerclub query by ID
     }
 
     var checked = true

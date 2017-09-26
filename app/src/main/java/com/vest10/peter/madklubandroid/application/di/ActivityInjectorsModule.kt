@@ -3,6 +3,7 @@ package com.vest10.peter.madklubandroid.application.di
 import com.vest10.peter.madklubandroid.depenedency_injection.components.UserComponent
 import com.vest10.peter.madklubandroid.main_activity.MainActivity
 import com.vest10.peter.madklubandroid.depenedency_injection.scopes.ActivityScope
+import com.vest10.peter.madklubandroid.detail_activity.DetailActivity
 import com.vest10.peter.madklubandroid.main_activity.di.MainActivityDependenciesModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -23,6 +24,9 @@ abstract class ActivityInjectorsModule {
     ))
     abstract fun contibutesMainActivityInjector(): MainActivity
 
+    @ActivityScope
+    @ContributesAndroidInjector
+    abstract fun contibutesDetailActivityInjector(): DetailActivity
     /*@ActivityScope
     @ContributesAndroidInjector(modules = arrayOf(
             OtherActivityDependenciesModule::class,

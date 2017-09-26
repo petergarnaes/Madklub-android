@@ -1,0 +1,29 @@
+query DinnerclubDetailQuery($id: ID!) {
+    me {
+        id
+        kitchen {
+            dinnerclub(id: $id){
+                id
+                at
+                shopping_complete
+                cancelled
+                meal
+                total_cost
+                cook {
+                    id
+                    display_name
+                }
+                participants {
+                    id
+                    guest_count
+                    will_be_late
+                    cancelled
+                    user {
+                        id
+                        display_name
+                    }
+                }
+            }
+        }
+    }
+}

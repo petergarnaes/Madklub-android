@@ -29,6 +29,7 @@ class RegularDinnerclubsDelegateAdapter(
         ViewCompat.setTransitionName(holder.itemView.kf_cancel_icon,"toDetailIconTransition"+holder.adapterPosition)
         with(holder.itemView) {
             kf_cancel_icon.setOnClickListener {
+                // TODO change to participation implementation
                 upcommingDinnerclub.cancelled = !upcommingDinnerclub.cancelled
                 val stateSet = intArrayOf(android.R.attr.state_checked * if (upcommingDinnerclub.cancelled) 1 else -1)
                 kf_cancel_icon.setImageState(stateSet, false)

@@ -45,6 +45,10 @@ class MainActivity : BaseActivity() {
                 val intent = Intent(this@MainActivity,DetailActivity::class.java)
                 intent.putExtra(DetailActivity.EXTRA_ID,dinnerclubItem.id)
                 intent.putExtra(DetailActivity.EXTRA_MEAL,dinnerclubItem.meal)
+                intent.putExtra(DetailActivity.EXTRA_HAS_SHOPPED,dinnerclubItem.shopping_complete)
+                intent.putExtra(DetailActivity.EXTRA_CANCELLED,dinnerclubItem.cancelled)
+                // TODO change to proper implementation
+                intent.putExtra(DetailActivity.EXTRA_IS_PARTICIPATING,false)
 
                 // Shared tansition
                 var transitionViewMeal: View? = null
@@ -98,7 +102,7 @@ class MainActivity : BaseActivity() {
                     .endDate("2017-12-22T12:00:00.000Z")
                     .build()
         }
-        .delay(4,TimeUnit.SECONDS)
+        //.delay(4,TimeUnit.SECONDS)
         .map {
             val me = it.data()?.me()
             Pair<String,List<UpcommingDinnerclubsQuery.Dinnerclub>>(me?.id()!!,me.kitchen()?.dinnerclubs()!!)
@@ -111,7 +115,6 @@ class MainActivity : BaseActivity() {
             pair ->
             pair.second.map {
                 val id = it.id()
-                Log.d("Madklub","User id is: $id")
                 if(pair.first == it.cook().id()){
                     // Current user is cook
                     //throw RuntimeException("Do we get the cook case")
@@ -121,7 +124,10 @@ class MainActivity : BaseActivity() {
                             it.shopping_complete(),
                             it.at(),
                             it.meal(),
-                            20)
+                            it.participants()!!.fold(0){
+                                sum,p -> sum + if(!p.cancelled()!!) 1+p.guest_count()!! else 0
+                            }
+                    )
                 }else{
                     // Current user is NOT cook
                     RegularDinnerclubItem(

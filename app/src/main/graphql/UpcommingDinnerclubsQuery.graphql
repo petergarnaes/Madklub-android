@@ -12,6 +12,11 @@ query UpcommingDinnerclubsQuery($startDate: String!,$endDate: String!) {
           id
           display_name
         }
+        participants {
+          id
+          cancelled
+          guest_count
+        }
       }
     }
   }

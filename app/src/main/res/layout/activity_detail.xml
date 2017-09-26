@@ -87,7 +87,7 @@
                     android:layout_margin="10dp"
                     android:contentDescription="@null"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/vd_kf_unselected" />
+                    android:src="@drawable/asl_kf" />
                 <com.github.zagum.switchicon.SwitchIconView
                     android:id="@+id/dinnerclub_detail_has_shopped_icon"
                     android:layout_toRightOf="@id/dinnerclub_detail_is_participating_icon"

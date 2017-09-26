@@ -18,7 +18,8 @@ The native Android app for <a href="https://github.com/petergarnaes/Madklub-webs
  - <s>Add logic that makes sure data is fetched/re-fetched in case user was thrown into authentication activity</s>
  - Implement <a href="https://github.com/team-supercharge/ShimmerLayout" target="_blank">ShimmerLayout</a> and/or <a href="https://github.com/sharish/ShimmerRecyclerView" target="_blank">ShimmerRecyclerView</a> for loading dinners
  - <s>Implement View type for dinners where user cooks</s>
-    * Participation count
+    * <s>Participation count</s>
+    * Implement participation shows correctly
     * Shopping icon should perform mutation
     * Cancelling participation icon should perform mutation
  - Dinnerclub infinte scroll
@@ -37,6 +38,8 @@ The native Android app for <a href="https://github.com/petergarnaes/Madklub-webs
         * Fix transition when selecting element partially underneath statusbar. <a href="https://github.com/codepath/android_guides/wiki/Shared-Element-Activity-Transition#5-customizing-shared-elements-transition">Link</a>
         * <s>Make shared transition of appropriate icon depending on if participant or cook </s>
         * <s>Make mail icon to edit icon</s>, and make it show a pop-up dialog for typing a new meal, and perform mutation
+        * Diplay data from server, mix properly with local data
+        * implement mutations for cancelled, shopped, participating, price etc.
     * One for cook view
  - Fancy drag-and-drop for your dinners where user cook?
     * When drag, add blank elements to signify free dates

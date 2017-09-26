@@ -11,4 +11,5 @@ abstract class UpcommingDinnerclubItem(var id: String,
                                         var cancelled: Boolean,
                                         var shopping_complete: Boolean,
                                         var at: DateTime,
-                                        var meal: String) : ViewType
+                                        var meal: String,
+                                        var isParticipating: Boolean) : ViewType

@@ -48,7 +48,7 @@ class MainActivity : BaseActivity() {
                 intent.putExtra(DetailActivity.EXTRA_HAS_SHOPPED,dinnerclubItem.shopping_complete)
                 intent.putExtra(DetailActivity.EXTRA_CANCELLED,dinnerclubItem.cancelled)
                 // TODO change to proper implementation
-                intent.putExtra(DetailActivity.EXTRA_IS_PARTICIPATING,false)
+                intent.putExtra(DetailActivity.EXTRA_IS_PARTICIPATING,dinnerclubItem.isParticipating)
 
                 // Shared tansition
                 var transitionViewMeal: View? = null
@@ -115,6 +115,9 @@ class MainActivity : BaseActivity() {
             pair ->
             pair.second.map {
                 val id = it.id()
+                val isParticipating = it.participants()!!.fold(false){
+                    part,p -> part || (if(p.user()!!.id() == pair.first) !(p.cancelled()!!) else false)
+                }
                 if(pair.first == it.cook().id()){
                     // Current user is cook
                     //throw RuntimeException("Do we get the cook case")
@@ -124,6 +127,8 @@ class MainActivity : BaseActivity() {
                             it.shopping_complete(),
                             it.at(),
                             it.meal(),
+                            isParticipating,
+                            // Summing the participants
                             it.participants()!!.fold(0){
                                 sum,p -> sum + if(!p.cancelled()!!) 1+p.guest_count()!! else 0
                             }
@@ -136,6 +141,7 @@ class MainActivity : BaseActivity() {
                             it.shopping_complete(),
                             it.at(),
                             it.meal(),
+                            isParticipating,
                             it.cook().display_name()!!)
                 }
             }

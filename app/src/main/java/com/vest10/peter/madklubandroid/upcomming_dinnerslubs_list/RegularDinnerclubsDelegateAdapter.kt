@@ -30,10 +30,10 @@ class RegularDinnerclubsDelegateAdapter(
         with(holder.itemView) {
             kf_cancel_icon.setOnClickListener {
                 // TODO change to participation implementation
-                upcommingDinnerclub.cancelled = !upcommingDinnerclub.cancelled
-                val stateSet = intArrayOf(android.R.attr.state_checked * if (upcommingDinnerclub.cancelled) 1 else -1)
+                upcommingDinnerclub.isParticipating = !upcommingDinnerclub.isParticipating
+                val stateSet = intArrayOf(android.R.attr.state_checked * if (upcommingDinnerclub.isParticipating) 1 else -1)
                 kf_cancel_icon.setImageState(stateSet, false)
-                cancelAction.onDinnerclubCancelled(holder.adapterPosition,upcommingDinnerclub.cancelled)
+                cancelAction.onDinnerclubCancelled(holder.adapterPosition,upcommingDinnerclub.isParticipating)
             }
             if(onItemSelected != null)
                 setOnClickListener {
@@ -49,7 +49,7 @@ class RegularDinnerclubsDelegateAdapter(
             dinnerclub_item_date.text = item.at.dayOfMonth().asText
             dinnerclub_item_meal.text = item.meal
             dinnerclub_item_cook.text = item.cookName
-            val stateSet = intArrayOf(android.R.attr.state_checked * if (item.cancelled) 1 else -1)
+            val stateSet = intArrayOf(android.R.attr.state_checked * if (item.isParticipating) 1 else -1)
             kf_cancel_icon.setImageState(stateSet, false)
         }
     }

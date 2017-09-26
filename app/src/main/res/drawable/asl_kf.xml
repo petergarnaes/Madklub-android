@@ -4,7 +4,7 @@
     <item
         android:id="@+id/kf_selected"
         android:drawable="@drawable/vd_kf_selected"
-        android:state_checked="true"/>
+        android:state_checked="false"/>
 
     <item
         android:id="@+id/kf_unselected"

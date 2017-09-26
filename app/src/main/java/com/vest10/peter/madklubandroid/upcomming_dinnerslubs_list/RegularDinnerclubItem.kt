@@ -12,6 +12,13 @@ class RegularDinnerclubItem(
         shopping_complete: Boolean,
         at: DateTime,
         meal: String,
-        val cookName: String) : UpcommingDinnerclubItem(id,cancelled,shopping_complete,at,meal) {
+        isParticipating: Boolean,
+        val cookName: String) : UpcommingDinnerclubItem(
+        id,
+        cancelled,
+        shopping_complete,
+        at,
+        meal,
+        isParticipating) {
     override fun getViewType(): Int = AdapterConstants.REGULAR_DINNERCLUB
 }

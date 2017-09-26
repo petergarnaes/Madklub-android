@@ -26,6 +26,7 @@ class RegularDinnerclubsDelegateAdapter(
         val upcommingDinnerclub = item as RegularDinnerclubItem
         ViewCompat.setTransitionName(holder.itemView.view_background,"toDetailBackgroundTransition"+holder.adapterPosition)
         ViewCompat.setTransitionName(holder.itemView.dinnerclub_item_meal,"toDetailMealTransition"+holder.adapterPosition)
+        ViewCompat.setTransitionName(holder.itemView.kf_cancel_icon,"toDetailIconTransition"+holder.adapterPosition)
         with(holder.itemView) {
             kf_cancel_icon.setOnClickListener {
                 upcommingDinnerclub.cancelled = !upcommingDinnerclub.cancelled

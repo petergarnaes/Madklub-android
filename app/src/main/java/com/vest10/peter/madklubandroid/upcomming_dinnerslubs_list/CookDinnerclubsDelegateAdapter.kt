@@ -28,6 +28,7 @@ class CookDinnerclubsDelegateAdapter(
         val upcommingDinnerclub = item as CookDinnerclubItem
         ViewCompat.setTransitionName(holder.itemView.view_background_cook,"toDetailBackgroundTransition"+holder.adapterPosition)
         ViewCompat.setTransitionName(holder.itemView.dinnerclub_item_cook_meal,"toDetailTransition"+holder.adapterPosition)
+        ViewCompat.setTransitionName(holder.itemView.dinnerclub_item_cook_has_shopped_icon,"toDetailIconTransition"+holder.adapterPosition)
         with(holder.itemView) {
             dinnerclub_item_cook_has_shopped_icon.setOnClickListener {
                 //dinnerclub_item_cook_has_shopped_icon.switchState(true)

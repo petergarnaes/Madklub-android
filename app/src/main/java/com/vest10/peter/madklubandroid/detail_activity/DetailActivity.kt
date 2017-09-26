@@ -17,6 +17,8 @@ class DetailActivity : AppCompatActivity() {
         val EXTRA_MEAL = "MadklubDetailMeal"
         val MEAL_TRANSITION_KEY = "sharedMealTransitionKey"
         val BACKGROUND_TRANSITION_KEY = "sharedBackgroundTransitionKey"
+        val ICON_PARTICIPATING_TRANSITION_KEY = "afjghlakerhgj"
+        val ICON_SHOPPED_TRANSITION_KEY = "fjhgfhgfhghg"
     }
 
     var checked = true
@@ -43,6 +45,10 @@ class DetailActivity : AppCompatActivity() {
             ViewCompat.setTransitionName(dinnerclub_detail_meal,intent.getStringExtra(MEAL_TRANSITION_KEY))
         if(intent.hasExtra(BACKGROUND_TRANSITION_KEY))
             ViewCompat.setTransitionName(view_background,intent.getStringExtra(BACKGROUND_TRANSITION_KEY))
+        if (intent.hasExtra(ICON_PARTICIPATING_TRANSITION_KEY))
+            ViewCompat.setTransitionName(dinnerclub_detail_is_participating_icon,intent.getStringExtra(ICON_PARTICIPATING_TRANSITION_KEY))
+        if (intent.hasExtra(ICON_SHOPPED_TRANSITION_KEY))
+            ViewCompat.setTransitionName(dinnerclub_detail_has_shopped_icon,intent.getStringExtra(ICON_SHOPPED_TRANSITION_KEY))
 
         val stateSet = intArrayOf(android.R.attr.state_checked * if (checked) 1 else -1)
         dinnerclub_detail_is_cancelled_icon.setImageState(stateSet, false)

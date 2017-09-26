@@ -45,17 +45,26 @@ class MainActivity : BaseActivity() {
                 val intent = Intent(this@MainActivity,DetailActivity::class.java)
                 intent.putExtra(DetailActivity.EXTRA_MEAL,dinnerclubItem.meal)
                 var transitionViewMeal: View? = null
+                var transitionViewIcon: View? = null
+                var transitionNameIcon: String? = null
                 var transitionViewBackground: View? = null
                 when(dinnerclubItem){
                     is RegularDinnerclubItem -> {
                         transitionViewMeal = holder.itemView.dinnerclub_item_meal
                         transitionViewBackground = holder.itemView.view_background
+                        transitionViewIcon = holder.itemView.kf_cancel_icon
+                        transitionNameIcon = ViewCompat.getTransitionName(transitionViewIcon)
+                        intent.putExtra(DetailActivity.ICON_PARTICIPATING_TRANSITION_KEY,transitionNameIcon)
                     }
                     is CookDinnerclubItem -> {
                         transitionViewMeal = holder.itemView.dinnerclub_item_cook_meal
                         transitionViewBackground = holder.itemView.view_background_cook
+                        transitionViewIcon = holder.itemView.dinnerclub_item_cook_has_shopped_icon
+                        transitionNameIcon = ViewCompat.getTransitionName(transitionViewIcon)
+                        intent.putExtra(DetailActivity.ICON_SHOPPED_TRANSITION_KEY,transitionNameIcon)
                     }
                 }
+
                 val transitionNameMeal = ViewCompat.getTransitionName(transitionViewMeal)
                 intent.putExtra(DetailActivity.MEAL_TRANSITION_KEY,transitionNameMeal)
                 val transitionNameBackground = ViewCompat.getTransitionName(transitionViewBackground)
@@ -63,7 +72,8 @@ class MainActivity : BaseActivity() {
 
                 val t1 = android.support.v4.util.Pair<View,String>(transitionViewMeal,transitionNameMeal)
                 val t2 = android.support.v4.util.Pair<View,String>(transitionViewBackground,transitionNameBackground)
-                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this@MainActivity,t1,t2)
+                val t3 = android.support.v4.util.Pair<View,String>(transitionViewIcon,transitionNameIcon)
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this@MainActivity,t1,t2,t3)
 
                 startActivity(intent,options.toBundle())
             })

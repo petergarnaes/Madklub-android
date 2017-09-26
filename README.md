@@ -35,6 +35,7 @@ The native Android app for <a href="https://github.com/petergarnaes/Madklub-webs
  - Dinnerclub detail activities
     * One for participant view
         * Fix transition when selecting element partially underneath statusbar. <a href="https://github.com/codepath/android_guides/wiki/Shared-Element-Activity-Transition#5-customizing-shared-elements-transition">Link</a>
+        * Make shared transition of appropriate icon depending on if participant or cook
         * Make mail icon to edit icon, and make it show a pop-up dialog for typing a new meal, and perform mutation
     * One for cook view
  - Fancy drag-and-drop for your dinners where user cook?

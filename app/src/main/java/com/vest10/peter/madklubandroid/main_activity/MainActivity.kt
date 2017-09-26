@@ -26,10 +26,6 @@ import android.support.v7.widget.DividerItemDecoration
 
 
 class MainActivity : BaseActivity() {
-    //@Inject
-    //lateinit var user : User
-    //@Inject
-    //lateinit var someClass : SomeClass
     @Inject
     lateinit var networkService: NetworkService
 

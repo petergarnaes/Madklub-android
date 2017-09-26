@@ -22,28 +22,40 @@ class DetailActivity : BaseActivity() {
         val EXTRA_CANCELLED = "DetailMadklubCancelled"
         val EXTRA_HAS_SHOPPED = "DetailMadklubShopped"
         val EXTRA_IS_PARTICIPATING = "DetailMadklubParticipating"
+        val EXTRA_COOK_NAME = "DetailMadklubCookName"
         val MEAL_TRANSITION_KEY = "sharedMealTransitionKey"
         val BACKGROUND_TRANSITION_KEY = "sharedBackgroundTransitionKey"
-        val ICON_PARTICIPATING_TRANSITION_KEY = "afjghlakerhgj"
-        val ICON_SHOPPED_TRANSITION_KEY = "fjhgfhgfhghg"
+        val ICON_PARTICIPATING_TRANSITION_KEY = "iconParticipatingTransitionKey"
+        val ICON_SHOPPED_TRANSITION_KEY = "iconHasShoppedTransitionKey"
     }
 
     @Inject
     lateinit var networkService: NetworkService
 
     override fun launchAuthenticatedNetworkRequests() {
-        // TODO implement individual dinnerclub query by ID
         val getDinnerclub = networkService.query {
             DinnerclubDetailQuery.builder()
                     .id(intent.getStringExtra(EXTRA_ID))
                     .build()
-        }
-                .map {
-                    Log.d("Madklub","Hurray!")
-                }
-                .subscribe {
-
-                }
+        }.map{
+            if (it.hasErrors())
+                throw RuntimeException("Something wrong with query or server...")
+            it.data()?.me()?.kitchen()?.dinnerclub()
+        }.subscribe ({
+            dinnerclub ->
+            if(dinnerclub != null){
+                dinnerclub_detail_cook.text = dinnerclub.cook().display_name()
+                dinnerclub_detail_meal.text = dinnerclub.meal()
+                setCancelledIcon(!dinnerclub.cancelled())
+                dinnerclub_detail_has_shopped_icon.setIconEnabled(dinnerclub.shopping_complete(),false)
+                supportActionBar?.title = dinnerclub.at().toString(DateTimeFormat.mediumDate())
+                Log.d("Madklub","Has set up")
+                // TODO setup rest of view, with cost and participants
+            }
+        },{
+            errors ->
+            // TODO make appropriate toast for error
+        })
         disposables.add(getDinnerclub)
     }
 
@@ -58,13 +70,20 @@ class DetailActivity : BaseActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        supportActionBar?.title = DateTime.now().toString(DateTimeFormat.mediumDate())
+        supportActionBar?.title = ""
 
         // Intent values
-        dinnerclub_detail_meal.text = intent.getStringExtra(EXTRA_MEAL)
+        dinnerclub_detail_meal.text = if(intent.hasExtra(EXTRA_MEAL))
+            intent.getStringExtra(EXTRA_MEAL)
+        else
+            "..."
         setCancelledIcon(!intent.getBooleanExtra(EXTRA_CANCELLED,false))
         dinnerclub_detail_has_shopped_icon.setIconEnabled(intent.getBooleanExtra(EXTRA_HAS_SHOPPED,false),false)
         setParticipatingIcon(intent.getBooleanExtra(EXTRA_IS_PARTICIPATING,false))
+        dinnerclub_detail_cook.text = if(intent.hasExtra(EXTRA_COOK_NAME))
+            intent.getStringExtra(EXTRA_COOK_NAME)
+        else
+            "..."
 
         val fab = findViewById(R.id.fab) as FloatingActionButton
         fab.setOnClickListener { view ->
@@ -88,7 +107,6 @@ class DetailActivity : BaseActivity() {
         dinnerclub_detail_is_participating_icon.setOnClickListener {
             setParticipatingIcon(!participating)
         }
-
         dinnerclub_detail_has_shopped_icon.setOnClickListener {
             dinnerclub_detail_has_shopped_icon.switchState()
         }

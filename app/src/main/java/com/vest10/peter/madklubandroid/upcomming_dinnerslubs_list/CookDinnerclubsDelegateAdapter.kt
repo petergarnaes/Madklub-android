@@ -1,5 +1,6 @@
 package com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list
 
+import android.support.v4.view.ViewCompat
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
@@ -15,7 +16,7 @@ import kotlinx.android.synthetic.main.upcomming_dinnerclub_cook_item.view.*
  */
 class CookDinnerclubsDelegateAdapter(
         private val shoppedListener: DinnerClubHasShoppedListener,
-        private val onItemSelected: ((UpcommingDinnerclubItem) -> Unit)?) : ViewTypeDelegateAdapter {
+        private val onItemSelected: ((UpcommingDinnerclubItem,RecyclerView.ViewHolder) -> Unit)?) : ViewTypeDelegateAdapter {
     interface DinnerClubHasShoppedListener {
         fun onDinnerclubShopped(position: Int,hasShopped: Boolean)
     }
@@ -25,6 +26,7 @@ class CookDinnerclubsDelegateAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType) {
         holder as TurnsViewHolder
         val upcommingDinnerclub = item as CookDinnerclubItem
+        ViewCompat.setTransitionName(holder.itemView.dinnerclub_item_cook_meal,"toDetailTransition"+holder.adapterPosition)
         with(holder.itemView) {
             dinnerclub_item_cook_has_shopped_icon.setOnClickListener {
                 //dinnerclub_item_cook_has_shopped_icon.switchState(true)
@@ -33,11 +35,11 @@ class CookDinnerclubsDelegateAdapter(
                 val has_shopped = dinnerclub_item_cook_has_shopped_icon.isIconEnabled
                 Log.d("Madklub","Has shopped: $has_shopped")
                 shoppedListener.onDinnerclubShopped(holder.adapterPosition,has_shopped)
-                if(onItemSelected != null)
-                    setOnClickListener {
-                        onItemSelected.invoke(upcommingDinnerclub)
-                    }
             }
+            if(onItemSelected != null)
+                setOnClickListener {
+                    onItemSelected.invoke(upcommingDinnerclub,holder)
+                }
         }
         holder.bind(upcommingDinnerclub)
     }

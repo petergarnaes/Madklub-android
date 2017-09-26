@@ -3,6 +3,7 @@ package com.vest10.peter.madklubandroid.detail_activity
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
+import android.support.v4.view.ViewCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.View
@@ -15,6 +16,7 @@ import org.joda.time.format.DateTimeFormat
 class DetailActivity : AppCompatActivity() {
     companion object {
         val EXTRA_MEAL = "MadklubDetailMeal"
+        val MEAL_TRANSITION_KEY = "sharedMealTransitionKey"
     }
 
     var checked = true
@@ -28,12 +30,17 @@ class DetailActivity : AppCompatActivity() {
 
         supportActionBar?.title = DateTime.now().toString(DateTimeFormat.mediumDate())
 
+        dinnerclub_detail_meal.text = intent.getStringExtra(EXTRA_MEAL)
+
         val fab = findViewById(R.id.fab) as FloatingActionButton
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
 
+        // Only animate shared element if requested
+        if (intent.hasExtra(MEAL_TRANSITION_KEY))
+            ViewCompat.setTransitionName(dinnerclub_detail_meal,intent.getStringExtra(MEAL_TRANSITION_KEY))
 
         val stateSet = intArrayOf(android.R.attr.state_checked * if (checked) 1 else -1)
         dinnerclub_detail_is_cancelled_icon.setImageState(stateSet, false)

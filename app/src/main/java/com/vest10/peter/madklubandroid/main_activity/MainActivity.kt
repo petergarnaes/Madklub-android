@@ -3,6 +3,8 @@ package com.vest10.peter.madklubandroid.main_activity
 import UpcommingDinnerclubsQuery
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.ActivityOptionsCompat
+import android.support.v4.view.ViewCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import com.apollographql.apollo.exception.ApolloNetworkException
@@ -14,6 +16,8 @@ import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.CookDinnerclub
 import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.RegularDinnerclubItem
 import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.UpcommingDinnerclubsAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.upcomming_dinnerclub_cook_item.view.*
+import kotlinx.android.synthetic.main.upcomming_dinnerclub_item.view.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -33,10 +37,19 @@ class MainActivity : BaseActivity() {
         kitchen_list.apply {
             setHasFixedSize(true)
             adapter = UpcommingDinnerclubsAdapter({
-                dinnerclubItem ->
+                dinnerclubItem,holder ->
                 val intent = Intent(this@MainActivity,DetailActivity::class.java)
                 intent.putExtra(DetailActivity.EXTRA_MEAL,dinnerclubItem.meal)
-                startActivity(intent)
+                //val transitionName = ViewCompat.getTransitionName(holder.itemView.dinnerclub_item_meal)
+                val transitionView = when(dinnerclubItem){
+                    is RegularDinnerclubItem -> holder.itemView.dinnerclub_item_meal
+                    is CookDinnerclubItem -> holder.itemView.dinnerclub_item_cook_meal
+                    else -> holder.itemView.dinnerclub_item_meal
+                }
+                val transitionName = ViewCompat.getTransitionName(transitionView)
+                intent.putExtra(DetailActivity.MEAL_TRANSITION_KEY,transitionName)
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this@MainActivity,transitionView,transitionName)
+                startActivity(intent,options.toBundle())
             })
             layoutManager = LinearLayoutManager(this@MainActivity)
             itemAnimator = null

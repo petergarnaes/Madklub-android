@@ -1,5 +1,6 @@
 package com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list
 
+import android.support.v4.view.ViewCompat
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
@@ -15,7 +16,7 @@ import kotlinx.android.synthetic.main.upcomming_dinnerclub_item.view.*
  */
 class RegularDinnerclubsDelegateAdapter(
         val cancelAction: DinnerClubCancelledListener,
-        private val onItemSelected: ((UpcommingDinnerclubItem) -> Unit)?) : ViewTypeDelegateAdapter {
+        private val onItemSelected: ((UpcommingDinnerclubItem,RecyclerView.ViewHolder) -> Unit)?) : ViewTypeDelegateAdapter {
     interface DinnerClubCancelledListener {
         fun onDinnerclubCancelled(position: Int,isCancelled: Boolean)
     }
@@ -25,6 +26,7 @@ class RegularDinnerclubsDelegateAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType) {
         holder as TurnsViewHolder
         val upcommingDinnerclub = item as RegularDinnerclubItem
+        ViewCompat.setTransitionName(holder.itemView.dinnerclub_item_meal,"toDetailTransition"+holder.adapterPosition)
         with(holder.itemView) {
             kf_cancel_icon.setOnClickListener {
                 upcommingDinnerclub.cancelled = !upcommingDinnerclub.cancelled
@@ -34,7 +36,7 @@ class RegularDinnerclubsDelegateAdapter(
             }
             if(onItemSelected != null)
                 setOnClickListener {
-                    onItemSelected.invoke(upcommingDinnerclub)
+                    onItemSelected.invoke(upcommingDinnerclub,holder)
                 }
         }
         holder.bind(upcommingDinnerclub)

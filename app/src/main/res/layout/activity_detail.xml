@@ -28,7 +28,6 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
-
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
@@ -41,6 +40,68 @@
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
-    <include layout="@layout/content_detail" />
+    <!--<include layout="@layout/content_detail" />-->
+    <android.support.v4.widget.NestedScrollView
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/dinnerclub_detail_meal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Spagetti med Kødsovs"
+                android:textSize="26sp"
+                android:layout_margin="15sp"/>
+            <TextView
+                android:id="@+id/dinnerclub_detail_cook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Peter Alexander Garnæs"
+                android:layout_below="@+id/dinnerclub_detail_meal"
+                android:textSize="20sp"
+                android:layout_margin="15sp"/>
+            <RelativeLayout
+                android:layout_below="@+id/dinnerclub_detail_cook"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/dinnerclub_detail_is_cancelled_icon"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_margin="10dp"
+                    android:contentDescription="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/asl_check_cancel" />
+                <ImageView
+                    android:id="@+id/dinnerclub_detail_is_participating_icon"
+                    android:layout_toRightOf="@id/dinnerclub_detail_is_cancelled_icon"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_margin="10dp"
+                    android:contentDescription="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/vd_kf_unselected" />
+                <com.github.zagum.switchicon.SwitchIconView
+                    android:id="@+id/dinnerclub_detail_has_shopped_icon"
+                    android:layout_toRightOf="@id/dinnerclub_detail_is_participating_icon"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_margin="10dp"
+                    android:scaleType="fitCenter"
+                    app:si_animation_duration="500"
+                    app:si_disabled_alpha=".5"
+                    app:si_disabled_color="@color/dark_grey_deselected"
+                    app:si_tint_color="@color/colorPrimary"
+                    app:si_enabled="true"
+                    app:si_no_dash="false"
+                    app:srcCompat="@drawable/cart"/>
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

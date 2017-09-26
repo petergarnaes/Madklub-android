@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/checked"
+        android:drawable="@drawable/check"
+        android:state_checked="true"/>
+
+    <item
+        android:id="@+id/cancelled"
+        android:drawable="@drawable/cancel" />
+
+
+    <transition
+        android:drawable="@drawable/avd_check_to_cancel"
+        android:fromId="@id/checked"
+        android:toId="@id/cancelled"/>
+
+    <transition
+        android:drawable="@drawable/avd_cancel_to_check"
+        android:fromId="@id/cancelled"
+        android:toId="@id/checked"/>
+
+</animated-selector>

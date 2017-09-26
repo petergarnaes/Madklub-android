@@ -33,7 +33,10 @@ class MainActivity : BaseActivity() {
         kitchen_list.apply {
             setHasFixedSize(true)
             adapter = UpcommingDinnerclubsAdapter({
-                startActivity(Intent(this@MainActivity,DetailActivity::class.java))
+                dinnerclubItem ->
+                val intent = Intent(this@MainActivity,DetailActivity::class.java)
+                intent.putExtra(DetailActivity.EXTRA_MEAL,dinnerclubItem.meal)
+                startActivity(intent)
             })
             layoutManager = LinearLayoutManager(this@MainActivity)
             itemAnimator = null
@@ -63,7 +66,6 @@ class MainActivity : BaseActivity() {
                 val id = it.id()
                 Log.d("Madklub","User id is: $id")
                 if(pair.first == it.cook().id()){
-                    Log.d("Madklub","Do we get the cook case?!?!?!")
                     // Current user is cook
                     //throw RuntimeException("Do we get the cook case")
                     CookDinnerclubItem(
@@ -74,7 +76,6 @@ class MainActivity : BaseActivity() {
                             it.meal(),
                             20)
                 }else{
-                    Log.d("Madklub","Do we get the regular case?!?!?!")
                     // Current user is NOT cook
                     RegularDinnerclubItem(
                             id,

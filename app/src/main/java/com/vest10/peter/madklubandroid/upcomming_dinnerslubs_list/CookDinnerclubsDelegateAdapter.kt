@@ -26,6 +26,7 @@ class CookDinnerclubsDelegateAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType) {
         holder as TurnsViewHolder
         val upcommingDinnerclub = item as CookDinnerclubItem
+        ViewCompat.setTransitionName(holder.itemView.view_background_cook,"toDetailBackgroundTransition"+holder.adapterPosition)
         ViewCompat.setTransitionName(holder.itemView.dinnerclub_item_cook_meal,"toDetailTransition"+holder.adapterPosition)
         with(holder.itemView) {
             dinnerclub_item_cook_has_shopped_icon.setOnClickListener {

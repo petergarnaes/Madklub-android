@@ -7,6 +7,7 @@ import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.view.ViewCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.view.View
 import com.apollographql.apollo.exception.ApolloNetworkException
 import com.vest10.peter.madklubandroid.R
 import com.vest10.peter.madklubandroid.application.BaseActivity
@@ -20,6 +21,9 @@ import kotlinx.android.synthetic.main.upcomming_dinnerclub_cook_item.view.*
 import kotlinx.android.synthetic.main.upcomming_dinnerclub_item.view.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import android.support.v7.widget.DividerItemDecoration
+
+
 
 class MainActivity : BaseActivity() {
     //@Inject
@@ -40,19 +44,36 @@ class MainActivity : BaseActivity() {
                 dinnerclubItem,holder ->
                 val intent = Intent(this@MainActivity,DetailActivity::class.java)
                 intent.putExtra(DetailActivity.EXTRA_MEAL,dinnerclubItem.meal)
-                //val transitionName = ViewCompat.getTransitionName(holder.itemView.dinnerclub_item_meal)
-                val transitionView = when(dinnerclubItem){
-                    is RegularDinnerclubItem -> holder.itemView.dinnerclub_item_meal
-                    is CookDinnerclubItem -> holder.itemView.dinnerclub_item_cook_meal
-                    else -> holder.itemView.dinnerclub_item_meal
+                var transitionViewMeal: View? = null
+                var transitionViewBackground: View? = null
+                when(dinnerclubItem){
+                    is RegularDinnerclubItem -> {
+                        transitionViewMeal = holder.itemView.dinnerclub_item_meal
+                        transitionViewBackground = holder.itemView.view_background
+                    }
+                    is CookDinnerclubItem -> {
+                        transitionViewMeal = holder.itemView.dinnerclub_item_cook_meal
+                        transitionViewBackground = holder.itemView.view_background_cook
+                    }
                 }
-                val transitionName = ViewCompat.getTransitionName(transitionView)
-                intent.putExtra(DetailActivity.MEAL_TRANSITION_KEY,transitionName)
-                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this@MainActivity,transitionView,transitionName)
+                val transitionNameMeal = ViewCompat.getTransitionName(transitionViewMeal)
+                intent.putExtra(DetailActivity.MEAL_TRANSITION_KEY,transitionNameMeal)
+                val transitionNameBackground = ViewCompat.getTransitionName(transitionViewBackground)
+                intent.putExtra(DetailActivity.BACKGROUND_TRANSITION_KEY,transitionNameBackground)
+
+                val t1 = android.support.v4.util.Pair<View,String>(transitionViewMeal,transitionNameMeal)
+                val t2 = android.support.v4.util.Pair<View,String>(transitionViewBackground,transitionNameBackground)
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this@MainActivity,t1,t2)
+
                 startActivity(intent,options.toBundle())
             })
             layoutManager = LinearLayoutManager(this@MainActivity)
             itemAnimator = null
+            val mDividerItemDecoration = DividerItemDecoration(
+                    context,
+                    (layoutManager as LinearLayoutManager).orientation
+            )
+            addItemDecoration(mDividerItemDecoration)
         }
         kitchen_list.setHasFixedSize(true)
     }

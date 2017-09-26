@@ -6,7 +6,6 @@ import android.support.design.widget.Snackbar
 import android.support.v4.view.ViewCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.view.View
 
 import com.vest10.peter.madklubandroid.R
 import kotlinx.android.synthetic.main.activity_detail.*
@@ -17,6 +16,7 @@ class DetailActivity : AppCompatActivity() {
     companion object {
         val EXTRA_MEAL = "MadklubDetailMeal"
         val MEAL_TRANSITION_KEY = "sharedMealTransitionKey"
+        val BACKGROUND_TRANSITION_KEY = "sharedBackgroundTransitionKey"
     }
 
     var checked = true
@@ -41,6 +41,8 @@ class DetailActivity : AppCompatActivity() {
         // Only animate shared element if requested
         if (intent.hasExtra(MEAL_TRANSITION_KEY))
             ViewCompat.setTransitionName(dinnerclub_detail_meal,intent.getStringExtra(MEAL_TRANSITION_KEY))
+        if(intent.hasExtra(BACKGROUND_TRANSITION_KEY))
+            ViewCompat.setTransitionName(view_background,intent.getStringExtra(BACKGROUND_TRANSITION_KEY))
 
         val stateSet = intArrayOf(android.R.attr.state_checked * if (checked) 1 else -1)
         dinnerclub_detail_is_cancelled_icon.setImageState(stateSet, false)

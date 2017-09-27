@@ -19,6 +19,7 @@ import javax.inject.Inject
  */
 abstract class BaseActivity<T : BaseView,P : BasePresenter<T>> : AppCompatActivity() {
     companion object {
+        // For tracking ConfigPersistentComponent's across configuration changes
         val KEY_ACTIVITY_ID = "keyActivityID"
         val NEXT_ID = AtomicLong(1)
         val configComponentMap = HashMap<Long,ConfigPersistentComponent>()
@@ -35,11 +36,8 @@ abstract class BaseActivity<T : BaseView,P : BasePresenter<T>> : AppCompatActivi
         //AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         // Doing persistence
-        activityID = if(savedInstanceState != null)
-            savedInstanceState.getLong(KEY_ACTIVITY_ID)
-        else
-            NEXT_ID.getAndIncrement()
-        val configComponent: ConfigPersistentComponent = if(!configComponentMap.containsKey(activityID)){
+        activityID = savedInstanceState?.getLong(KEY_ACTIVITY_ID) ?: NEXT_ID.getAndIncrement()
+        val configComponent = if(!configComponentMap.containsKey(activityID)){
             val configComponent = (application as MadklubApplication).appComponent.plus()
             configComponentMap[activityID] = configComponent
             configComponent
@@ -48,7 +46,6 @@ abstract class BaseActivity<T : BaseView,P : BasePresenter<T>> : AppCompatActivi
             configComponentMap[activityID]!!
         }
         injectMembers(configComponent)
-        //configComponent?.plus()?.inject(this)
 
         // Setting up presenter
         presenter.attachView(this as T)

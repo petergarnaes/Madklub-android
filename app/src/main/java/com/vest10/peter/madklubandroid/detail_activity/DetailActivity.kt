@@ -17,10 +17,6 @@ import org.joda.time.format.DateTimeFormat
 import javax.inject.Inject
 
 class DetailActivity : BaseActivity<DetailPresenter.DetailView,DetailPresenter>(), DetailPresenter.DetailView {
-    override fun injectMembers(configPersistentComponent: ConfigPersistentComponent) {
-        configPersistentComponent.detailActivityComponent().inject(this)
-    }
-
     companion object {
         val EXTRA_MEAL = "MadklubDetailMeal"
         val EXTRA_ID = "DetailDinnerclubID"
@@ -119,6 +115,10 @@ class DetailActivity : BaseActivity<DetailPresenter.DetailView,DetailPresenter>(
         dinnerclub_detail_has_shopped_icon.setOnClickListener {
             dinnerclub_detail_has_shopped_icon.switchState()
         }
+    }
+
+    override fun injectMembers(configPersistentComponent: ConfigPersistentComponent) {
+        configPersistentComponent.detailActivityComponent().inject(this)
     }
 
     fun setCancelledIcon(value: Boolean) {

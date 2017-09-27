@@ -10,7 +10,7 @@ import dagger.Provides
  */
 @Module
 class DetailActivityDependenciesModule {
-    @Provides
-    @ActivityScope
-    fun providesDetailPresenter() = DetailPresenter()
+    //@Provides
+    //@ActivityScope
+    //fun providesDetailPresenter() = DetailPresenter()
 }

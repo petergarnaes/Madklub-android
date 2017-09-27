@@ -8,6 +8,7 @@ The native Android app for <a href="https://github.com/petergarnaes/Madklub-webs
 
 ## TODO
 
+ - Enable Apollo caching
  - <s>Implement account through Android accounts</s>
     * Add proper account selection
     * <s>Handle no accounts in `accountManager.getAccountsByType` by sending them to AuthenticatorActivity</s>

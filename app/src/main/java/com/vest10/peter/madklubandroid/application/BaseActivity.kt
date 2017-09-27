@@ -47,15 +47,18 @@ abstract class BaseActivity<T : BaseView,P : BasePresenter<T>> : AppCompatActivi
         }
         injectMembers(configComponent)
 
-        // Setting up presenter
-        presenter.attachView(this as T)
-
-
         // Checking if authenticated
         val d = userManager.setupAuthentication(this).subscribe {
             launchAuthenticatedNetworkRequests()
         }
         disposables.add(d)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        // TODO put this in a better place, since we do not need this to be called every time the
+        // activity is brought to the foreground
+        presenter.attachView(this as T)
     }
 
     abstract fun injectMembers(configPersistentComponent: ConfigPersistentComponent)
@@ -88,6 +91,7 @@ abstract class BaseActivity<T : BaseView,P : BasePresenter<T>> : AppCompatActivi
         presenter.detachView()
         // If the activity is being destroyed for good
         if(!isChangingConfigurations){
+            Log.d("Madklub","Not changing orientation, destroying for real!!!")
             presenter.unsubscribe()
             configComponentMap.remove(activityID)
         }

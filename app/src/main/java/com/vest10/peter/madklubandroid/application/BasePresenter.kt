@@ -17,4 +17,8 @@ abstract class BasePresenter<V : BaseView>(var view: V?) {
 
     abstract fun attachView(view: V)
     abstract fun detachView()
+
+    fun unsubscribe(){
+        uiDependentDisposables.clear()
+    }
 }

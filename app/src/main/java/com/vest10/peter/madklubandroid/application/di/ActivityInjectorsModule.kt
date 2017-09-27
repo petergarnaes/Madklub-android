@@ -1,6 +1,5 @@
 package com.vest10.peter.madklubandroid.application.di
 
-import com.vest10.peter.madklubandroid.depenedency_injection.components.UserComponent
 import com.vest10.peter.madklubandroid.main_activity.MainActivity
 import com.vest10.peter.madklubandroid.depenedency_injection.scopes.ActivityScope
 import com.vest10.peter.madklubandroid.detail_activity.DetailActivity

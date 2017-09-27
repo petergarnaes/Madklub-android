@@ -21,62 +21,22 @@ import kotlinx.android.synthetic.main.upcomming_dinnerclub_cook_item.view.*
 import kotlinx.android.synthetic.main.upcomming_dinnerclub_item.view.*
 import javax.inject.Inject
 import android.support.v7.widget.DividerItemDecoration
-
+import android.support.v7.widget.RecyclerView
+import com.vest10.peter.madklubandroid.depenedency_injection.components.ConfigPersistentComponent
+import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.UpcommingDinnerclubItem
 
 
 class MainActivity : BaseActivity<MainPresenter.MainView,MainPresenter>(), MainPresenter.MainView {
-    @Inject
-    lateinit var networkService: NetworkService
+    override fun injectMembers(configPersistentComponent: ConfigPersistentComponent) {
+        configPersistentComponent.mainActivityComponent().inject(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         kitchen_list.apply {
             setHasFixedSize(true)
-            adapter = UpcommingDinnerclubsAdapter({
-                dinnerclubItem,holder ->
-                val intent = Intent(this@MainActivity,DetailActivity::class.java)
-                intent.putExtra(DetailActivity.EXTRA_ID,dinnerclubItem.id)
-                intent.putExtra(DetailActivity.EXTRA_MEAL,dinnerclubItem.meal)
-                intent.putExtra(DetailActivity.EXTRA_HAS_SHOPPED,dinnerclubItem.shopping_complete)
-                intent.putExtra(DetailActivity.EXTRA_CANCELLED,dinnerclubItem.cancelled)
-                // TODO change to proper implementation
-                intent.putExtra(DetailActivity.EXTRA_IS_PARTICIPATING,dinnerclubItem.isParticipating)
-
-                // Shared tansition
-                var transitionViewMeal: View? = null
-                var transitionViewIcon: View? = null
-                var transitionNameIcon: String? = null
-                var transitionViewBackground: View? = null
-                when(dinnerclubItem){
-                    is RegularDinnerclubItem -> {
-                        transitionViewMeal = holder.itemView.dinnerclub_item_meal
-                        transitionViewBackground = holder.itemView.view_background
-                        transitionViewIcon = holder.itemView.kf_cancel_icon
-                        transitionNameIcon = ViewCompat.getTransitionName(transitionViewIcon)
-                        intent.putExtra(DetailActivity.ICON_PARTICIPATING_TRANSITION_KEY,transitionNameIcon)
-                    }
-                    is CookDinnerclubItem -> {
-                        transitionViewMeal = holder.itemView.dinnerclub_item_cook_meal
-                        transitionViewBackground = holder.itemView.view_background_cook
-                        transitionViewIcon = holder.itemView.dinnerclub_item_cook_has_shopped_icon
-                        transitionNameIcon = ViewCompat.getTransitionName(transitionViewIcon)
-                        intent.putExtra(DetailActivity.ICON_SHOPPED_TRANSITION_KEY,transitionNameIcon)
-                    }
-                }
-
-                val transitionNameMeal = ViewCompat.getTransitionName(transitionViewMeal)
-                intent.putExtra(DetailActivity.MEAL_TRANSITION_KEY,transitionNameMeal)
-                val transitionNameBackground = ViewCompat.getTransitionName(transitionViewBackground)
-                intent.putExtra(DetailActivity.BACKGROUND_TRANSITION_KEY,transitionNameBackground)
-
-                val t1 = android.support.v4.util.Pair<View,String>(transitionViewMeal,transitionNameMeal)
-                val t2 = android.support.v4.util.Pair<View,String>(transitionViewBackground,transitionNameBackground)
-                val t3 = android.support.v4.util.Pair<View,String>(transitionViewIcon,transitionNameIcon)
-                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this@MainActivity,t1,t2,t3)
-
-                startActivity(intent,options.toBundle())
-            })
+            adapter = UpcommingDinnerclubsAdapter(this@MainActivity::performSharedTransactionToDetailActivity)
             layoutManager = LinearLayoutManager(this@MainActivity)
             itemAnimator = null
             val mDividerItemDecoration = DividerItemDecoration(
@@ -85,71 +45,56 @@ class MainActivity : BaseActivity<MainPresenter.MainView,MainPresenter>(), MainP
             )
             addItemDecoration(mDividerItemDecoration)
         }
-        kitchen_list.setHasFixedSize(true)
+    }
+
+    override fun showDinnerclubs(dinnerclubs: List<UpcommingDinnerclubItem>) {
+        (kitchen_list.adapter as UpcommingDinnerclubsAdapter).addDinnerclubs(dinnerclubs)
     }
 
     override fun launchAuthenticatedNetworkRequests() {
-        val getDinnerclubs = networkService.query {
-            UpcommingDinnerclubsQuery.builder()
-                    .startDate("2017-09-22T12:00:00.000Z")
-                    .endDate("2017-12-22T12:00:00.000Z")
-                    .build()
-        }
-        //.delay(4,TimeUnit.SECONDS)
-        .map {
-            val me = it.data()?.me()
-            Pair<String,List<UpcommingDinnerclubsQuery.Dinnerclub>>(me?.id()!!,me.kitchen()?.dinnerclubs()!!)
-            //it.data()?.me()?.kitchen()?.dinnerclubs()
-        }.onErrorReturn({
-            Log.d("We had the error", it.localizedMessage)
-            Log.d("We had the error", "$it")
-            Pair("",emptyList<UpcommingDinnerclubsQuery.Dinnerclub>())
-        }).map {
-            pair ->
-            pair.second.map {
-                val id = it.id()
-                val isParticipating = it.participants()!!.fold(false){
-                    part,p -> part || (if(p.user()!!.id() == pair.first) !(p.cancelled()!!) else false)
-                }
-                if(pair.first == it.cook().id()){
-                    // Current user is cook
-                    //throw RuntimeException("Do we get the cook case")
-                    CookDinnerclubItem(
-                            id,
-                            it.cancelled(),
-                            it.shopping_complete(),
-                            it.at(),
-                            it.meal(),
-                            isParticipating,
-                            // Summing the participants
-                            it.participants()!!.fold(0){
-                                sum,p -> sum + if(!p.cancelled()!!) 1+p.guest_count()!! else 0
-                            }
-                    )
-                }else{
-                    // Current user is NOT cook
-                    RegularDinnerclubItem(
-                            id,
-                            it.cancelled(),
-                            it.shopping_complete(),
-                            it.at(),
-                            it.meal(),
-                            isParticipating,
-                            it.cook().display_name()!!)
-                }
+        presenter.getDinnerclubs()
+    }
+
+    fun performSharedTransactionToDetailActivity(dinnerclubItem: UpcommingDinnerclubItem,holder: RecyclerView.ViewHolder){
+        val intent = Intent(this@MainActivity,DetailActivity::class.java)
+        intent.putExtra(DetailActivity.EXTRA_ID,dinnerclubItem.id)
+        intent.putExtra(DetailActivity.EXTRA_MEAL,dinnerclubItem.meal)
+        intent.putExtra(DetailActivity.EXTRA_HAS_SHOPPED,dinnerclubItem.shopping_complete)
+        intent.putExtra(DetailActivity.EXTRA_CANCELLED,dinnerclubItem.cancelled)
+        intent.putExtra(DetailActivity.EXTRA_IS_PARTICIPATING,dinnerclubItem.isParticipating)
+
+        // Shared tansition
+        var transitionViewMeal: View? = null
+        var transitionViewIcon: View? = null
+        var transitionNameIcon: String? = null
+        var transitionViewBackground: View? = null
+        when(dinnerclubItem){
+            is RegularDinnerclubItem -> {
+                transitionViewMeal = holder.itemView.dinnerclub_item_meal
+                transitionViewBackground = holder.itemView.view_background
+                transitionViewIcon = holder.itemView.kf_cancel_icon
+                transitionNameIcon = ViewCompat.getTransitionName(transitionViewIcon)
+                intent.putExtra(DetailActivity.ICON_PARTICIPATING_TRANSITION_KEY,transitionNameIcon)
             }
-        }.subscribe ({
-            res ->
-            (kitchen_list.adapter as UpcommingDinnerclubsAdapter).addDinnerclubs(res)
-            Log.d("Madklub","successfully returned from logged in query")
-        },{
-            // TODO do errors based on their type
-            error -> when (error) {
-        // TODO inform user there is no connection
-            is ApolloNetworkException -> Log.d("Madklub","Network error, server probably down...")
+            is CookDinnerclubItem -> {
+                transitionViewMeal = holder.itemView.dinnerclub_item_cook_meal
+                transitionViewBackground = holder.itemView.view_background_cook
+                transitionViewIcon = holder.itemView.dinnerclub_item_cook_has_shopped_icon
+                transitionNameIcon = ViewCompat.getTransitionName(transitionViewIcon)
+                intent.putExtra(DetailActivity.ICON_SHOPPED_TRANSITION_KEY,transitionNameIcon)
+            }
         }
-            Log.d("Madklub","We had an error")
-        })
-        disposables.add(getDinnerclubs)
+
+        val transitionNameMeal = ViewCompat.getTransitionName(transitionViewMeal)
+        intent.putExtra(DetailActivity.MEAL_TRANSITION_KEY,transitionNameMeal)
+        val transitionNameBackground = ViewCompat.getTransitionName(transitionViewBackground)
+        intent.putExtra(DetailActivity.BACKGROUND_TRANSITION_KEY,transitionNameBackground)
+
+        val t1 = android.support.v4.util.Pair<View,String>(transitionViewMeal,transitionNameMeal)
+        val t2 = android.support.v4.util.Pair<View,String>(transitionViewBackground,transitionNameBackground)
+        val t3 = android.support.v4.util.Pair<View,String>(transitionViewIcon,transitionNameIcon)
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this@MainActivity,t1,t2,t3)
+
+        startActivity(intent,options.toBundle())
     }
 }

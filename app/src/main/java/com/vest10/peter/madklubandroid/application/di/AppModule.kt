@@ -1,12 +1,10 @@
 package com.vest10.peter.madklubandroid.application.di
 
 import android.accounts.AccountManager
-import android.app.Application
 import android.content.Context
 import com.vest10.peter.madklubandroid.android.MadklubPreferences
 import com.vest10.peter.madklubandroid.application.MadklubApplication
 import com.vest10.peter.madklubandroid.authentication.MadklubUserManager
-import com.vest10.peter.madklubandroid.user.AppUserManager
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

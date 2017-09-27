@@ -9,13 +9,14 @@ import android.util.Log
 
 import com.vest10.peter.madklubandroid.R
 import com.vest10.peter.madklubandroid.application.BaseActivity
+import com.vest10.peter.madklubandroid.depenedency_injection.components.ConfigPersistentComponent
 import com.vest10.peter.madklubandroid.networking.NetworkService
-import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_detail.*
 import org.joda.time.format.DateTimeFormat
 import javax.inject.Inject
 
 class DetailActivity : BaseActivity<DetailPresenter.DetailView,DetailPresenter>(), DetailPresenter.DetailView {
+
     companion object {
         val EXTRA_MEAL = "MadklubDetailMeal"
         val EXTRA_ID = "DetailDinnerclubID"
@@ -29,42 +30,9 @@ class DetailActivity : BaseActivity<DetailPresenter.DetailView,DetailPresenter>(
         val ICON_SHOPPED_TRANSITION_KEY = "iconHasShoppedTransitionKey"
     }
 
-    @Inject
-    lateinit var networkService: NetworkService
-
     override fun launchAuthenticatedNetworkRequests() {
-        val getDinnerclub = networkService.query {
-            DinnerclubDetailQuery.builder()
-                    .id(intent.getStringExtra(EXTRA_ID))
-                    .build()
-        }.map{
-            if (it.hasErrors())
-                throw RuntimeException("Something wrong with query or server...")
-            it.data()?.me()?.kitchen()?.dinnerclub()
-        }.observeOn(
-                // Observing on main thread so UI updates happen (for example actionBar change
-                AndroidSchedulers.mainThread()
-        ).subscribe ({
-            dinnerclub ->
-            if(dinnerclub != null){
-                dinnerclub_detail_cook.text = dinnerclub.cook().display_name()
-                dinnerclub_detail_meal.text = dinnerclub.meal()
-                setCancelledIcon(!dinnerclub.cancelled())
-                dinnerclub_detail_has_shopped_icon.setIconEnabled(dinnerclub.shopping_complete(),false)
-                supportActionBar?.title = dinnerclub.at().toString(DateTimeFormat.mediumDate())
-                Log.d("Madklub","Has set up")
-                // TODO setup rest of view, with cost and participants
-            }
-        },{
-            errors ->
-            // TODO make appropriate toast for error
-        })
-        disposables.add(getDinnerclub)
+        presenter.getDinnerclub(intent.getStringExtra(EXTRA_ID))
     }
-
-    // TODO make these depend on the underlying model, aka object from apollo
-    var cancelled = true
-    var participating = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,11 +44,12 @@ class DetailActivity : BaseActivity<DetailPresenter.DetailView,DetailPresenter>(
         supportActionBar?.title = ""
 
         // Intent values
+        // TODO only used for transition, so ignore this when presenter thinks so?
         dinnerclub_detail_meal.text = if(intent.hasExtra(EXTRA_MEAL))
            intent.getStringExtra(EXTRA_MEAL)
         else
             "..."
-        setCancelledIcon(!intent.getBooleanExtra(EXTRA_CANCELLED,false))
+        setCancelledIcon(intent.getBooleanExtra(EXTRA_CANCELLED,false))
         dinnerclub_detail_has_shopped_icon.setIconEnabled(intent.getBooleanExtra(EXTRA_HAS_SHOPPED,false),false)
         setParticipatingIcon(intent.getBooleanExtra(EXTRA_IS_PARTICIPATING,false))
         //dinnerclub_detail_cook.text = if(intent.hasExtra(EXTRA_COOK_NAME))
@@ -105,25 +74,39 @@ class DetailActivity : BaseActivity<DetailPresenter.DetailView,DetailPresenter>(
             ViewCompat.setTransitionName(dinnerclub_detail_has_shopped_icon,intent.getStringExtra(ICON_SHOPPED_TRANSITION_KEY))
 
         dinnerclub_detail_is_cancelled_icon.setOnClickListener {
-            setCancelledIcon(!cancelled)
+            presenter.cancelIconClicked()
         }
         dinnerclub_detail_is_participating_icon.setOnClickListener {
-            setParticipatingIcon(!participating)
+            presenter.participationIconClicked()
         }
         dinnerclub_detail_has_shopped_icon.setOnClickListener {
-            dinnerclub_detail_has_shopped_icon.switchState()
+            presenter.shoppingIconClicked()
         }
     }
 
-    fun setCancelledIcon(value: Boolean) {
-        cancelled = value
-        val stateSet = intArrayOf(android.R.attr.state_checked * if (value) 1 else -1)
+    override fun showDinnerclub(dinnerclub: DetailedDinnerclub) {
+        dinnerclub_detail_cook.text = dinnerclub.cook.name
+        dinnerclub_detail_meal.text = dinnerclub.meal
+        setCancelledIcon(dinnerclub.cancelled)
+        dinnerclub_detail_has_shopped_icon.setIconEnabled(dinnerclub.shoppingComplete,false)
+        supportActionBar?.title = dinnerclub.at.toString(DateTimeFormat.mediumDate())
+    }
+
+    override fun injectMembers(configPersistentComponent: ConfigPersistentComponent) {
+        configPersistentComponent.detailActivityComponent().inject(this)
+    }
+
+    override fun setCancelledIcon(value: Boolean) {
+        val stateSet = intArrayOf(android.R.attr.state_checked * if (!value) 1 else -1)
         dinnerclub_detail_is_cancelled_icon.setImageState(stateSet, false)
     }
 
-    fun setParticipatingIcon(value: Boolean) {
-        participating = value
+    override fun setParticipatingIcon(value: Boolean) {
         val stateSet = intArrayOf(android.R.attr.state_checked * if (value) 1 else -1)
         dinnerclub_detail_is_participating_icon.setImageState(stateSet, false)
+    }
+
+    override fun setShoppingIcon(value: Boolean){
+        dinnerclub_detail_has_shopped_icon.setIconEnabled(value,true)
     }
 }

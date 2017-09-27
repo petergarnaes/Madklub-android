@@ -23,7 +23,10 @@ import javax.inject.Inject
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.RecyclerView
 import com.vest10.peter.madklubandroid.depenedency_injection.components.ConfigPersistentComponent
+import com.vest10.peter.madklubandroid.kitchens_list.InfiniteScrollListener
 import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.UpcommingDinnerclubItem
+import io.reactivex.Observable
+import java.util.concurrent.TimeUnit
 
 
 class MainActivity : BaseActivity<MainPresenter.MainView,MainPresenter>(), MainPresenter.MainView {
@@ -37,13 +40,23 @@ class MainActivity : BaseActivity<MainPresenter.MainView,MainPresenter>(), MainP
         kitchen_list.apply {
             setHasFixedSize(true)
             adapter = UpcommingDinnerclubsAdapter(this@MainActivity::performSharedTransactionToDetailActivity)
-            layoutManager = LinearLayoutManager(this@MainActivity)
+            val manager = LinearLayoutManager(this@MainActivity)
+            layoutManager = manager
             itemAnimator = null
             val mDividerItemDecoration = DividerItemDecoration(
                     context,
                     (layoutManager as LinearLayoutManager).orientation
             )
             addItemDecoration(mDividerItemDecoration)
+            addOnScrollListener(InfiniteScrollListener(this@MainActivity::loadMoreDinnerclubs,manager))
+        }
+    }
+
+    fun loadMoreDinnerclubs(){
+        Log.d("Madklub","Loading more dinnerclubs")
+        // Should trigger end reached
+        Observable.just(Unit).delay(3,TimeUnit.SECONDS).subscribe {
+            showDinnerclubs(emptyList())
         }
     }
 

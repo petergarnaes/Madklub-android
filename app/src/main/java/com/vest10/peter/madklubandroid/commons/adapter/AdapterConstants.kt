@@ -7,4 +7,5 @@ object AdapterConstants {
     val LOADING = 1
     val REGULAR_DINNERCLUB = 2
     val COOKING_DINNERCLUB = 3
+    val END = 99
 }

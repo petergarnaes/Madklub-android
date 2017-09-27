@@ -2,7 +2,6 @@ package com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list
 
 import android.support.v4.util.SparseArrayCompat
 import android.support.v7.widget.RecyclerView
-import android.view.View
 import android.view.ViewGroup
 import com.vest10.peter.madklubandroid.commons.adapter.AdapterConstants
 import com.vest10.peter.madklubandroid.commons.adapter.ViewType
@@ -15,17 +14,20 @@ class UpcommingDinnerclubsAdapter(private val onClickListener: ((UpcommingDinner
         RecyclerView.Adapter<RecyclerView.ViewHolder>(),
         RegularDinnerclubsDelegateAdapter.DinnerClubCancelledListener,
         CookDinnerclubsDelegateAdapter.DinnerClubHasShoppedListener {
-
     private var items: ArrayList<ViewType>
     private var delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
     private val loadingItem = object : ViewType {
         override fun getViewType(): Int = AdapterConstants.LOADING
+    }
+    private val endItem = object : ViewType {
+        override fun getViewType(): Int = AdapterConstants.END
     }
 
     init {
         delegateAdapters.put(AdapterConstants.LOADING,LoadingDelegateAdapter())
         delegateAdapters.put(AdapterConstants.REGULAR_DINNERCLUB,RegularDinnerclubsDelegateAdapter(this,onClickListener))
         delegateAdapters.put(AdapterConstants.COOKING_DINNERCLUB,CookDinnerclubsDelegateAdapter(this,onClickListener))
+        delegateAdapters.put(AdapterConstants.END,EndDelegateAdapter())
         items = ArrayList()
         items.add(loadingItem)
     }
@@ -46,9 +48,18 @@ class UpcommingDinnerclubsAdapter(private val onClickListener: ((UpcommingDinner
         items.removeAt(initPosition)
         notifyItemRemoved(initPosition)
         items.addAll(dinnerclubs)
-        items.add(loadingItem)
+        if(dinnerclubs.isEmpty()){
+            items.add(endItem)
+        } else {
+            items.add(loadingItem)
+        }
         notifyItemRangeChanged(initPosition, items.size + 1 /* plus loading item*/)
     }
+
+    fun endReached(){
+
+    }
+
     override fun onDinnerclubCancelled(position: Int,isCancelled: Boolean) {
         notifyItemChanged(position)
         // TODO optimistic server update

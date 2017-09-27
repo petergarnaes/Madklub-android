@@ -10,9 +10,11 @@ import android.util.Log
 import com.vest10.peter.madklubandroid.R
 import com.vest10.peter.madklubandroid.application.BaseActivity
 import com.vest10.peter.madklubandroid.networking.NetworkService
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_detail.*
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class DetailActivity : BaseActivity() {
@@ -37,11 +39,14 @@ class DetailActivity : BaseActivity() {
             DinnerclubDetailQuery.builder()
                     .id(intent.getStringExtra(EXTRA_ID))
                     .build()
-        }.map{
+        }.delay(3,TimeUnit.SECONDS).map{
             if (it.hasErrors())
                 throw RuntimeException("Something wrong with query or server...")
             it.data()?.me()?.kitchen()?.dinnerclub()
-        }.subscribe ({
+        }.observeOn(
+                // Observing on main thread so UI updates happen (for example actionBar change
+                AndroidSchedulers.mainThread()
+        ).subscribe ({
             dinnerclub ->
             if(dinnerclub != null){
                 dinnerclub_detail_cook.text = dinnerclub.cook().display_name()
@@ -74,16 +79,16 @@ class DetailActivity : BaseActivity() {
 
         // Intent values
         dinnerclub_detail_meal.text = if(intent.hasExtra(EXTRA_MEAL))
-            intent.getStringExtra(EXTRA_MEAL)
+           intent.getStringExtra(EXTRA_MEAL)
         else
             "..."
         setCancelledIcon(!intent.getBooleanExtra(EXTRA_CANCELLED,false))
         dinnerclub_detail_has_shopped_icon.setIconEnabled(intent.getBooleanExtra(EXTRA_HAS_SHOPPED,false),false)
         setParticipatingIcon(intent.getBooleanExtra(EXTRA_IS_PARTICIPATING,false))
-        dinnerclub_detail_cook.text = if(intent.hasExtra(EXTRA_COOK_NAME))
-            intent.getStringExtra(EXTRA_COOK_NAME)
-        else
-            "..."
+        //dinnerclub_detail_cook.text = if(intent.hasExtra(EXTRA_COOK_NAME))
+        //    intent.getStringExtra(EXTRA_COOK_NAME)
+        //else
+        //    "..."
 
         val fab = findViewById(R.id.fab) as FloatingActionButton
         fab.setOnClickListener { view ->

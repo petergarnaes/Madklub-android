@@ -55,14 +55,14 @@
                 android:id="@+id/dinnerclub_detail_meal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Spagetti med Kødsovs"
+                android:text="..."
                 android:textSize="26sp"
                 android:layout_margin="15sp"/>
             <TextView
                 android:id="@+id/dinnerclub_detail_cook"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Peter Alexander Garnæs"
+                android:text="..."
                 android:layout_below="@+id/dinnerclub_detail_meal"
                 android:textSize="20sp"
                 android:layout_margin="15sp"/>

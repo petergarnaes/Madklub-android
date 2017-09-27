@@ -2,6 +2,7 @@ package com.vest10.peter.madklubandroid.main_activity.di
 
 import com.vest10.peter.madklubandroid.SomeClass
 import com.vest10.peter.madklubandroid.depenedency_injection.scopes.ActivityScope
+import com.vest10.peter.madklubandroid.main_activity.MainPresenter
 import dagger.Module
 import dagger.Provides
 
@@ -26,7 +27,7 @@ class MainActivityDependenciesModule {
 
     @ActivityScope
     @Provides
-    fun someClass(): SomeClass = SomeClass()
+    fun providesMainPresenter(): MainPresenter = MainPresenter()
 
     /*@ActivityScope
     @Binds

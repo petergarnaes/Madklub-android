@@ -4,10 +4,15 @@ import android.accounts.Account
 import android.accounts.AccountManager
 import android.accounts.AccountManagerCallback
 import android.accounts.AccountManagerFuture
+import android.app.Activity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import com.vest10.peter.madklubandroid.BaseView
 import com.vest10.peter.madklubandroid.android.MadklubPreferences
 import com.vest10.peter.madklubandroid.application.BaseActivity
+import com.vest10.peter.madklubandroid.application.BaseContract
+import com.vest10.peter.madklubandroid.application.BasePresenter
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers
@@ -58,7 +63,7 @@ class MadklubUserManager @Inject constructor(
             account = acs[0]
     }
 
-    fun setupAuthentication(baseActivity: BaseActivity): Observable<Unit> =
+    fun <T : BaseView,P : BasePresenter<T>> setupAuthentication(baseActivity: BaseActivity<T,P>): Observable<Unit> =
         if(account == null){
             Observable.just(
                     ""

@@ -12,12 +12,10 @@ import com.vest10.peter.madklubandroid.application.BaseActivity
 import com.vest10.peter.madklubandroid.networking.NetworkService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_detail.*
-import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class DetailActivity : BaseActivity() {
+class DetailActivity : BaseActivity<DetailPresenter.DetailView,DetailPresenter>(), DetailPresenter.DetailView {
     companion object {
         val EXTRA_MEAL = "MadklubDetailMeal"
         val EXTRA_ID = "DetailDinnerclubID"
@@ -39,7 +37,7 @@ class DetailActivity : BaseActivity() {
             DinnerclubDetailQuery.builder()
                     .id(intent.getStringExtra(EXTRA_ID))
                     .build()
-        }.delay(3,TimeUnit.SECONDS).map{
+        }.map{
             if (it.hasErrors())
                 throw RuntimeException("Something wrong with query or server...")
             it.data()?.me()?.kitchen()?.dinnerclub()

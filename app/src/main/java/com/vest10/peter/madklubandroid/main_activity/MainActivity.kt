@@ -19,21 +19,18 @@ import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.UpcommingDinne
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.upcomming_dinnerclub_cook_item.view.*
 import kotlinx.android.synthetic.main.upcomming_dinnerclub_item.view.*
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import android.support.v7.widget.DividerItemDecoration
 
 
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity<MainPresenter.MainView,MainPresenter>(), MainPresenter.MainView {
     @Inject
     lateinit var networkService: NetworkService
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         kitchen_list.apply {
             setHasFixedSize(true)
             adapter = UpcommingDinnerclubsAdapter({

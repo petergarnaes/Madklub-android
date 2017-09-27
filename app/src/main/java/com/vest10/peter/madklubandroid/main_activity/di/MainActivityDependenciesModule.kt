@@ -25,9 +25,9 @@ class MainActivityDependenciesModule {
     }*/
 
 
-    @ActivityScope
-    @Provides
-    fun providesMainPresenter(): MainPresenter = MainPresenter()
+    //@ActivityScope
+    //@Provides
+    //fun providesMainPresenter(): MainPresenter = MainPresenter()
 
     /*@ActivityScope
     @Binds

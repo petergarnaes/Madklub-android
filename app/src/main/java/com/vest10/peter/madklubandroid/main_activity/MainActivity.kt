@@ -21,16 +21,22 @@ import kotlinx.android.synthetic.main.upcomming_dinnerclub_cook_item.view.*
 import kotlinx.android.synthetic.main.upcomming_dinnerclub_item.view.*
 import javax.inject.Inject
 import android.support.v7.widget.DividerItemDecoration
-
+import com.vest10.peter.madklubandroid.depenedency_injection.components.ConfigPersistentComponent
 
 
 class MainActivity : BaseActivity<MainPresenter.MainView,MainPresenter>(), MainPresenter.MainView {
+
+    override fun injectMembers(configPersistentComponent: ConfigPersistentComponent) {
+        configPersistentComponent.mainActivityComponent().inject(this)
+    }
+
     @Inject
     lateinit var networkService: NetworkService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        Log.d("MadklubTest","We have presenter: ${presenter}")
         kitchen_list.apply {
             setHasFixedSize(true)
             adapter = UpcommingDinnerclubsAdapter({

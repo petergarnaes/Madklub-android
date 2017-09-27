@@ -9,6 +9,7 @@ import android.util.Log
 
 import com.vest10.peter.madklubandroid.R
 import com.vest10.peter.madklubandroid.application.BaseActivity
+import com.vest10.peter.madklubandroid.depenedency_injection.components.ConfigPersistentComponent
 import com.vest10.peter.madklubandroid.networking.NetworkService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_detail.*
@@ -16,6 +17,10 @@ import org.joda.time.format.DateTimeFormat
 import javax.inject.Inject
 
 class DetailActivity : BaseActivity<DetailPresenter.DetailView,DetailPresenter>(), DetailPresenter.DetailView {
+    override fun injectMembers(configPersistentComponent: ConfigPersistentComponent) {
+        configPersistentComponent.detailActivityComponent().inject(this)
+    }
+
     companion object {
         val EXTRA_MEAL = "MadklubDetailMeal"
         val EXTRA_ID = "DetailDinnerclubID"
@@ -69,6 +74,7 @@ class DetailActivity : BaseActivity<DetailPresenter.DetailView,DetailPresenter>(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
+        Log.d("MadklubTest","We have presenter: ${presenter}")
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

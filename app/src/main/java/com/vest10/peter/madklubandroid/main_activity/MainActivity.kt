@@ -1,6 +1,5 @@
 package com.vest10.peter.madklubandroid.main_activity
 
-import UpcommingDinnerclubsQuery
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.ActivityOptionsCompat
@@ -8,25 +7,21 @@ import android.support.v4.view.ViewCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
-import com.apollographql.apollo.exception.ApolloNetworkException
 import com.vest10.peter.madklubandroid.R
 import com.vest10.peter.madklubandroid.application.BaseActivity
 import com.vest10.peter.madklubandroid.detail_activity.DetailActivity
-import com.vest10.peter.madklubandroid.networking.NetworkService
 import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.CookDinnerclubItem
 import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.RegularDinnerclubItem
 import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.UpcommingDinnerclubsAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.upcomming_dinnerclub_cook_item.view.*
 import kotlinx.android.synthetic.main.upcomming_dinnerclub_item.view.*
-import javax.inject.Inject
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.RecyclerView
 import com.vest10.peter.madklubandroid.depenedency_injection.components.ConfigPersistentComponent
 import com.vest10.peter.madklubandroid.kitchens_list.InfiniteScrollListener
 import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.UpcommingDinnerclubItem
 import io.reactivex.Observable
-import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
 
 
@@ -67,7 +62,6 @@ class MainActivity : BaseActivity<MainPresenter.MainView,MainPresenter>(), MainP
         Observable.timer(1,TimeUnit.SECONDS).subscribe{
             (kitchen_list.adapter as UpcommingDinnerclubsAdapter).shortList()
         }
-
     }
 
     fun loadMoreDinnerclubs(){
@@ -80,7 +74,7 @@ class MainActivity : BaseActivity<MainPresenter.MainView,MainPresenter>(), MainP
     }
 
     override fun showDinnerclubs(dinnerclubs: List<UpcommingDinnerclubItem>) {
-        (kitchen_list.adapter as UpcommingDinnerclubsAdapter).addDinnerclubs(dinnerclubs)
+        (kitchen_list.adapter as UpcommingDinnerclubsAdapter).concatDinnerclubs(dinnerclubs)
     }
 
     override fun showMoreDinnerclubs(dinnerclubs: List<UpcommingDinnerclubItem>){

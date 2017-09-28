@@ -24,7 +24,7 @@ The native Android app for <a href="https://github.com/petergarnaes/Madklub-webs
     * <s>Implement participation shows correctly</s>
     * Shopping icon should perform mutation
     * Cancelling participation icon should perform mutation
- - Dinnerclub infinte scroll
+ - Dinnerclub infinite scroll
     * <s>Implement scroll listener</s>
     * <s>If nothing loaded, tell user end is reached</s>
     * load more when scrolled to bottom

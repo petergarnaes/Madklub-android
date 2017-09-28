@@ -15,7 +15,6 @@ class UpcommingDinnerclubsAdapter(private val onClickListener: ((UpcommingDinner
         RecyclerView.Adapter<RecyclerView.ViewHolder>(),
         RegularDinnerclubsDelegateAdapter.DinnerClubCancelledListener,
         CookDinnerclubsDelegateAdapter.DinnerClubHasShoppedListener {
-    private var recyclerView: RecyclerView? = null
     private var items: ArrayList<ViewType>
     private var delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
     private val loadingItem = object : ViewType {
@@ -34,11 +33,6 @@ class UpcommingDinnerclubsAdapter(private val onClickListener: ((UpcommingDinner
         items.add(loadingItem)
     }
 
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView?) {
-        super.onAttachedToRecyclerView(recyclerView)
-        this.recyclerView = recyclerView
-    }
-
     override fun getItemViewType(position: Int): Int = items[position].getViewType()
 
     override fun getItemCount(): Int = items.size
@@ -50,9 +44,19 @@ class UpcommingDinnerclubsAdapter(private val onClickListener: ((UpcommingDinner
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
             delegateAdapters.get(viewType).onCreateViewHolder(parent)
 
-    fun addDinnerclubs(dinnerclubs: List<UpcommingDinnerclubItem>) {
-        var visibleItemCount = recyclerView?.childCount ?: 0
-        Log.d("Madklub","Before nofified, recycler child count: $visibleItemCount and total count: $itemCount")
+    fun clearAndSetDinnerclubs(dinnerclubs: List<UpcommingDinnerclubItem>){
+        items.clear()
+        items.addAll(dinnerclubs)
+        if(dinnerclubs.isEmpty()){
+            // TODO special end plate when no dinnerclubs?
+            items.add(endItem)
+        } else {
+            items.add(loadingItem)
+        }
+        notifyDataSetChanged()
+    }
+
+    fun concatDinnerclubs(dinnerclubs: List<UpcommingDinnerclubItem>) {
         val initPosition = items.size - 1
         items.removeAt(initPosition)
         notifyItemRemoved(initPosition)

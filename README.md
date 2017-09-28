@@ -29,7 +29,8 @@ The native Android app for <a href="https://github.com/petergarnaes/Madklub-webs
     * <s>If nothing loaded, tell user end is reached</s>
     * load more when scrolled to bottom
     * load previous when scrolled to top, remember to reset scroll
-    * If list is to short, replace bottom loader that when pressed loads the next
+    * <s>If list is to short, replace bottom loader</s>
+        * Decide what to do when list is short. Do we do "Load more" button or make it try to load next segment?
  - Dinnerclub list refresh
     * On refresh reset date range we look at
  - Headers showing month we are in.

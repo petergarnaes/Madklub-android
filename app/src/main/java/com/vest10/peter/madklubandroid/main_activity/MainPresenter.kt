@@ -93,12 +93,12 @@ class MainPresenter @Inject constructor(val networkService: NetworkService) : Ba
                 showDinnerclubs(res)
                 Log.d("Madklub","successfully returned from logged in query")
             },{
-                // TODO do errors based on their type
                 error -> when (error) {
-            // TODO inform user there is no connection
-                is ApolloNetworkException -> Log.d("Madklub","Network error, server probably down...")
-            }
-                Log.d("Madklub","We had an error")
+                    // TODO do errors based on their type
+                    // TODO inform user there is no connection
+                    is ApolloNetworkException -> Log.d("Madklub","Network error, server probably down...")
+                    else -> Log.d("Madklub Error!","We had the error: ${error.localizedMessage}")
+                }
             }).addTo(uiDependentDisposables)
         }
     }
@@ -110,5 +110,6 @@ class MainPresenter @Inject constructor(val networkService: NetworkService) : Ba
 
     interface MainView : BaseView {
         fun showDinnerclubs(dinnerclubs: List<UpcommingDinnerclubItem>)
+        fun showMoreDinnerclubs(dinnerclubs: List<UpcommingDinnerclubItem>)
     }
 }

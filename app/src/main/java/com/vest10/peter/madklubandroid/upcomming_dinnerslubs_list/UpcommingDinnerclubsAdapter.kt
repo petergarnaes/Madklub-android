@@ -2,6 +2,7 @@ package com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list
 
 import android.support.v4.util.SparseArrayCompat
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.ViewGroup
 import com.vest10.peter.madklubandroid.commons.adapter.AdapterConstants
 import com.vest10.peter.madklubandroid.commons.adapter.ViewType
@@ -14,6 +15,7 @@ class UpcommingDinnerclubsAdapter(private val onClickListener: ((UpcommingDinner
         RecyclerView.Adapter<RecyclerView.ViewHolder>(),
         RegularDinnerclubsDelegateAdapter.DinnerClubCancelledListener,
         CookDinnerclubsDelegateAdapter.DinnerClubHasShoppedListener {
+    private var recyclerView: RecyclerView? = null
     private var items: ArrayList<ViewType>
     private var delegateAdapters = SparseArrayCompat<ViewTypeDelegateAdapter>()
     private val loadingItem = object : ViewType {
@@ -32,6 +34,11 @@ class UpcommingDinnerclubsAdapter(private val onClickListener: ((UpcommingDinner
         items.add(loadingItem)
     }
 
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView?) {
+        super.onAttachedToRecyclerView(recyclerView)
+        this.recyclerView = recyclerView
+    }
+
     override fun getItemViewType(position: Int): Int = items[position].getViewType()
 
     override fun getItemCount(): Int = items.size
@@ -44,6 +51,8 @@ class UpcommingDinnerclubsAdapter(private val onClickListener: ((UpcommingDinner
             delegateAdapters.get(viewType).onCreateViewHolder(parent)
 
     fun addDinnerclubs(dinnerclubs: List<UpcommingDinnerclubItem>) {
+        var visibleItemCount = recyclerView?.childCount ?: 0
+        Log.d("Madklub","Before nofified, recycler child count: $visibleItemCount and total count: $itemCount")
         val initPosition = items.size - 1
         items.removeAt(initPosition)
         notifyItemRemoved(initPosition)
@@ -56,8 +65,14 @@ class UpcommingDinnerclubsAdapter(private val onClickListener: ((UpcommingDinner
         notifyItemRangeChanged(initPosition, items.size + 1 /* plus loading item*/)
     }
 
-    fun endReached(){
-
+    fun shortList(){
+        val initPosition = items.size - 1
+        if(items[initPosition] != endItem){
+            items.removeAt(initPosition)
+            // TODO make custom "Load more" button?
+            items.add(endItem)
+            notifyItemChanged(initPosition)
+        }
     }
 
     override fun onDinnerclubCancelled(position: Int,isCancelled: Boolean) {

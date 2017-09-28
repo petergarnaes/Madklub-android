@@ -26,6 +26,7 @@ import com.vest10.peter.madklubandroid.depenedency_injection.components.ConfigPe
 import com.vest10.peter.madklubandroid.kitchens_list.InfiniteScrollListener
 import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.UpcommingDinnerclubItem
 import io.reactivex.Observable
+import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
 
 
@@ -40,7 +41,16 @@ class MainActivity : BaseActivity<MainPresenter.MainView,MainPresenter>(), MainP
         kitchen_list.apply {
             setHasFixedSize(true)
             adapter = UpcommingDinnerclubsAdapter(this@MainActivity::performSharedTransactionToDetailActivity)
-            val manager = LinearLayoutManager(this@MainActivity)
+            val manager = object : LinearLayoutManager(this@MainActivity){
+                override fun onLayoutCompleted(state: RecyclerView.State) {
+                    super.onLayoutCompleted(state)
+                    // Adding 1 because of 0 indexing
+                    val visibleItemCount = (this.findLastVisibleItemPosition()- this.findFirstVisibleItemPosition())+1
+                    if (layoutManager.itemCount == visibleItemCount){
+                        asyncCallShortList()
+                    }
+                }
+            }
             layoutManager = manager
             itemAnimator = null
             val mDividerItemDecoration = DividerItemDecoration(
@@ -52,7 +62,16 @@ class MainActivity : BaseActivity<MainPresenter.MainView,MainPresenter>(), MainP
         }
     }
 
+    fun asyncCallShortList(){
+        // TODO if list is short, load next segment?
+        Observable.timer(1,TimeUnit.SECONDS).subscribe{
+            (kitchen_list.adapter as UpcommingDinnerclubsAdapter).shortList()
+        }
+
+    }
+
     fun loadMoreDinnerclubs(){
+        // TODO implement segment loading
         Log.d("Madklub","Loading more dinnerclubs")
         // Should trigger end reached
         Observable.just(Unit).delay(3,TimeUnit.SECONDS).subscribe {
@@ -62,6 +81,10 @@ class MainActivity : BaseActivity<MainPresenter.MainView,MainPresenter>(), MainP
 
     override fun showDinnerclubs(dinnerclubs: List<UpcommingDinnerclubItem>) {
         (kitchen_list.adapter as UpcommingDinnerclubsAdapter).addDinnerclubs(dinnerclubs)
+    }
+
+    override fun showMoreDinnerclubs(dinnerclubs: List<UpcommingDinnerclubItem>){
+
     }
 
     override fun launchAuthenticatedNetworkRequests() {

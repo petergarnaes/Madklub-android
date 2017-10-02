@@ -21,7 +21,8 @@
         android:roundIcon="@drawable/vd_kf_unselected"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".main_activity.MainActivity">
+        <activity android:name=".main_activity.MainActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

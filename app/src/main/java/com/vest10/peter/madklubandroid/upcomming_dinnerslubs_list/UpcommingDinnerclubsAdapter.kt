@@ -23,9 +23,10 @@ class UpcommingDinnerclubsAdapter(private val onClickListener: ((UpcommingDinner
     private val endItem = object : ViewType {
         override fun getViewType(): Int = AdapterConstants.END
     }
+    private val loadingDelegateAdapter = LoadingDelegateAdapter()
 
     init {
-        delegateAdapters.put(AdapterConstants.LOADING,LoadingDelegateAdapter())
+        delegateAdapters.put(AdapterConstants.LOADING,loadingDelegateAdapter)
         delegateAdapters.put(AdapterConstants.REGULAR_DINNERCLUB,RegularDinnerclubsDelegateAdapter(this,onClickListener))
         delegateAdapters.put(AdapterConstants.COOKING_DINNERCLUB,CookDinnerclubsDelegateAdapter(this,onClickListener))
         delegateAdapters.put(AdapterConstants.END,EndDelegateAdapter())
@@ -56,6 +57,10 @@ class UpcommingDinnerclubsAdapter(private val onClickListener: ((UpcommingDinner
         notifyDataSetChanged()
     }
 
+    fun toggleLoadMore(isVisible: Boolean){
+        loadingDelegateAdapter.toggleLoadMore(isVisible)
+    }
+
     fun concatDinnerclubs(dinnerclubs: List<UpcommingDinnerclubItem>) {
         val initPosition = items.size - 1
         items.removeAt(initPosition)
@@ -67,16 +72,6 @@ class UpcommingDinnerclubsAdapter(private val onClickListener: ((UpcommingDinner
             items.add(loadingItem)
         }
         notifyItemRangeChanged(initPosition, items.size + 1 /* plus loading item*/)
-    }
-
-    fun shortList(){
-        val initPosition = items.size - 1
-        if(items[initPosition] != endItem){
-            items.removeAt(initPosition)
-            // TODO make custom "Load more" button?
-            items.add(endItem)
-            notifyItemChanged(initPosition)
-        }
     }
 
     override fun onDinnerclubCancelled(position: Int,isCancelled: Boolean) {

@@ -2,12 +2,15 @@ package com.vest10.peter.madklubandroid.commons
 
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
+import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.UpcommingDinnerclubsAdapter
 
 /**
- * Created by peter on 12-09-17.
+ * Created by peter on 9/27/17.
  */
-class InfiniteScrollViewer(
+class InfiniteScrollListener(
         val func: () -> Unit,
+        val upcommingDinnerclubsAdapter: UpcommingDinnerclubsAdapter,
         val layoutManager: LinearLayoutManager) : RecyclerView.OnScrollListener() {
     private var previousTotal = 0
     private var loading = true
@@ -18,21 +21,22 @@ class InfiniteScrollViewer(
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
-
-        if(dy > 0) {
+        if (dy > 0) {
             visibleItemCount = recyclerView.childCount
             totalItemCount = layoutManager.itemCount
             firstVisibleItem = layoutManager.findFirstVisibleItemPosition()
-
-            if(loading) {
+            if (loading) {
                 if (totalItemCount > previousTotal) {
                     loading = false
                     previousTotal = totalItemCount
                 }
             }
-            if (!loading &&
-                    (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
+            if (!loading && (totalItemCount - visibleItemCount)
+                    <= (firstVisibleItem + visibleThreshold)) {
+                // End has been reached
+                Log.i("InfiniteScrollListener", "End reached")
                 func()
+                upcommingDinnerclubsAdapter.toggleLoadMore(false)
                 loading = true
             }
         }

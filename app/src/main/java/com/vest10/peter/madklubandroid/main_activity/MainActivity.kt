@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.upcomming_dinnerclub_item.view.*
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.RecyclerView
 import com.vest10.peter.madklubandroid.depenedency_injection.components.ConfigPersistentComponent
-import com.vest10.peter.madklubandroid.kitchens_list.InfiniteScrollListener
+import com.vest10.peter.madklubandroid.commons.InfiniteScrollListener
 import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.UpcommingDinnerclubItem
 import io.reactivex.Observable
 import java.util.concurrent.TimeUnit
@@ -35,17 +35,9 @@ class MainActivity : BaseActivity<MainPresenter.MainView,MainPresenter>(), MainP
         setContentView(R.layout.activity_main)
         kitchen_list.apply {
             setHasFixedSize(true)
-            adapter = UpcommingDinnerclubsAdapter(this@MainActivity::performSharedTransactionToDetailActivity)
-            val manager = object : LinearLayoutManager(this@MainActivity){
-                override fun onLayoutCompleted(state: RecyclerView.State) {
-                    super.onLayoutCompleted(state)
-                    // Adding 1 because of 0 indexing
-                    val visibleItemCount = (this.findLastVisibleItemPosition()- this.findFirstVisibleItemPosition())+1
-                    if (layoutManager.itemCount == visibleItemCount){
-                        asyncCallShortList()
-                    }
-                }
-            }
+            val upcommingAdapter = UpcommingDinnerclubsAdapter(this@MainActivity::performSharedTransactionToDetailActivity)
+            adapter = upcommingAdapter
+            val manager = LinearLayoutManager(this@MainActivity)
             layoutManager = manager
             itemAnimator = null
             val mDividerItemDecoration = DividerItemDecoration(
@@ -53,14 +45,7 @@ class MainActivity : BaseActivity<MainPresenter.MainView,MainPresenter>(), MainP
                     (layoutManager as LinearLayoutManager).orientation
             )
             addItemDecoration(mDividerItemDecoration)
-            addOnScrollListener(InfiniteScrollListener(this@MainActivity::loadMoreDinnerclubs,manager))
-        }
-    }
-
-    fun asyncCallShortList(){
-        // TODO if list is short, load next segment?
-        Observable.timer(1,TimeUnit.SECONDS).subscribe{
-            (kitchen_list.adapter as UpcommingDinnerclubsAdapter).shortList()
+            addOnScrollListener(InfiniteScrollListener(this@MainActivity::loadMoreDinnerclubs,upcommingAdapter,manager))
         }
     }
 

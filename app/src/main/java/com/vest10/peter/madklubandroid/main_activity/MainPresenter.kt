@@ -11,21 +11,27 @@ import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.RegularDinnerc
 import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.UpcommingDinnerclubItem
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.addTo
+import org.joda.time.DateTime
 import javax.inject.Inject
 
 /**
  * Created by peter on 27-09-17.
  */
+
+const val LOAD_DAY_INTERVAL = 40
+
 @ConfigPersistentScope
 class MainPresenter @Inject constructor(val networkService: NetworkService) : BasePresenter<MainPresenter.MainView>(null) {
     var dinnerclubs: List<UpcommingDinnerclubItem>? = null
     var dinnerclubsObservable: Observable<List<UpcommingDinnerclubItem>>? = null
+    var rangeStart = DateTime.now().withTime(0,0,0,0)
+    var rangeEnd = rangeStart.plusDays(LOAD_DAY_INTERVAL).withTime(23,59,59,59)
 
     override fun attachView(view: MainView) {
         this.view = view
 
         dinnerclubs?.let(this::showDinnerclubs)
-        dinnerclubsObservable?.let(this::subscribeToDinnerclubs)
+        //dinnerclubsObservable?.let(this::subscribeToDinnerclubs)
     }
 
     override fun detachView() {
@@ -33,10 +39,18 @@ class MainPresenter @Inject constructor(val networkService: NetworkService) : Ba
     }
 
     fun getDinnerclubs(){
+        // If cached, do not produce network request
+        dinnerclubs?.let {
+            if (it.isNotEmpty())
+                return
+        }
+        Log.d("Madklub","From $rangeStart to $rangeEnd")
         networkService.query {
             UpcommingDinnerclubsQuery.builder()
-                    .startDate("2017-09-22T12:00:00.000Z")
-                    .endDate("2017-12-22T12:00:00.000Z")
+                    // "2017-09-22T12:00:00.000Z"
+                    .startDate("$rangeStart")
+                    // "2017-12-22T12:00:00.000Z"
+                    .endDate("$rangeEnd")
                     .build()
         }.map {
             val me = it.data()?.me()
@@ -85,8 +99,10 @@ class MainPresenter @Inject constructor(val networkService: NetworkService) : Ba
     }
 
     fun subscribeToDinnerclubs(observable: Observable<List<UpcommingDinnerclubItem>>){
-        dinnerclubsObservable = observable
+        //dinnerclubsObservable = observable
+        Log.d("Madklub","Before subscribe")
         view?.let {
+            Log.d("Madklub","Sbuscribing")
             // TODO start loading indicator, and stop it when subscribe is called
             observable.subscribe ({
                 res ->

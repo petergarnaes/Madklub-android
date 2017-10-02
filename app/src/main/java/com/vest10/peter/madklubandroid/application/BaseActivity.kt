@@ -46,19 +46,19 @@ abstract class BaseActivity<T : BaseView,P : BasePresenter<T>> : AppCompatActivi
             configComponentMap[activityID]!!
         }
         injectMembers(configComponent)
-
-        // Checking if authenticated
-        val d = userManager.setupAuthentication(this).subscribe {
-            launchAuthenticatedNetworkRequests()
-        }
-        disposables.add(d)
     }
 
     override fun onStart() {
         super.onStart()
         // TODO put this in a better place, since we do not need this to be called every time the
         // activity is brought to the foreground
+        //presenter.attachView(this as T)
         presenter.attachView(this as T)
+        // Checking if authenticated
+        val d = userManager.setupAuthentication(this).subscribe {
+            launchAuthenticatedNetworkRequests()
+        }
+        disposables.add(d)
     }
 
     abstract fun injectMembers(configPersistentComponent: ConfigPersistentComponent)

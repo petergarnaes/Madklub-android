@@ -10,7 +10,11 @@ import com.apollographql.apollo.exception.ApolloHttpException
 import com.apollographql.apollo.rx2.Rx2Apollo
 import com.vest10.peter.madklubandroid.authentication.MadklubUserManager
 import io.reactivex.Observable
+import java.util.*
 import javax.inject.Inject
+import java.util.UUID.randomUUID
+
+
 
 /**
  * Created by peter on 02-09-17.
@@ -21,6 +25,10 @@ import javax.inject.Inject
 class NetworkService @Inject constructor(
         val client: ApolloClient,
         val userManager: MadklubUserManager) {
+
+    fun <D: Operation.Data,T,V: Operation.Variables> optimisticUpdate(mutation: Mutation<D,T,V>,optimisticResponse: D) : Observable<Response<T>>{
+        return Rx2Apollo.from(client.mutate(mutation,optimisticResponse))
+    }
 
     private fun <T> tryReAuthenticating(getObservable: () -> Observable<Response<T>>) = { t: Throwable ->
         when (t) {
@@ -41,8 +49,9 @@ class NetworkService @Inject constructor(
     }
 
     fun <D: Operation.Data,T,V: Operation.Variables>
-            mutation(generateMutation: () -> Mutation<D,T,V>): Observable<Response<T>> {
-        fun getObservable() = Rx2Apollo.from(client.mutate(generateMutation()))
+            mutation(opimisticData: D?,generateMutation: () -> Mutation<D,T,V>): Observable<Response<T>> {
+        fun getObservable() = if(opimisticData != null) Rx2Apollo.from(client.mutate(generateMutation(),opimisticData)) else Rx2Apollo.from(client.mutate(generateMutation()))
+        val b = getObservable()
         return getObservable().onErrorResumeNext(tryReAuthenticating(::getObservable))
     }
 

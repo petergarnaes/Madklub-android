@@ -2,16 +2,23 @@ package com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list
 
 import android.support.v4.util.SparseArrayCompat
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.ViewGroup
 import com.vest10.peter.madklubandroid.commons.adapter.AdapterConstants
 import com.vest10.peter.madklubandroid.commons.adapter.ViewType
 import com.vest10.peter.madklubandroid.commons.adapter.ViewTypeDelegateAdapter
+import com.vest10.peter.madklubandroid.depenedency_injection.scopes.ActivityScope
+import com.vest10.peter.madklubandroid.main_activity.MainActivity
+import com.vest10.peter.madklubandroid.main_activity.MainPresenter
+import javax.inject.Inject
 
 /**
  * Created by peter on 12-09-17.
  */
-class UpcommingDinnerclubsAdapter(private val onClickListener: ((UpcommingDinnerclubItem,RecyclerView.ViewHolder) -> Unit)?) :
+@ActivityScope
+class UpcommingDinnerclubsAdapter @Inject constructor(
+        private val mainActivity: MainActivity,
+        private val mainPresenter: MainPresenter
+        ) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>(),
         RegularDinnerclubsDelegateAdapter.DinnerClubCancelledListener,
         CookDinnerclubsDelegateAdapter.DinnerClubHasShoppedListener {
@@ -27,8 +34,8 @@ class UpcommingDinnerclubsAdapter(private val onClickListener: ((UpcommingDinner
 
     init {
         delegateAdapters.put(AdapterConstants.LOADING,loadingDelegateAdapter)
-        delegateAdapters.put(AdapterConstants.REGULAR_DINNERCLUB,RegularDinnerclubsDelegateAdapter(this,onClickListener))
-        delegateAdapters.put(AdapterConstants.COOKING_DINNERCLUB,CookDinnerclubsDelegateAdapter(this,onClickListener))
+        delegateAdapters.put(AdapterConstants.REGULAR_DINNERCLUB,RegularDinnerclubsDelegateAdapter(this,mainActivity::performSharedTransactionToDetailActivity))
+        delegateAdapters.put(AdapterConstants.COOKING_DINNERCLUB,CookDinnerclubsDelegateAdapter(this,mainActivity::performSharedTransactionToDetailActivity))
         delegateAdapters.put(AdapterConstants.END,EndDelegateAdapter())
         items = ArrayList()
         items.add(loadingItem)
@@ -74,9 +81,8 @@ class UpcommingDinnerclubsAdapter(private val onClickListener: ((UpcommingDinner
         notifyItemRangeChanged(initPosition, items.size + 1 /* plus loading item*/)
     }
 
-    override fun onDinnerclubCancelled(position: Int,isCancelled: Boolean) {
-        notifyItemChanged(position)
-        // TODO optimistic server update
+    override fun onCancellingParticipation(position: Int, isParticipating: Boolean) {
+        mainPresenter.cancelParticipation(!isParticipating,(items[position] as UpcommingDinnerclubItem).id)
     }
 
     override fun onDinnerclubShopped(position: Int, hasShopped: Boolean) {

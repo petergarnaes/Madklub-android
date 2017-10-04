@@ -57,7 +57,7 @@ class NetworkService @Inject constructor(
 
     fun <D: Operation.Data,T,V: Operation.Variables>
             query(generateQuery: () -> Query<D, T, V>): Observable<Response<T>> {
-        fun getObservable() = Rx2Apollo.from(client.query(generateQuery()))
+        fun getObservable() = Rx2Apollo.from(client.query(generateQuery()).watcher())
         return getObservable().onErrorResumeNext(tryReAuthenticating(::getObservable))
     }
 }

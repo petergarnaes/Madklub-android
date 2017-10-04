@@ -20,14 +20,18 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.RecyclerView
 import com.vest10.peter.madklubandroid.depenedency_injection.components.ConfigPersistentComponent
 import com.vest10.peter.madklubandroid.commons.InfiniteScrollListener
+import com.vest10.peter.madklubandroid.main_activity.di.MainActivityDependenciesModule
 import com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.UpcommingDinnerclubItem
 import io.reactivex.Observable
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 
 class MainActivity : BaseActivity<MainPresenter.MainView,MainPresenter>(), MainPresenter.MainView {
+    @Inject lateinit var upcommingAdapter: UpcommingDinnerclubsAdapter
+
     override fun injectMembers(configPersistentComponent: ConfigPersistentComponent) {
-        configPersistentComponent.mainActivityComponent().inject(this)
+        configPersistentComponent.mainActivityComponent(MainActivityDependenciesModule(this)).inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +39,7 @@ class MainActivity : BaseActivity<MainPresenter.MainView,MainPresenter>(), MainP
         setContentView(R.layout.activity_main)
         kitchen_list.apply {
             setHasFixedSize(true)
-            val upcommingAdapter = UpcommingDinnerclubsAdapter(this@MainActivity::performSharedTransactionToDetailActivity)
+            //val upcommingAdapter = UpcommingDinnerclubsAdapter(this@MainActivity::performSharedTransactionToDetailActivity)
             adapter = upcommingAdapter
             val manager = LinearLayoutManager(this@MainActivity)
             layoutManager = manager

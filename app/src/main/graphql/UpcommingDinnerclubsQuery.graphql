@@ -2,6 +2,7 @@ query UpcommingDinnerclubsQuery($startDate: String!,$endDate: String!) {
   me {
     id
     kitchen {
+      id
       dinnerclubs(range: {start: $startDate,end: $endDate}){
         id
         cancelled

@@ -25,7 +25,7 @@ class MainPresenter @Inject constructor(val networkService: NetworkService) : Ba
     var dinnerclubs: List<UpcommingDinnerclubItem>? = null
     var dinnerclubsObservable: Observable<List<UpcommingDinnerclubItem>>? = null
     var rangeStart = DateTime.now().withTime(0,0,0,0)
-    var rangeEnd = rangeStart.plusDays(LOAD_DAY_INTERVAL).withTime(23,59,59,59)
+    var rangeEnd = rangeStart.plusDays(LOAD_DAY_INTERVAL).withTime(23,59,59,999)
 
     override fun attachView(view: MainView) {
         this.view = view
@@ -47,9 +47,9 @@ class MainPresenter @Inject constructor(val networkService: NetworkService) : Ba
         Log.d("Madklub","From $rangeStart to $rangeEnd")
         networkService.query {
             UpcommingDinnerclubsQuery.builder()
-                    // "2017-09-22T12:00:00.000Z"
+                    //.startDate("2017-09-22T12:00:00.000Z")
                     .startDate("$rangeStart")
-                    // "2017-12-22T12:00:00.000Z"
+                    //.endDate("2017-12-22T12:00:00.000Z")
                     .endDate("$rangeEnd")
                     .build()
         }.map {
@@ -58,9 +58,10 @@ class MainPresenter @Inject constructor(val networkService: NetworkService) : Ba
         }.onErrorReturn({
             Log.d("We had the error", it.localizedMessage)
             Log.d("We had the error", "$it")
-            Pair("",emptyList<UpcommingDinnerclubsQuery.Dinnerclub>())
+            Pair("",emptyList())
         }).map {
             pair ->
+            Log.d("Madklub","Returned ${pair.second} with ${pair.second.size} results")
             pair.second.map {
                 val id = it.id()
                 val isParticipating = it.participants()!!.fold(false){
@@ -95,6 +96,29 @@ class MainPresenter @Inject constructor(val networkService: NetworkService) : Ba
             }
         }.apply {
             subscribeToDinnerclubs(this)
+        }
+    }
+
+    fun cancelParticipation(isCancelled: Boolean,dinnerclubId: String){
+        networkService.mutation(CancelParticipationMutation.Data(
+                CancelParticipationMutation.Participate(
+                        // Must be a better way?
+                        "UserParticipation",
+                        dinnerclubId,
+                        isCancelled
+                )
+        )) {
+            Log.d("Madklub","CAncelling $dinnerclubId setting it to $isCancelled")
+            CancelParticipationMutation.builder()
+                    .dinnerclubID(dinnerclubId)
+                    .cancel(isCancelled)
+                    .build()
+        }.subscribe {
+            if(it.hasErrors())
+                it.errors().forEach { e ->
+                    Log.d("Madklub","${e.message()}")
+                }
+            Log.d("Madklub","Returned with $it")
         }
     }
 

@@ -2,6 +2,7 @@ package com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list
 
 import android.support.v4.view.ViewCompat
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.ViewGroup
 import com.vest10.peter.madklubandroid.R
 import com.vest10.peter.madklubandroid.commons.adapter.ViewType
@@ -16,7 +17,7 @@ class RegularDinnerclubsDelegateAdapter(
         val cancelAction: DinnerClubCancelledListener,
         private val onItemSelected: ((UpcommingDinnerclubItem,RecyclerView.ViewHolder) -> Unit)?) : ViewTypeDelegateAdapter {
     interface DinnerClubCancelledListener {
-        fun onDinnerclubCancelled(position: Int,isCancelled: Boolean)
+        fun onCancellingParticipation(position: Int, isParticipating: Boolean)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder = TurnsViewHolder(parent)
@@ -29,11 +30,10 @@ class RegularDinnerclubsDelegateAdapter(
         ViewCompat.setTransitionName(holder.itemView.kf_cancel_icon,"toDetailIconTransition"+holder.adapterPosition)
         with(holder.itemView) {
             kf_cancel_icon.setOnClickListener {
-                // TODO change to participation implementation
                 upcommingDinnerclub.isParticipating = !upcommingDinnerclub.isParticipating
                 val stateSet = intArrayOf(android.R.attr.state_checked * if (upcommingDinnerclub.isParticipating) 1 else -1)
                 kf_cancel_icon.setImageState(stateSet, false)
-                cancelAction.onDinnerclubCancelled(holder.adapterPosition,upcommingDinnerclub.isParticipating)
+                cancelAction.onCancellingParticipation(holder.adapterPosition,upcommingDinnerclub.isParticipating)
             }
             if(onItemSelected != null)
                 setOnClickListener {

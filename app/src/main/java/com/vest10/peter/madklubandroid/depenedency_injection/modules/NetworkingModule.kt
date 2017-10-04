@@ -59,14 +59,17 @@ class NetworkingModule {
         val cacheFactory = LruNormalizedCacheFactory(EvictionPolicy.builder().maxSizeBytes(10 * 1024).build())
         val cacheKeyResolver = object : CacheKeyResolver(){
             override fun fromFieldRecordSet(field: ResponseField, recordSet: MutableMap<String, Any>): CacheKey {
-                Log.d("Madklub","Record set do we have: ${recordSet["__typename"]}")
-                return formatCacheKey(recordSet["__typename"] as String + recordSet["id"] as String)
+                //return formatCacheKey(recordSet["__typename"] as String + recordSet["id"] as String)
+                return formatCacheKey(recordSet["id"] as String)
             }
 
             override fun fromFieldArguments(field: ResponseField, variables: Operation.Variables): CacheKey {
-                Log.d("Madklub","Field arguments do we have: ${field.resolveArgument("__typename",variables)}")
-                return formatCacheKey(field.resolveArgument("__typename",variables) as String +
-                        field.resolveArgument("id",variables) as String)
+                val idField = field.resolveArgument("id",variables)
+                val id: String? = when (idField) {
+                    is String -> idField
+                    else -> null
+                }
+                return formatCacheKey(id)
             }
 
             private fun formatCacheKey(id: String?): CacheKey = if(id == null || id.isEmpty())

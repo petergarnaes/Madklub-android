@@ -51,7 +51,6 @@ class NetworkService @Inject constructor(
     fun <D: Operation.Data,T,V: Operation.Variables>
             mutation(opimisticData: D?,generateMutation: () -> Mutation<D,T,V>): Observable<Response<T>> {
         fun getObservable() = if(opimisticData != null) Rx2Apollo.from(client.mutate(generateMutation(),opimisticData)) else Rx2Apollo.from(client.mutate(generateMutation()))
-        val b = getObservable()
         return getObservable().onErrorResumeNext(tryReAuthenticating(::getObservable))
     }
 

@@ -41,7 +41,7 @@ class MainActivity : BaseActivity<MainPresenter.MainView,MainPresenter>(), MainP
             setHasFixedSize(true)
             //val upcommingAdapter = UpcommingDinnerclubsAdapter(this@MainActivity::performSharedTransactionToDetailActivity)
             adapter = upcommingAdapter
-            val manager = LinearLayoutManager(this@MainActivity)
+            val manager = LinearLayoutManager(context)
             layoutManager = manager
             itemAnimator = null
             val mDividerItemDecoration = DividerItemDecoration(
@@ -63,7 +63,7 @@ class MainActivity : BaseActivity<MainPresenter.MainView,MainPresenter>(), MainP
     }
 
     override fun showDinnerclubs(dinnerclubs: List<UpcommingDinnerclubItem>) {
-        (kitchen_list.adapter as UpcommingDinnerclubsAdapter).concatDinnerclubs(dinnerclubs)
+        upcommingAdapter.concatDinnerclubs(dinnerclubs)
     }
 
     override fun showMoreDinnerclubs(dinnerclubs: List<UpcommingDinnerclubItem>){

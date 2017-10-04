@@ -32,9 +32,7 @@ class MadklubUserManager @Inject constructor(
     }
 
     fun blockingGetAuthToken(): String? {
-        Log.d("MadklubNetwork","Hello?!?!?!")
         cachedAuthToken?.let {
-            Log.d("MadklubNetwork","Retrieved cached token")
             return it
         }
         Log.d("MadklubNetwork","Retrieved account $account")

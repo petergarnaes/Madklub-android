@@ -61,7 +61,7 @@ class MainPresenter @Inject constructor(val networkService: NetworkService) : Ba
             Pair("",emptyList())
         }).map {
             pair ->
-            Log.d("Madklub","Returned ${pair.second} with ${pair.second.size} results")
+            Log.d("Madklub","Hello with ${pair.second.size} results")
             pair.second.map {
                 val id = it.id()
                 val isParticipating = it.participants()!!.fold(false){

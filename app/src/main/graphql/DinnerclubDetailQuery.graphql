@@ -2,6 +2,7 @@ query DinnerclubDetailQuery($id: ID!) {
     me {
         id
         kitchen {
+            id
             dinnerclub(id: $id){
                 id
                 at

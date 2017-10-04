@@ -48,6 +48,9 @@ class UpcommingDinnerclubsAdapter @Inject constructor(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         delegateAdapters.get(getItemViewType(position)).onBindViewHolder(holder,items[position])
     }
+    //fun blah(d: UpcommingDinnerclubsQuery.Dinnerclub){
+
+    //}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
             delegateAdapters.get(viewType).onCreateViewHolder(parent)

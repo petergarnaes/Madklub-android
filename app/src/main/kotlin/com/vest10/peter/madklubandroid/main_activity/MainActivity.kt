@@ -66,6 +66,7 @@ class MainActivity : BaseActivity<MainPresenter.MainView,MainPresenter>(), MainP
         upcommingAdapter.concatDinnerclubs(dinnerclubs)
     }
 
+
     override fun showMoreDinnerclubs(dinnerclubs: List<UpcommingDinnerclubItem>){
 
     }

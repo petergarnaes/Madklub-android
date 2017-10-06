@@ -121,7 +121,7 @@ class MainPresenter @Inject constructor(val networkService: NetworkService) : Ba
                     Log.d("Madklub","${e.message()}")
                 }
             Log.d("Madklub","Returned with $it")
-        }
+        }.addTo(uiDependentDisposables)
     }
 
     fun subscribeToDinnerclubs(observable: Observable<List<UpcommingDinnerclubItem>>){

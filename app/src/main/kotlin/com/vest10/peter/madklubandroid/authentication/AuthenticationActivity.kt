@@ -39,6 +39,7 @@ import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Operation
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.rx2.Rx2Apollo
+import com.vest10.peter.madklubandroid.LoginMutation
 import com.vest10.peter.madklubandroid.depenedency_injection.modules.NetworkingModule
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_authentication.*

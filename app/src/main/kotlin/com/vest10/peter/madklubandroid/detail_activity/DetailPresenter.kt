@@ -1,7 +1,7 @@
 package com.vest10.peter.madklubandroid.detail_activity
 
-import android.util.Log
 import com.vest10.peter.madklubandroid.BaseView
+import com.vest10.peter.madklubandroid.DinnerclubDetailQuery
 import com.vest10.peter.madklubandroid.application.BasePresenter
 import com.vest10.peter.madklubandroid.depenedency_injection.scopes.ConfigPersistentScope
 import com.vest10.peter.madklubandroid.networking.NetworkService

@@ -3,6 +3,7 @@ package com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list
 import android.support.v4.util.SparseArrayCompat
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import com.vest10.peter.madklubandroid.UpcommingDinnerclubsQuery
 import com.vest10.peter.madklubandroid.commons.adapter.AdapterConstants
 import com.vest10.peter.madklubandroid.commons.adapter.ViewType
 import com.vest10.peter.madklubandroid.commons.adapter.ViewTypeDelegateAdapter
@@ -48,9 +49,9 @@ class UpcommingDinnerclubsAdapter @Inject constructor(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         delegateAdapters.get(getItemViewType(position)).onBindViewHolder(holder,items[position])
     }
-    //fun blah(d: UpcommingDinnerclubsQuery.Dinnerclub){
+    fun blah(d: UpcommingDinnerclubsQuery.Dinnerclub){
 
-    //}
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
             delegateAdapters.get(viewType).onCreateViewHolder(parent)

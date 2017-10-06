@@ -13,13 +13,13 @@ import com.apollographql.apollo.cache.normalized.lru.EvictionPolicy
 import com.apollographql.apollo.cache.normalized.lru.LruNormalizedCacheFactory
 import com.vest10.peter.madklubandroid.authentication.MadklubUserManager
 import com.vest10.peter.madklubandroid.networking.NetworkService
+import com.vest10.peter.madklubandroid.type.CustomType
 import dagger.Module
 import dagger.Provides
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
-import type.CustomType
 import javax.inject.Singleton
 
 /**

@@ -1,0 +1,301 @@
+Initialized native services in: /home/peter/.gradle/native
+The client will now receive all logging from the daemon (pid: 9237). The daemon log file: /home/peter/.gradle/daemon/4.1/daemon-9237.out.log
+Starting 3rd build in daemon [uptime: 12 mins 12.454 secs, performance: 99%, no major garbage collections]
+Using 4 worker leases.
+Creating new cache for fileHashes, path /home/peter/Workspace/Madklub-android/.gradle/4.1/fileHashes/fileHashes.bin, access org.gradle.cache.internal.DefaultCacheAccess@1842fcff
+Creating new cache for plugin-use-metadata, path /home/peter/.gradle/caches/4.1/plugin-resolution/plugin-use-metadata.bin, access org.gradle.cache.internal.DefaultCacheAccess@341db14
+Creating new cache for client-status, path /home/peter/.gradle/caches/4.1/plugin-resolution/client-status.bin, access org.gradle.cache.internal.DefaultCacheAccess@341db14
+Starting Build
+Settings evaluated using settings file '/home/peter/Workspace/Madklub-android/settings.gradle'.
+Projects loaded. Root project using build file '/home/peter/Workspace/Madklub-android/build.gradle'.
+Included projects: [root project 'Madklub-android', project ':app']
+Evaluating root project 'Madklub-android' using build file '/home/peter/Workspace/Madklub-android/build.gradle'.
+Creating new cache for metadata-1.1/results, path /home/peter/.gradle/caches/transforms-1/metadata-1.1/results.bin, access org.gradle.cache.internal.DefaultCacheAccess@6cc4f384
+Creating new cache for metadata-2.23/module-metadata, path /home/peter/.gradle/caches/modules-2/metadata-2.23/module-metadata.bin, access org.gradle.cache.internal.DefaultCacheAccess@627493fd
+Creating new cache for metadata-2.23/artifact-at-repository, path /home/peter/.gradle/caches/modules-2/metadata-2.23/artifact-at-repository.bin, access org.gradle.cache.internal.DefaultCacheAccess@627493fd
+Evaluating project ':app' using build file '/home/peter/Workspace/Madklub-android/app/build.gradle'.
+Creating configuration androidTestUtil
+Creating configuration compile
+Creating configuration apk
+Creating configuration provided
+Creating configuration api
+Creating configuration implementation
+Creating configuration runtimeOnly
+Creating configuration compileOnly
+Creating configuration wearApp
+Creating configuration annotationProcessor
+Creating configuration androidTestCompile
+Creating configuration androidTestApk
+Creating configuration androidTestProvided
+Creating configuration androidTestApi
+Creating configuration androidTestImplementation
+Creating configuration androidTestRuntimeOnly
+Creating configuration androidTestCompileOnly
+Creating configuration androidTestWearApp
+Creating configuration androidTestAnnotationProcessor
+Creating configuration testCompile
+Creating configuration testApk
+Creating configuration testProvided
+Creating configuration testApi
+Creating configuration testImplementation
+Creating configuration testRuntimeOnly
+Creating configuration testCompileOnly
+Creating configuration testWearApp
+Creating configuration testAnnotationProcessor
+Creating configuration debugCompile
+Creating configuration debugApk
+Creating configuration debugProvided
+Creating configuration debugApi
+Creating configuration debugImplementation
+Creating configuration debugRuntimeOnly
+Creating configuration debugCompileOnly
+Creating configuration debugWearApp
+Creating configuration debugAnnotationProcessor
+Creating configuration testDebugCompile
+Creating configuration testDebugApk
+Creating configuration testDebugProvided
+Creating configuration testDebugApi
+Creating configuration testDebugImplementation
+Creating configuration testDebugRuntimeOnly
+Creating configuration testDebugCompileOnly
+Creating configuration testDebugWearApp
+Creating configuration testDebugAnnotationProcessor
+Creating configuration releaseCompile
+Creating configuration releaseApk
+Creating configuration releaseProvided
+Creating configuration releaseApi
+Creating configuration releaseImplementation
+Creating configuration releaseRuntimeOnly
+Creating configuration releaseCompileOnly
+Creating configuration releaseWearApp
+Creating configuration releaseAnnotationProcessor
+Creating configuration testReleaseCompile
+Creating configuration testReleaseApk
+Creating configuration testReleaseProvided
+Creating configuration testReleaseApi
+Creating configuration testReleaseImplementation
+Creating configuration testReleaseRuntimeOnly
+Creating configuration testReleaseCompileOnly
+Creating configuration testReleaseWearApp
+Creating configuration testReleaseAnnotationProcessor
+Configuration 'compile' in project ':app' is deprecated. Use 'implementation' instead.
+Configuration 'androidTestCompile' in project ':app' is deprecated. Use 'androidTestImplementation' instead.
+Configuration 'testCompile' in project ':app' is deprecated. Use 'testImplementation' instead.
+Parsing the SDK, no caching allowed
+Parsing /home/peter/Programming/Android/Sdk/build-tools/25.0.2/package.xml
+Parsing /home/peter/Programming/Android/Sdk/build-tools/26.0.0/package.xml
+Parsing /home/peter/Programming/Android/Sdk/build-tools/26.0.2/package.xml
+Parsing /home/peter/Programming/Android/Sdk/emulator/package.xml
+Parsing /home/peter/Programming/Android/Sdk/extras/android/m2repository/package.xml
+Parsing /home/peter/Programming/Android/Sdk/extras/google/m2repository/package.xml
+Parsing /home/peter/Programming/Android/Sdk/extras/m2repository/com/android/support/constraint/constraint-layout-solver/1.0.2/package.xml
+Parsing /home/peter/Programming/Android/Sdk/extras/m2repository/com/android/support/constraint/constraint-layout/1.0.2/package.xml
+Parsing /home/peter/Programming/Android/Sdk/patcher/v4/package.xml
+Parsing /home/peter/Programming/Android/Sdk/platform-tools/package.xml
+Parsing /home/peter/Programming/Android/Sdk/platforms/android-23/package.xml
+Parsing /home/peter/Programming/Android/Sdk/platforms/android-25/package.xml
+Parsing /home/peter/Programming/Android/Sdk/platforms/android-26/package.xml
+Parsing /home/peter/Programming/Android/Sdk/system-images/android-26/google_apis/x86/package.xml
+Parsing /home/peter/Programming/Android/Sdk/tools/package.xml
+SDK initialized in 134 ms
+Using incremental javac compilation for :app debug.
+Using incremental javac compilation for :app debugUnitTest.
+Using incremental javac compilation for :app release.
+Using incremental javac compilation for :app releaseUnitTest.
+Using incremental javac compilation for :app debugAndroidTest.
+All projects evaluated.
+Selected primary task 'build' from project :
+Creating new cache for annotation-processors, path /home/peter/Workspace/Madklub-android/.gradle/4.1/fileContent/annotation-processors.bin, access org.gradle.cache.internal.DefaultCacheAccess@5d62e1f1
+Tasks to be executed: [task ':app:preBuild', task ':app:preDebugBuild', task ':app:compileDebugAidl', task ':app:compileDebugRenderscript', task ':app:nodeSetup', task ':app:installApolloCodegen', task ':app:generateDebugApolloIR', task ':app:generateDebugApolloClasses', task ':app:checkDebugManifest', task ':app:generateDebugBuildConfig', task ':app:generateDebugResValues', task ':app:generateDebugResources', task ':app:mergeDebugResources', task ':app:createDebugCompatibleScreenManifests', task ':app:processDebugManifest', task ':app:splitsDiscoveryTaskDebug', task ':app:processDebugResources', task ':app:kaptGenerateStubsDebugKotlin', task ':app:kaptDebugKotlin', task ':app:compileDebugKotlin', task ':app:generateDebugSources', task ':app:javaPreCompileDebug', task ':app:compileDebugJavaWithJavac', task ':app:compileDebugNdk', task ':app:compileDebugSources', task ':app:mergeDebugShaders', task ':app:compileDebugShaders', task ':app:generateDebugAssets', task ':app:mergeDebugAssets', task ':app:transformClassesWithDexBuilderForDebug', task ':app:transformDexArchiveWithExternalLibsDexMergerForDebug', task ':app:transformDexArchiveWithDexMergerForDebug', task ':app:mergeDebugJniLibFolders', task ':app:transformNativeLibsWithMergeJniLibsForDebug', task ':app:processDebugJavaRes', task ':app:transformResourcesWithMergeJavaResForDebug', task ':app:validateSigningDebug', task ':app:packageDebug', task ':app:assembleDebug', task ':app:preReleaseBuild', task ':app:compileReleaseAidl', task ':app:compileReleaseRenderscript', task ':app:generateReleaseApolloIR', task ':app:generateReleaseApolloClasses', task ':app:checkReleaseManifest', task ':app:generateReleaseBuildConfig', task ':app:generateReleaseResValues', task ':app:generateReleaseResources', task ':app:mergeReleaseResources', task ':app:createReleaseCompatibleScreenManifests', task ':app:processReleaseManifest', task ':app:splitsDiscoveryTaskRelease', task ':app:processReleaseResources', task ':app:kaptGenerateStubsReleaseKotlin', task ':app:kaptReleaseKotlin', task ':app:compileReleaseKotlin', task ':app:generateReleaseSources', task ':app:javaPreCompileRelease', task ':app:compileReleaseJavaWithJavac', task ':app:compileReleaseNdk', task ':app:compileReleaseSources', task ':app:mergeReleaseShaders', task ':app:compileReleaseShaders', task ':app:generateReleaseAssets', task ':app:mergeReleaseAssets', task ':app:transformClassesWithPreDexForRelease', task ':app:transformDexWithDexForRelease', task ':app:mergeReleaseJniLibFolders', task ':app:transformNativeLibsWithMergeJniLibsForRelease', task ':app:processReleaseJavaRes', task ':app:transformResourcesWithMergeJavaResForRelease', task ':app:packageRelease', task ':app:prepareLintJar', task ':app:lintVitalRelease', task ':app:assembleRelease', task ':app:assemble', task ':app:lint', task ':app:kaptGenerateStubsDebugUnitTestKotlin', task ':app:kaptDebugUnitTestKotlin', task ':app:compileDebugUnitTestKotlin', task ':app:preDebugUnitTestBuild', task ':app:javaPreCompileDebugUnitTest', task ':app:compileDebugUnitTestJavaWithJavac', task ':app:mockableAndroidJar', task ':app:processDebugUnitTestJavaRes', task ':app:testDebugUnitTest', task ':app:kaptGenerateStubsReleaseUnitTestKotlin', task ':app:kaptReleaseUnitTestKotlin', task ':app:compileReleaseUnitTestKotlin', task ':app:preReleaseUnitTestBuild', task ':app:javaPreCompileReleaseUnitTest', task ':app:compileReleaseUnitTestJavaWithJavac', task ':app:processReleaseUnitTestJavaRes', task ':app:testReleaseUnitTest', task ':app:test', task ':app:check', task ':app:build']
+Creating new cache for resourceHashesCache, path /home/peter/Workspace/Madklub-android/.gradle/4.1/fileHashes/resourceHashesCache.bin, access org.gradle.cache.internal.DefaultCacheAccess@1842fcff
+Creating new cache for fileSnapshots, path /home/peter/Workspace/Madklub-android/.gradle/4.1/taskHistory/fileSnapshots.bin, access org.gradle.cache.internal.DefaultCacheAccess@394f941d
+Creating new cache for taskHistory, path /home/peter/Workspace/Madklub-android/.gradle/4.1/taskHistory/taskHistory.bin, access org.gradle.cache.internal.DefaultCacheAccess@394f941d
+:app:preBuild (Thread[Task worker for ':',5,main]) started.
+:app:preBuild
+Skipping task ':app:preBuild' as it has no actions.
+:app:preBuild UP-TO-DATE
+:app:preBuild (Thread[Task worker for ':',5,main]) completed. Took 0.001 secs.
+:app:preDebugBuild (Thread[Task worker for ':',5,main]) started.
+:app:preDebugBuild
+Putting task artifact state for task ':app:preDebugBuild' into context took 0.0 secs.
+Creating new cache for metadata-2.23/module-versions, path /home/peter/.gradle/caches/modules-2/metadata-2.23/module-versions.bin, access org.gradle.cache.internal.DefaultCacheAccess@627493fd
+Creating new cache for metadata-2.23/module-artifacts, path /home/peter/.gradle/caches/modules-2/metadata-2.23/module-artifacts.bin, access org.gradle.cache.internal.DefaultCacheAccess@627493fd
+Skipping task ':app:preDebugBuild' as it is up-to-date (took 0.124 secs).
+:app:preDebugBuild UP-TO-DATE
+:app:preDebugBuild (Thread[Task worker for ':',5,main]) completed. Took 0.125 secs.
+:app:compileDebugAidl (Thread[Task worker for ':' Thread 2,5,main]) started.
+:app:compileDebugAidl
+Putting task artifact state for task ':app:compileDebugAidl' into context took 0.0 secs.
+Skipping task ':app:compileDebugAidl' as it is up-to-date (took 0.006 secs).
+:app:compileDebugAidl UP-TO-DATE
+:app:compileDebugAidl (Thread[Task worker for ':' Thread 2,5,main]) completed. Took 0.007 secs.
+:app:compileDebugRenderscript (Thread[Daemon worker Thread 3,5,main]) started.
+:app:compileDebugRenderscript
+Putting task artifact state for task ':app:compileDebugRenderscript' into context took 0.0 secs.
+Skipping task ':app:compileDebugRenderscript' as it is up-to-date (took 0.004 secs).
+:app:compileDebugRenderscript UP-TO-DATE
+:app:compileDebugRenderscript (Thread[Daemon worker Thread 3,5,main]) completed. Took 0.004 secs.
+:app:nodeSetup (Thread[Task worker for ':' Thread 3,5,main]) started.
+:app:nodeSetup
+Putting task artifact state for task ':app:nodeSetup' into context took 0.0 secs.
+Skipping task ':app:nodeSetup' as it is up-to-date (took 0.058 secs).
+:app:nodeSetup UP-TO-DATE
+:app:nodeSetup (Thread[Task worker for ':' Thread 3,5,main]) completed. Took 0.06 secs.
+:app:installApolloCodegen (Thread[Task worker for ':' Thread 3,5,main]) started.
+:app:installApolloCodegen
+Putting task artifact state for task ':app:installApolloCodegen' into context took 0.0 secs.
+Skipping task ':app:installApolloCodegen' as it is up-to-date (took 0.003 secs).
+:app:installApolloCodegen UP-TO-DATE
+:app:installApolloCodegen (Thread[Task worker for ':' Thread 3,5,main]) completed. Took 0.004 secs.
+:app:generateDebugApolloIR (Thread[Daemon worker Thread 3,5,main]) started.
+:app:generateDebugApolloIR
+Putting task artifact state for task ':app:generateDebugApolloIR' into context took 0.0 secs.
+file or directory '/home/peter/Workspace/Madklub-android/app/src/debug/graphql', not found
+Skipping task ':app:generateDebugApolloIR' as it is up-to-date (took 0.001 secs).
+:app:generateDebugApolloIR UP-TO-DATE
+:app:generateDebugApolloIR (Thread[Daemon worker Thread 3,5,main]) completed. Took 0.002 secs.
+:app:generateDebugApolloClasses (Thread[Daemon worker Thread 3,5,main]) started.
+:app:generateDebugApolloClasses
+Putting task artifact state for task ':app:generateDebugApolloClasses' into context took 0.0 secs.
+Skipping task ':app:generateDebugApolloClasses' as it is up-to-date (took 0.001 secs).
+:app:generateDebugApolloClasses UP-TO-DATE
+:app:generateDebugApolloClasses (Thread[Daemon worker Thread 3,5,main]) completed. Took 0.002 secs.
+:app:checkDebugManifest (Thread[Daemon worker Thread 3,5,main]) started.
+:app:checkDebugManifest
+Putting task artifact state for task ':app:checkDebugManifest' into context took 0.0 secs.
+Skipping task ':app:checkDebugManifest' as it is up-to-date (took 0.001 secs).
+:app:checkDebugManifest UP-TO-DATE
+:app:checkDebugManifest (Thread[Daemon worker Thread 3,5,main]) completed. Took 0.001 secs.
+:app:generateDebugBuildConfig (Thread[Daemon worker Thread 3,5,main]) started.
+:app:generateDebugBuildConfig
+Putting task artifact state for task ':app:generateDebugBuildConfig' into context took 0.0 secs.
+Skipping task ':app:generateDebugBuildConfig' as it is up-to-date (took 0.003 secs).
+:app:generateDebugBuildConfig UP-TO-DATE
+:app:generateDebugBuildConfig (Thread[Daemon worker Thread 3,5,main]) completed. Took 0.005 secs.
+:app:generateDebugResValues (Thread[Daemon worker Thread 3,5,main]) started.
+:app:generateDebugResValues
+Putting task artifact state for task ':app:generateDebugResValues' into context took 0.0 secs.
+Skipping task ':app:generateDebugResValues' as it is up-to-date (took 0.0 secs).
+:app:generateDebugResValues UP-TO-DATE
+:app:generateDebugResValues (Thread[Daemon worker Thread 3,5,main]) completed. Took 0.002 secs.
+:app:generateDebugResources (Thread[Daemon worker Thread 3,5,main]) started.
+:app:generateDebugResources
+Skipping task ':app:generateDebugResources' as it has no actions.
+:app:generateDebugResources UP-TO-DATE
+:app:generateDebugResources (Thread[Daemon worker Thread 3,5,main]) completed. Took 0.0 secs.
+:app:mergeDebugResources (Thread[Daemon worker Thread 3,5,main]) started.
+:app:mergeDebugResources
+Putting task artifact state for task ':app:mergeDebugResources' into context took 0.0 secs.
+Skipping task ':app:mergeDebugResources' as it is up-to-date (took 0.064 secs).
+:app:mergeDebugResources UP-TO-DATE
+:app:mergeDebugResources (Thread[Daemon worker Thread 3,5,main]) completed. Took 0.065 secs.
+:app:createDebugCompatibleScreenManifests (Thread[Task worker for ':',5,main]) started.
+:app:createDebugCompatibleScreenManifests
+Putting task artifact state for task ':app:createDebugCompatibleScreenManifests' into context took 0.001 secs.
+Skipping task ':app:createDebugCompatibleScreenManifests' as it is up-to-date (took 0.001 secs).
+:app:createDebugCompatibleScreenManifests UP-TO-DATE
+:app:createDebugCompatibleScreenManifests (Thread[Task worker for ':',5,main]) completed. Took 0.002 secs.
+:app:processDebugManifest (Thread[Task worker for ':',5,main]) started.
+:app:processDebugManifest
+Putting task artifact state for task ':app:processDebugManifest' into context took 0.0 secs.
+Skipping task ':app:processDebugManifest' as it is up-to-date (took 0.004 secs).
+:app:processDebugManifest UP-TO-DATE
+:app:processDebugManifest (Thread[Task worker for ':',5,main]) completed. Took 0.004 secs.
+:app:splitsDiscoveryTaskDebug (Thread[Task worker for ':',5,main]) started.
+:app:splitsDiscoveryTaskDebug
+Putting task artifact state for task ':app:splitsDiscoveryTaskDebug' into context took 0.0 secs.
+Skipping task ':app:splitsDiscoveryTaskDebug' as it is up-to-date (took 0.001 secs).
+:app:splitsDiscoveryTaskDebug UP-TO-DATE
+:app:splitsDiscoveryTaskDebug (Thread[Task worker for ':',5,main]) completed. Took 0.003 secs.
+:app:processDebugResources (Thread[Task worker for ':',5,main]) started.
+:app:processDebugResources
+Putting task artifact state for task ':app:processDebugResources' into context took 0.0 secs.
+Skipping task ':app:processDebugResources' as it is up-to-date (took 0.017 secs).
+:app:processDebugResources UP-TO-DATE
+:app:processDebugResources (Thread[Task worker for ':',5,main]) completed. Took 0.019 secs.
+:app:kaptGenerateStubsDebugKotlin (Thread[Task worker for ':' Thread 3,5,main]) started.
+:app:kaptGenerateStubsDebugKotlin
+Putting task artifact state for task ':app:kaptGenerateStubsDebugKotlin' into context took 0.001 secs.
+Skipping task ':app:kaptGenerateStubsDebugKotlin' as it is up-to-date (took 0.017 secs).
+:app:kaptGenerateStubsDebugKotlin UP-TO-DATE
+:app:kaptGenerateStubsDebugKotlin (Thread[Task worker for ':' Thread 3,5,main]) completed. Took 0.019 secs.
+:app:kaptDebugKotlin (Thread[Task worker for ':' Thread 3,5,main]) started.
+:app:kaptDebugKotlin
+Putting task artifact state for task ':app:kaptDebugKotlin' into context took 0.0 secs.
+Executing task ':app:kaptDebugKotlin' (up-to-date check took 0.026 secs) due to:
+  Task has failed previously.
+e: /home/peter/Workspace/Madklub-android/app/build/tmp/kapt3/stubs/debug/com/vest10/peter/madklubandroid/upcomming_dinnerslubs_list/UpcommingDinnerclubsAdapter.java:5: error: dagger.internal.codegen.ComponentProcessor was unable to process this class because not all of its dependencies could be resolved. Check for compilation errors or a circular dependency with generated code.
+e: 
+
+e: public final class UpcommingDinnerclubsAdapter extends android.support.v7.widget.RecyclerView.Adapter<android.support.v7.widget.RecyclerView.ViewHolder> implements com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.RegularDinnerclubsDelegateAdapter.DinnerClubCancelledListener, com.vest10.peter.madklubandroid.upcomming_dinnerslubs_list.CookDinnerclubsDelegateAdapter.DinnerClubHasShoppedListener {
+e:              ^
+e: /home/peter/Workspace/Madklub-android/app/build/tmp/kapt3/stubs/debug/com/vest10/peter/madklubandroid/application/di/AppComponent.java:6: error: dagger.internal.codegen.ComponentProcessor was unable to process this interface because not all of its dependencies could be resolved. Check for compilation errors or a circular dependency with generated code.
+e: 
+
+e: public abstract interface AppComponent extends dagger.android.AndroidInjector<com.vest10.peter.madklubandroid.application.MadklubApplication> {
+e:                 ^
+e: java.lang.IllegalStateException: failed to analyze: org.jetbrains.kotlin.kapt3.diagnostic.KaptError: Error while annotation processing
+	at org.jetbrains.kotlin.analyzer.AnalysisResult.throwIfError(AnalysisResult.kt:57)
+	at org.jetbrains.kotlin.cli.jvm.compiler.KotlinToJVMBytecodeCompiler.compileModules(KotlinToJVMBytecodeCompiler.kt:138)
+	at org.jetbrains.kotlin.cli.jvm.K2JVMCompiler.doExecute(K2JVMCompiler.kt:154)
+	at org.jetbrains.kotlin.cli.jvm.K2JVMCompiler.doExecute(K2JVMCompiler.kt:58)
+	at org.jetbrains.kotlin.cli.common.CLICompiler.execImpl(CLICompiler.java:103)
+	at org.jetbrains.kotlin.cli.common.CLICompiler.execImpl(CLICompiler.java:51)
+	at org.jetbrains.kotlin.cli.common.CLITool.exec(CLITool.kt:92)
+	at org.jetbrains.kotlin.daemon.CompileServiceImpl$compile$1$2.invoke(CompileServiceImpl.kt:386)
+	at org.jetbrains.kotlin.daemon.CompileServiceImpl$compile$1$2.invoke(CompileServiceImpl.kt:96)
+	at org.jetbrains.kotlin.daemon.CompileServiceImpl$doCompile$$inlined$ifAlive$lambda$2.invoke(CompileServiceImpl.kt:889)
+	at org.jetbrains.kotlin.daemon.CompileServiceImpl$doCompile$$inlined$ifAlive$lambda$2.invoke(CompileServiceImpl.kt:96)
+	at org.jetbrains.kotlin.daemon.common.DummyProfiler.withMeasure(PerfUtils.kt:137)
+	at org.jetbrains.kotlin.daemon.CompileServiceImpl.checkedCompile(CompileServiceImpl.kt:916)
+	at org.jetbrains.kotlin.daemon.CompileServiceImpl.doCompile(CompileServiceImpl.kt:888)
+	at org.jetbrains.kotlin.daemon.CompileServiceImpl.compile(CompileServiceImpl.kt:385)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:346)
+	at sun.rmi.transport.Transport$1.run(Transport.java:200)
+	at sun.rmi.transport.Transport$1.run(Transport.java:197)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at sun.rmi.transport.Transport.serviceCall(Transport.java:196)
+	at sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:568)
+	at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:826)
+	at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(TCPTransport.java:683)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:682)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.jetbrains.kotlin.kapt3.diagnostic.KaptError: Error while annotation processing
+	at org.jetbrains.kotlin.kapt3.AnnotationProcessingKt.doAnnotationProcessing(annotationProcessing.kt:90)
+	at org.jetbrains.kotlin.kapt3.AnnotationProcessingKt.doAnnotationProcessing$default(annotationProcessing.kt:42)
+	at org.jetbrains.kotlin.kapt3.AbstractKapt3Extension.runAnnotationProcessing(Kapt3Extension.kt:205)
+	at org.jetbrains.kotlin.kapt3.AbstractKapt3Extension.analysisCompleted(Kapt3Extension.kt:166)
+	at org.jetbrains.kotlin.kapt3.ClasspathBasedKapt3Extension.analysisCompleted(Kapt3Extension.kt:82)
+	at org.jetbrains.kotlin.cli.jvm.compiler.TopDownAnalyzerFacadeForJVM$analyzeFilesWithJavaIntegration$2.invoke(TopDownAnalyzerFacadeForJVM.kt:96)
+	at org.jetbrains.kotlin.cli.jvm.compiler.TopDownAnalyzerFacadeForJVM.analyzeFilesWithJavaIntegration(TopDownAnalyzerFacadeForJVM.kt:106)
+	at org.jetbrains.kotlin.cli.jvm.compiler.TopDownAnalyzerFacadeForJVM.analyzeFilesWithJavaIntegration$default(TopDownAnalyzerFacadeForJVM.kt:83)
+	at org.jetbrains.kotlin.cli.jvm.compiler.KotlinToJVMBytecodeCompiler$analyze$1.invoke(KotlinToJVMBytecodeCompiler.kt:377)
+	at org.jetbrains.kotlin.cli.jvm.compiler.KotlinToJVMBytecodeCompiler$analyze$1.invoke(KotlinToJVMBytecodeCompiler.kt:68)
+	at org.jetbrains.kotlin.cli.common.messages.AnalyzerWithCompilerReport.analyzeAndReport(AnalyzerWithCompilerReport.kt:96)
+	at org.jetbrains.kotlin.cli.jvm.compiler.KotlinToJVMBytecodeCompiler.analyze(KotlinToJVMBytecodeCompiler.kt:368)
+	at org.jetbrains.kotlin.cli.jvm.compiler.KotlinToJVMBytecodeCompiler.compileModules(KotlinToJVMBytecodeCompiler.kt:133)
+	... 30 more
+
+:app:kaptDebugKotlin FAILED
+:app:kaptDebugKotlin (Thread[Task worker for ':' Thread 3,5,main]) completed. Took 2.192 secs.
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:kaptDebugKotlin'.
+> Internal compiler error. See log for more details
+
+* Try:
+Run with --stacktrace option to get the stack trace. Run with --debug option to get more log output.
+
+* Get more help at https://help.gradle.org
+
+BUILD FAILED in 3s
+17 actionable tasks: 1 executed, 16 up-to-date

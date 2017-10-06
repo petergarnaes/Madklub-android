@@ -3,6 +3,8 @@ package com.vest10.peter.madklubandroid.main_activity
 import android.util.Log
 import com.apollographql.apollo.exception.ApolloNetworkException
 import com.vest10.peter.madklubandroid.BaseView
+import com.vest10.peter.madklubandroid.CancelParticipationMutation
+import com.vest10.peter.madklubandroid.UpcommingDinnerclubsQuery
 import com.vest10.peter.madklubandroid.application.BasePresenter
 import com.vest10.peter.madklubandroid.depenedency_injection.scopes.ConfigPersistentScope
 import com.vest10.peter.madklubandroid.networking.NetworkService

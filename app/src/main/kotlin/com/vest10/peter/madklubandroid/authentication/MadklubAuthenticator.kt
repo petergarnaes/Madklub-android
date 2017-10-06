@@ -1,6 +1,5 @@
 package com.vest10.peter.madklubandroid.authentication
 
-import LoginMutation
 import android.accounts.AbstractAccountAuthenticator
 import android.accounts.Account
 import android.accounts.AccountAuthenticatorResponse
@@ -11,6 +10,7 @@ import android.os.Bundle
 import android.util.Log
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.exception.ApolloException
+import com.vest10.peter.madklubandroid.LoginMutation
 import com.vest10.peter.madklubandroid.depenedency_injection.modules.NetworkingModule
 import okhttp3.OkHttpClient
 

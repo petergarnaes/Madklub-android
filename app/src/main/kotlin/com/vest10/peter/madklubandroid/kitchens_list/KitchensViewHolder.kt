@@ -3,6 +3,7 @@ package com.vest10.peter.madklubandroid.kitchens_list
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
+import com.vest10.peter.madklubandroid.KitchensQuery
 import com.vest10.peter.madklubandroid.R
 
 /**

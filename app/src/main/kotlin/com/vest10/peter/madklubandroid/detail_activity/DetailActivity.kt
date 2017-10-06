@@ -37,7 +37,6 @@ class DetailActivity : BaseActivity<DetailPresenter.DetailView,DetailPresenter>(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
-        val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -57,7 +56,6 @@ class DetailActivity : BaseActivity<DetailPresenter.DetailView,DetailPresenter>(
         //else
         //    "..."
 
-        val fab = findViewById(R.id.fab) as FloatingActionButton
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
